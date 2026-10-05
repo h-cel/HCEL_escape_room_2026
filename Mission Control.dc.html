@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics="">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_ds/modernist-9b7a8d4a-e616-4a3e-b31c-b1db8651309f/styles.css">
+<script src="_ds/modernist-9b7a8d4a-e616-4a3e-b31c-b1db8651309f/_ds_bundle.js"></script>
+<script src="./image-slot.js"></script>
+<style>
+  body{margin:0;background:#201e1d;}
+  a{color:#ff563c}a:hover{color:#ff9783}
+  @keyframes eoFade{from{opacity:0}to{opacity:1}}
+  @keyframes eoBlink{0%,100%{opacity:1}50%{opacity:.2}}
+  @keyframes eoShake{20%,80%{transform:translateX(3px)}40%,60%{transform:translateX(-3px)}}
+  @keyframes eoAlarm{0%,100%{opacity:1}50%{opacity:.25}}
+  @keyframes eoVignette{0%{opacity:.18}50%{opacity:.55}100%{opacity:0}}
+  @keyframes eoBar{0%,100%{background:#201e1d}50%{background:#5c1a0e}}
+  @keyframes eoAlarmOut{0%{opacity:1}50%{opacity:.25}99%{opacity:1}100%{opacity:0}}
+  @keyframes eoFlame{from{transform:translateX(-50%) scale(.82);opacity:.75}to{transform:translateX(-50%) scale(1.08);opacity:1}}
+  @keyframes eoHouseBurn{0%,100%{fill:#f8f4f4}50%{fill:#ff563c}}
+  @keyframes eoPlane{0%{left:-14%}100%{left:112%}}
+  @keyframes eoBob{0%,100%{transform:translateY(0) rotate(45deg)}50%{transform:translateY(-5px) rotate(45deg)}}
+  @keyframes eoDrop{0%{opacity:0;transform:scaleY(.2)}20%{opacity:.85;transform:scaleY(1)}100%{opacity:0;transform:scaleY(1.2) translateY(14px)}}
+  @keyframes eoSave{0%{fill:#ff563c}100%{fill:#41CD03}}
+  @keyframes eoOut{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.2)}}
+  @keyframes eoFlick{from{transform:scale(.85)}to{transform:scale(1.1)}}
+  input[type=range]{accent-color:#ff563c}
+  *:focus-visible{outline:2px solid #ff563c;outline-offset:2px}
+</style>
+</helmet>
+
+<div style="min-height:100vh;width:100%;background:#201e1d;color:#f8f4f4;font-family:'Archivo',system-ui,sans-serif">
+
+  <sc-if value="{{isLock}}" hint-placeholder-val="{{true}}">
+    <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 56px;animation:eoFade .4s">
+      <div style="font-size:12px;font-weight:600;letter-spacing:.22em;color:#9b9797">DEEL 2</div>
+      <div style="height:2px;width:100%;max-width:560px;background:#605d5d;margin:16px 0 28px"></div>
+      <div style="font-size:13px;font-weight:700;letter-spacing:.2em;color:#ff563c;margin-bottom:12px">ACCESS PROTOCOL — ESA NETWORK</div>
+      <div style="font-size:40px;font-weight:800;line-height:1.05;letter-spacing:-.02em;max-width:22ch">TOEGANG TOT DE CONTROLEKAMER</div>
+      <div style="font-size:16px;line-height:1.55;color:#bab6b6;max-width:52ch;margin-top:18px">Het systeem vraagt een code van 8 cijfers. Voer ze in en bevestig met ENTER.</div>
+
+      <div style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:14px;margin-top:22px">
+        <div style="font-size:12px;font-weight:700;letter-spacing:.18em;color:#9b9797">RESTERENDE MISSIETIJD</div>
+        <div style="font-size:26px;font-weight:800;letter-spacing:.04em;color:#f8f4f4">{{timer}}</div>
+        <div style="font-size:12px;font-weight:600;letter-spacing:.1em;color:#7d7979">VAN {{startTime}}</div>
+      </div>
+
+      <sc-if value="{{lockHint}}" hint-placeholder-val="{{false}}">
+        <div style="border-top:3px solid #ff563c;padding:14px 0 0;margin-top:22px;max-width:52ch;font-size:15px;line-height:1.55;color:#ffc4b8;animation:eoFade .3s">Het satellietnetwerk is gebouwd door ESA. Hang de satellieten in de juiste volgorde van lancering. De codefragmenten vormen samen de oprichtingsdatum van ESA: dag, maand, jaar.</div>
+      </sc-if>
+
+      <div style="display:flex;justify-content:center;margin:26px 0 8px">
+        <sc-for list="{{codeSlots}}" as="slot" hint-placeholder-count="8">
+          <div style="width:46px;height:60px;background:#2d2b2b;border:2px solid {{slot.border}};display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:{{slot.color}};margin-right:{{slot.gapAfter}}">{{slot.display}}</div>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{lockHint}}" hint-placeholder-val="{{false}}">
+        <div style="display:flex;justify-content:center;margin-bottom:8px">
+          <sc-for list="{{dateLabels}}" as="d" hint-placeholder-count="3">
+            <div style="width:{{d.w}};font-size:11px;font-weight:700;letter-spacing:.16em;color:#ff563c">{{d.t}}</div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{lockMsg}}" hint-placeholder-val="{{false}}">
+        <div style="font-size:{{lockMsgSize}};font-weight:800;letter-spacing:.16em;color:{{lockMsgColor}};margin:10px 0 6px;animation:eoBlink 1s infinite">{{lockMsg}}</div>
+      </sc-if>
+
+      <div style="display:grid;grid-template-columns:repeat(3,84px);gap:6px;margin-top:18px;justify-content:center;animation:{{lockShake}}">
+        <sc-for list="{{keys}}" as="k" hint-placeholder-count="12">
+          <button onClick="{{k.onClick}}" style="height:60px;border:2px solid {{k.border}};background:{{k.bg}};color:{{k.color}};font-family:'Archivo',sans-serif;font-size:{{k.size}};font-weight:800;letter-spacing:.06em;text-align:center;padding:0;cursor:pointer">{{k.label}}</button>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{noLockHint}}" hint-placeholder-val="{{true}}">
+        <button onClick="{{askLockHint}}" style="margin-top:28px;border:2px solid #605d5d;background:transparent;color:#bab6b6;font-family:'Archivo',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;padding:12px 18px;text-align:left;cursor:pointer" style-hover="border-color:#ff563c;color:#ff563c">HINT VRAGEN — KOST 2:00 MINUTEN</button>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{isBrief}}" hint-placeholder-val="{{false}}">
+    <div style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:48px 56px;animation:eoFade .4s">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="width:10px;height:10px;background:#ff563c;animation:eoBlink 1.1s infinite"></div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:.2em;color:#ff563c">ALERT: BOSBRAND GEDETECTEERD</div>
+      </div>
+      <div style="height:2px;background:#605d5d;margin:20px 0 28px"></div>
+      <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+      <div style="flex:1 1 420px;min-width:0;max-width:720px">
+      <div style="font-size:52px;font-weight:800;line-height:1;letter-spacing:-.03em">FIRE RESPONSE<br>OPERATIONS CENTER</div>
+      <div style="font-size:17px;line-height:1.6;color:#bab6b6;max-width:56ch;margin-top:24px"><strong style="color:#79E6FB;font-weight:800">Gironde, nabij Bordeaux</strong> — 24 juli 2026. De lokale autoriteiten wachten op jullie analyse. Bij elke vraag kiezen jullie eerst de juiste satelliet. Daarna verschijnt het satellietbeeld en lezen jullie daaruit het antwoord af.</div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,200px));gap:2px;background:#444141;margin:36px 0;max-width:606px">
+        <sc-for list="{{partsOverview}}" as="p" hint-placeholder-count="3">
+          <div style="background:#201e1d;padding:18px 20px">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.18em;color:#ff563c">{{p.tag}}</div>
+            <div style="font-size:17px;font-weight:700;margin-top:8px">{{p.title}}</div>
+            <div style="font-size:13px;color:#9b9797;margin-top:6px">{{p.count}}</div>
+          </div>
+        </sc-for>
+      </div>
+      <button onClick="{{start}}" style="align-self:flex-start;border:none;background:#ff563c;color:#201e1d;font-family:'Archivo',sans-serif;font-size:16px;font-weight:800;letter-spacing:.06em;padding:18px 28px;min-width:280px;text-align:left;cursor:pointer" style-hover="background:#ff9783">START ANALYSE</button>
+      </div>
+
+      <figure style="margin:0;background:#201e1d;border:2px solid #444141;flex:1 1 340px;min-width:0;max-width:560px">
+        <img src="uploads/bosbrandinfo.avif" alt="Kaart van de bosbrand in de Gironde ten westen van Bordeaux" style="display:block;width:100%;height:auto">
+        <figcaption style="font-size:16px;font-weight:600;line-height:1.45;color:#bab6b6;padding:12px 14px">Situering van de brandzone tussen Cap Ferret en Bordeaux.</figcaption>
+      </figure>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{isTask}}" hint-placeholder-val="{{false}}">
+    <div style="height:100vh;display:flex;flex-direction:column;overflow:hidden">
+      <div style="flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px 24px;padding:14px 28px 10px;border-bottom:2px solid #605d5d;animation:{{barAnim}}">
+        <div style="display:flex;align-items:center;gap:20px;min-width:0">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.2em;color:#ff563c;white-space:nowrap">EO RESPONSE TEAM</div>
+          <div style="display:flex;gap:4px">
+            <sc-for list="{{rail}}" as="r" hint-placeholder-count="8">
+              <div style="width:26px;height:6px;background:{{r.bg}}"></div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:14px 20px;justify-content:flex-end;min-width:0">
+          <sc-if value="{{overtime}}" hint-placeholder-val="{{false}}">
+            <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:flex-end;gap:14px 4px;max-width:420px" title="Elke minuut extra staat er een huis in brand">
+              <sc-for list="{{houses}}" as="ho" hint-placeholder-count="2">
+                <svg viewBox="0 0 16 16" style="width:16px;height:16px;display:block;flex:0 0 auto">
+                  <polygon points="8,1 15,7 1,7" fill="{{ho.fill}}" style="animation:{{ho.anim}}"></polygon>
+                  <rect x="3" y="7" width="10" height="8" fill="{{ho.fill}}" style="animation:{{ho.anim}}"></rect>
+                </svg>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{notOvertime}}" hint-placeholder-val="{{true}}">
+          <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:flex-end;gap:16px 4px;max-width:420px" title="Elke minuut brandt er een boom af">
+            <sc-for list="{{trees}}" as="t" hint-placeholder-count="45">
+              <div style="position:relative;width:14px;height:23px;flex:0 0 auto">
+                <svg viewBox="0 0 10 16" style="width:14px;height:23px;display:block">
+                  <polygon points="5,0 9,7 1,7" fill="{{t.fill}}"></polygon>
+                  <polygon points="5,4 10,12 0,12" fill="{{t.fill}}"></polygon>
+                  <rect x="4" y="12" width="2" height="4" fill="{{t.fill}}"></rect>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="#ff563c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:50%;top:-15px;width:17px;height:17px;display:{{t.flame}};transform:translateX(-50%);transform-origin:50% 100%;animation:eoFlame .6s infinite alternate">
+                  <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+                </svg>
+              </div>
+            </sc-for>
+          </div>
+          </sc-if>
+          <div style="font-size:15px;font-weight:700;letter-spacing:.1em;color:{{timerColor}};animation:{{timerAnim}}">{{timer}}</div>
+          <button onClick="{{toggleHint}}" style="border:2px solid #605d5d;background:transparent;color:#bab6b6;font-family:'Archivo',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;padding:9px 16px;text-align:left;cursor:pointer" style-hover="border-color:#ff563c;color:#ff563c">HULP VRAGEN</button>
+        </div>
+      </div>
+
+      <div style="flex:1;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);min-height:0">
+        <div style="padding:22px 28px;border-right:2px solid #444141;display:flex;flex-direction:column;gap:12px;overflow-y:auto;min-height:0">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.2em;color:#9b9797">{{partTitle}}</div>
+
+          <sc-if value="{{isQ}}" hint-placeholder-val="{{true}}">
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="font-size:12px;font-weight:700;letter-spacing:.18em;color:#ff563c">{{stepNo}}</div>
+              <div style="font-size:32px;font-weight:800;line-height:1.08;letter-spacing:-.02em;text-wrap:pretty">{{question}}</div>
+              <sc-if value="{{subHidden}}" hint-placeholder-val="{{true}}">
+                <button onClick="{{askSubHint}}" style="align-self:flex-start;border:2px solid #605d5d;background:transparent;color:#bab6b6;font-family:'Archivo',sans-serif;font-size:15px;font-weight:700;letter-spacing:.1em;padding:10px 16px;text-align:left;cursor:pointer" style-hover="border-color:#ff563c;color:#ff563c">HINT VRAGEN — KOST 0:30</button>
+              </sc-if>
+              <sc-if value="{{subShown}}" hint-placeholder-val="{{false}}">
+                <div style="border-left:4px solid #ff563c;padding:6px 0 6px 16px;font-size:19px;font-weight:600;line-height:1.4;color:#ffc4b8;text-wrap:pretty;animation:eoFade .3s">{{sub}}</div>
+              </sc-if>
+              <div style="height:2px;background:#444141"></div>
+              <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px">
+                <div style="font-size:15px;font-weight:700;letter-spacing:.14em;color:#bab6b6">SELECTEER DE SATELLIET</div>
+                <div style="font-size:12px;font-weight:700;letter-spacing:.1em;color:#ff563c">FOUTE KEUZE — 1:00</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <sc-for list="{{satOptions}}" as="o" hint-placeholder-count="3">
+                  <button onClick="{{o.onClick}}" style="display:flex;align-items:center;justify-content:space-between;gap:12px;border:2px solid {{o.border}};background:{{o.bg}};color:{{o.color}};font-family:'Archivo',sans-serif;font-size:18px;font-weight:700;padding:11px 18px;text-align:left;cursor:pointer">
+                    <span>{{o.label}}</span>
+                    <span style="display:{{o.check}};align-items:center;gap:8px;font-size:13px;font-weight:800;letter-spacing:.14em">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="#201e1d" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;display:block"><path d="M20 6 9 17l-5-5"></path></svg>
+                    </span>
+                  </button>
+                </sc-for>
+              </div>
+              <sc-if value="{{hasOkMsg}}" hint-placeholder-val="{{false}}">
+                <div style="border-left:4px solid #41CD03;padding:6px 0 6px 16px;font-size:17px;line-height:1.45;color:#f8f4f4;text-wrap:pretty">{{okMsg}}</div>
+              </sc-if>
+              <sc-if value="{{hasSatMsg}}" hint-placeholder-val="{{false}}">
+                <div style="border-left:4px solid #ff563c;padding:6px 0 6px 16px;font-size:17px;line-height:1.45;color:#ffc4b8">{{satMsg}}</div>
+              </sc-if>
+              <sc-if value="{{hasNote}}" hint-placeholder-val="{{false}}">
+                
+              </sc-if>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{isSummary}}" hint-placeholder-val="{{false}}">
+            <div style="display:flex;flex-direction:column;gap:20px">
+              <div style="font-size:34px;font-weight:800;line-height:1.05;letter-spacing:-.02em">FIRE RISK<br>ASSESSMENT COMPLETE</div>
+              <div style="font-size:15px;line-height:1.55;color:#bab6b6">Dit is jullie inschatting van het brandrisico op basis van de vier factoren.</div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{isReport}}" hint-placeholder-val="{{false}}">
+            <div style="display:flex;flex-direction:column;gap:20px">
+              <div style="font-size:34px;font-weight:800;line-height:1.05;letter-spacing:-.02em">FINAL FIRE<br>RESPONSE REPORT</div>
+              <div style="font-size:15px;line-height:1.55;color:#bab6b6">Controleer het rapport. Klik op een regel om terug te gaan en een antwoord aan te passen. Daarna verzenden jullie het naar de lokale autoriteiten.</div>
+              <button onClick="{{transmit}}" style="align-self:flex-start;border:none;background:#ff563c;color:#201e1d;font-family:'Archivo',sans-serif;font-size:16px;font-weight:800;letter-spacing:.06em;padding:18px 28px;min-width:300px;text-align:left;cursor:pointer" style-hover="background:#ff9783">RAPPORT VERZENDEN</button>
+            </div>
+          </sc-if>
+        </div>
+
+        <div style="padding:16px 28px 20px;display:flex;flex-direction:column;gap:12px;min-width:0;min-height:0;overflow-y:auto">
+          <sc-if value="{{isQ}}" hint-placeholder-val="{{true}}">
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <sc-if value="{{satChosen}}" hint-placeholder-val="{{true}}">
+                <div style="display:flex;flex-direction:column;gap:10px;animation:eoFade .3s">
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px">
+                    <div style="font-size:15px;font-weight:700;letter-spacing:.14em;color:#bab6b6">{{figCaption}}</div>
+                    <div style="display:flex;gap:20px">
+                      <button onClick="{{toggleMap}}" style="border:none;background:transparent;color:#79E6FB;font-family:'Archivo',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;padding:0;cursor:pointer" style-hover="color:#b6f2fd">KAART STUDIEGEBIED</button>
+                      <button onClick="{{toggleZoom}}" style="border:none;background:transparent;color:#ff563c;font-family:'Archivo',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;padding:0;cursor:pointer" style-hover="color:#ff9783">{{zoomLabel}}</button>
+                    </div>
+                  </div>
+                  <sc-if value="{{showMap}}" hint-placeholder-val="{{false}}">
+                    <div onClick="{{toggleMap}}" style="position:fixed;inset:0;z-index:80;background:rgba(32,30,29,.92);display:flex;align-items:center;justify-content:center;padding:32px;cursor:pointer">
+                      <figure style="margin:0;max-width:min(1100px,100%);max-height:100%;display:flex;flex-direction:column;background:#201e1d;border:2px solid #605d5d">
+                        <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 16px;border-bottom:2px solid #444141">
+                          <div style="font-size:13px;font-weight:800;letter-spacing:.16em;color:#79E6FB">STUDIEGEBIED — GIRONDE</div>
+                          <div style="font-size:12px;font-weight:700;letter-spacing:.1em;color:#bab6b6">KLIK OM TE SLUITEN ✕</div>
+                        </div>
+                        <img src="uploads/bosbrandinfo.avif" alt="Kaart van het studiegebied" style="display:block;max-width:100%;max-height:calc(100vh - 160px);object-fit:contain">
+                        <figcaption style="font-size:16px;font-weight:600;line-height:1.45;color:#bab6b6;padding:12px 16px">Situering van de brandzone tussen Cap Ferret en Bordeaux.</figcaption>
+                      </figure>
+                    </div>
+                  </sc-if>
+                  <div style="{{figStyle}}">
+                    <sc-if value="{{zoom}}" hint-placeholder-val="{{false}}">
+                      <button onClick="{{toggleZoom}}" style="position:absolute;top:0;right:0;z-index:70;border:none;background:#ff563c;color:#201e1d;font-family:'Archivo',sans-serif;font-size:13px;font-weight:800;letter-spacing:.12em;padding:12px 20px;text-align:left;cursor:pointer" style-hover="background:#ff9783">SLUITEN ✕</button>
+                    </sc-if>
+                    <sc-for list="{{figSlots}}" as="f" hint-placeholder-count="1">
+                      <div style="position:absolute;inset:0;display:{{f.display}}">
+                        <image-slot id="{{f.id}}" shape="rect" fit="contain" placeholder="{{f.placeholder}}"></image-slot>
+                      </div>
+                    </sc-for>
+
+                    <sc-if value="{{isGrid}}" hint-placeholder-val="{{false}}">
+                      <div style="position:absolute;inset:0;display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(5,1fr)">
+                        <sc-for list="{{gridCells}}" as="c" hint-placeholder-count="40">
+                          <button onClick="{{c.onClick}}" style="border:1px solid {{c.border}};background:{{c.bg}};color:{{c.color}};font-family:'Archivo',sans-serif;font-size:11px;font-weight:700;cursor:pointer;padding:0;display:flex;align-items:flex-start;justify-content:flex-start;padding:3px">{{c.label}}</button>
+                        </sc-for>
+                      </div>
+                      <div style="position:absolute;left:0;bottom:0;background:#2979ff;color:#f8f4f4;font-size:12px;font-weight:800;letter-spacing:.12em;padding:8px 14px;pointer-events:none">KLIK DE CELLEN AAN WAAR HET VUUR ACTIEF BRANDT, DAN BEVESTIGEN</div>
+                    </sc-if>
+
+                    <sc-if value="{{isPoly}}" hint-placeholder-val="{{false}}">
+                      <div onClick="{{addPoint}}" style="position:absolute;inset:0;cursor:crosshair">
+                        <svg viewBox="{{bufView}}" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none">
+                          <polygon points="{{bufPoints}}" fill="rgba(65,205,3,.28)" stroke="rgba(65,205,3,.28)" stroke-width="{{bufStroke}}" stroke-linejoin="round"></polygon>
+                        </svg>
+                        <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none">
+                          <polygon points="{{refPoints}}" fill="none" stroke="#79E6FB" stroke-width="2" stroke-dasharray="6 4" vector-effect="non-scaling-stroke"></polygon>
+                          <polygon points="{{polyPoints}}" fill="rgba(41,121,255,.3)" stroke="#2979ff" stroke-width="2" vector-effect="non-scaling-stroke"></polygon>
+                        </svg>
+                        <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none">
+                          <sc-for list="{{polyDots}}" as="p" hint-placeholder-count="0">
+                            <circle cx="{{p.cx}}" cy="{{p.cy}}" r="0.8" fill="#2979ff" stroke="#f8f4f4" stroke-width="1" vector-effect="non-scaling-stroke"></circle>
+                          </sc-for>
+                        </svg>
+                        <div style="position:absolute;left:0;top:0;right:0;height:42px;background:#201e1d;pointer-events:none"></div>
+                        <div style="position:absolute;left:12px;top:8px;font-size:11px;font-weight:800;letter-spacing:.14em;color:#f8f4f4;pointer-events:none">{{scaleKm}} KM</div>
+                        <div style="position:absolute;left:12px;top:26px;height:8px;width:{{scaleBarW}};background:#f8f4f4;border-left:3px solid #ff563c;border-right:3px solid #ff563c;box-sizing:border-box;pointer-events:none"></div>
+                        <div style="position:absolute;left:0;bottom:0;background:#2979ff;color:#f8f4f4;font-size:12px;font-weight:800;letter-spacing:.12em;padding:8px 14px">KLIK PUNT NA PUNT ROND DE BRANDZONE</div>
+                      </div>
+                    </sc-if>
+                  </div>
+
+                  <sc-if value="{{hasLegend}}" hint-placeholder-val="{{false}}">
+                    <div style="border:2px solid #444141;padding:10px 14px;display:flex;flex-direction:column;gap:6px">
+                      <div style="font-size:12px;font-weight:800;letter-spacing:.16em;color:#79E6FB">{{legendTitle}}</div>
+                      <sc-for list="{{legendRows}}" as="r" hint-placeholder-count="2">
+                        <div style="display:flex;align-items:flex-start;gap:12px">
+                          <div style="display:{{r.swDisplay}};flex:0 0 auto;width:18px;height:18px;margin-top:2px;background:{{r.sw}};border:2px solid #605d5d"></div>
+                          <div style="font-size:15px;line-height:1.4;color:#f8f4f4;text-wrap:pretty">{{r.text}}</div>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+
+                  <sc-if value="{{isLevel}}" hint-placeholder-val="{{false}}">
+                    <div style="display:flex;flex-direction:column;gap:10px">
+                      <div style="font-size:12px;font-weight:700;letter-spacing:.16em;color:#ff563c">{{outLabel}}</div>
+                      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px">
+                        <sc-for list="{{levelOptions}}" as="o" hint-placeholder-count="4">
+                          <button onClick="{{o.onClick}}" style="border:2px solid {{o.border}};background:{{o.bg}};color:{{o.color}};font-family:'Archivo',sans-serif;font-size:15px;font-weight:700;letter-spacing:.06em;padding:12px 14px;text-align:left;cursor:pointer">{{o.label}}</button>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </sc-if>
+
+                  <sc-if value="{{isGrid}}" hint-placeholder-val="{{false}}">
+                    <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px 20px">
+                      <div style="display:flex;flex-direction:column;gap:4px;flex:1 1 200px">
+                        <div style="font-size:12px;font-weight:700;letter-spacing:.16em;color:#ff563c">{{outLabel}}</div>
+                        <div style="font-size:12px;font-weight:700;letter-spacing:.1em;color:#9b9797">FOUTE CEL — 0:05</div>
+                      </div>
+                      <sc-if value="{{notConfirmed}}" hint-placeholder-val="{{true}}">
+                        <button onClick="{{confirmCells}}" style="align-self:flex-start;border:none;background:#ff563c;color:#201e1d;font-family:'Archivo',sans-serif;font-size:14px;font-weight:800;letter-spacing:.08em;padding:14px 22px;min-width:260px;text-align:left;cursor:pointer" style-hover="background:#ff9783">SELECTIE BEVESTIGEN</button>
+                      </sc-if>
+                      <sc-if value="{{cellsConfirmed}}" hint-placeholder-val="{{false}}">
+                        <div style="font-size:14px;font-weight:700;letter-spacing:.08em;color:#f8f4f4">BEVESTIGD: {{currentValue}}</div>
+                      </sc-if>
+                    </div>
+                  </sc-if>
+
+                  <sc-if value="{{isCompass}}" hint-placeholder-val="{{false}}">
+                    <div style="display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center">
+                      <div style="font-size:12px;font-weight:700;letter-spacing:.16em;color:#ff563c;flex:0 0 100%">{{outLabel}}</div>
+                      <div onPointerDown="{{dialDown}}" onPointerMove="{{dialMove}}" onPointerUp="{{dialUp}}" style="position:relative;width:196px;height:196px;border:2px solid #444141;border-radius:50%;cursor:grab;touch-action:none">
+                        <div style="position:absolute;top:50%;left:50%;width:2px;height:66px;background:#ff563c;transform-origin:50% 100%;transform:{{needleRot}}"></div>
+                        <div style="position:absolute;top:50%;left:50%;width:8px;height:8px;background:#ff563c;transform:translate(-50%,-50%)"></div>
+                        <sc-for list="{{dirOptions}}" as="o" hint-placeholder-count="8">
+                          <button onClick="{{o.onClick}}" style="position:absolute;top:50%;left:50%;transform:{{o.pos}};border:2px solid {{o.border}};background:{{o.bg}};color:{{o.color}};font-family:'Archivo',sans-serif;font-size:11px;font-weight:700;width:34px;height:26px;cursor:pointer;padding:0">{{o.label}}</button>
+                        </sc-for>
+                      </div>
+                      <sc-if value="{{hasDirMsg}}" hint-placeholder-val="{{false}}">
+                        <div style="flex:1 1 220px;border-left:3px solid #ff563c;padding:8px 0 8px 14px;font-size:16px;line-height:1.5;color:#ffc4b8">{{dirMsg}}</div>
+                      </sc-if>
+                    </div>
+                  </sc-if>
+
+                  <sc-if value="{{isPoly}}" hint-placeholder-val="{{false}}">
+                    <div style="display:flex;flex-direction:column;gap:10px">
+                      <div style="font-size:12px;font-weight:700;letter-spacing:.16em;color:#ff563c">{{outLabel}}</div>
+                      <div style="font-size:14px;line-height:1.5;color:#bab6b6;text-wrap:pretty">Elke klik op het beeld zet een hoekpunt. Sluit de polygoon om de oppervlakte te berekenen; de schaal van {{scaleKm}} km is al ingesteld.</div>
+                      <sc-if value="{{polyClosed}}" hint-placeholder-val="{{false}}">
+                        <div style="display:flex;align-items:baseline;gap:10px">
+                          <div style="font-size:36px;font-weight:800;letter-spacing:-.02em;line-height:1">{{polyArea}}</div>
+                          <div style="font-size:16px;font-weight:700;color:#bab6b6">ha</div>
+                          <div style="font-size:14px;color:#7d7979">= {{polyKm2}} km²</div>
+                        </div>
+                        <sc-if value="{{hasScore}}" hint-placeholder-val="{{false}}">
+                          <div style="border:2px solid {{scoreColor}};padding:10px 14px;display:flex;flex-direction:column;gap:4px">
+                            <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+                              <div style="font-size:13px;font-weight:700;letter-spacing:.16em;color:{{scoreColor}}">OVEREENKOMST</div>
+                              <div style="font-size:32px;font-weight:800;letter-spacing:-.02em;line-height:1;color:{{scoreColor}}">{{scorePct}}%</div>
+                            </div>
+                            <div style="font-size:16px;line-height:1.45;color:#f8f4f4">{{scoreText}}</div>
+                          </div>
+                        </sc-if>
+                      </sc-if>
+                      <sc-if value="{{setupMode}}" hint-placeholder-val="{{false}}">
+                        <div style="border:2px dashed #79E6FB;padding:14px 18px;display:flex;flex-direction:column;gap:10px">
+                          <div style="font-size:13px;font-weight:800;letter-spacing:.16em;color:#79E6FB">INSTELMODUS — JUISTE ZONE</div>
+                          <div style="font-size:14px;line-height:1.55;color:#bab6b6">Teken de juiste brandzone en sluit de polygoon. Die wordt meteen bewaard op deze computer. De groene rand is de toegestane marge (tweak "bufferKm"): een polygoon die de zone omvat en binnen het groen blijft, scoort 100%. Wil je ze vast in het spel zetten, kopieer de code, plak ze in de tweak "juisteZone" en zet de instelmodus uit.</div>
+                          <sc-if value="{{hasRefCode}}" hint-placeholder-val="{{false}}">
+                            <textarea readonly="" value="{{refCode}}" style="width:100%;min-height:64px;box-sizing:border-box;border:2px solid #605d5d;background:#201e1d;color:#f8f4f4;font-family:ui-monospace,monospace;font-size:12px;padding:8px;resize:vertical"></textarea>
+                            <button onClick="{{copyRef}}" style="align-self:flex-start;border:none;background:#79E6FB;color:#201e1d;font-family:'Archivo',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;padding:12px 18px;text-align:left;cursor:pointer" style-hover="background:#b6f2fd">{{copyLabel}}</button>
+                          </sc-if>
+                        </div>
+                      </sc-if>
+                      <div style="display:flex;flex-wrap:wrap;gap:8px">
+                        <sc-if value="{{polyCanClose}}" hint-placeholder-val="{{true}}">
+                          <button onClick="{{closePoly}}" style="border:none;background:#2979ff;color:#f8f4f4;font-family:'Archivo',sans-serif;font-size:14px;font-weight:800;letter-spacing:.08em;padding:12px 20px;min-width:200px;text-align:left;cursor:pointer" style-hover="background:#5b9bff">POLYGOON SLUITEN</button>
+                        </sc-if>
+                        <sc-if value="{{polyHasPoints}}" hint-placeholder-val="{{false}}">
+                          <button onClick="{{undoPoint}}" style="border:2px solid #605d5d;background:transparent;color:#bab6b6;font-family:'Archivo',sans-serif;font-size:13px;font-weight:700;letter-spacing:.08em;padding:13px 18px;text-align:left;cursor:pointer" style-hover="border-color:#ff563c;color:#ff563c">LAATSTE PUNT WISSEN</button>
+                        </sc-if>
+                        <button onClick="{{clearPoly}}" style="border:2px solid #605d5d;background:transparent;color:#bab6b6;font-family:'Archivo',sans-serif;font-size:13px;font-weight:700;letter-spacing:.08em;padding:13px 18px;text-align:left;cursor:pointer" style-hover="border-color:#ff563c;color:#ff563c">OPNIEUW BEGINNEN</button>
+                      </div>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{isSummary}}" hint-placeholder-val="{{false}}">
+            <div style="display:flex;flex-direction:column;gap:2px;background:#444141;border:2px solid #444141">
+              <sc-for list="{{summaryRows}}" as="r" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;background:#201e1d;padding:18px 20px">
+                  <span style="font-size:13px;font-weight:700;letter-spacing:.12em;color:#9b9797">{{r.label}}</span>
+                  <span style="font-size:17px;font-weight:800;color:#ff563c">{{r.value}}</span>
+                </div>
+              </sc-for>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;background:#2d2b2b;padding:20px">
+                <span style="font-size:13px;font-weight:700;letter-spacing:.12em;color:#f8f4f4">RISK CONTRIBUTION</span>
+                <span style="font-size:22px;font-weight:800;color:#ff563c">{{overallRisk}}</span>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{isReport}}" hint-placeholder-val="{{false}}">
+            <div style="display:flex;flex-direction:column;gap:20px">
+              <sc-for list="{{reportGroups}}" as="g" hint-placeholder-count="3">
+                <div style="display:flex;flex-direction:column;gap:2px;background:#444141;border:2px solid #444141">
+                  <div style="background:#2d2b2b;padding:12px 20px;font-size:12px;font-weight:700;letter-spacing:.18em;color:#f8f4f4">{{g.title}}</div>
+                  <sc-for list="{{g.rows}}" as="r" hint-placeholder-count="4">
+                    <button onClick="{{r.onClick}}" style="display:flex;align-items:center;justify-content:space-between;gap:16px;background:#201e1d;border:none;padding:14px 20px;font-family:'Archivo',sans-serif;cursor:pointer;text-align:left" style-hover="background:#2d2b2b">
+                      <span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#9b9797">{{r.label}}</span>
+                      <span style="font-size:16px;font-weight:800;color:#ff563c">{{r.value}}</span>
+                    </button>
+                  </sc-for>
+                  <sc-if value="{{g.hasTotal}}" hint-placeholder-val="{{false}}">
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;background:#2d2b2b;padding:14px 20px">
+                      <span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#f8f4f4">{{g.totalLabel}}</span>
+                      <span style="font-size:18px;font-weight:800;color:#ff563c">{{g.total}}</span>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:2px;border-top:2px solid #605d5d">
+        <button onClick="{{back}}" style="flex:0 0 220px;border:none;background:transparent;color:#bab6b6;font-family:'Archivo',sans-serif;font-size:15px;font-weight:700;letter-spacing:.08em;padding:20px 32px;text-align:left;cursor:pointer" style-hover="color:#ff563c">← TERUG</button>
+        <sc-if value="{{isReport}}" hint-placeholder-val="{{false}}">
+          <div style="flex:1"></div>
+        </sc-if>
+        <sc-if value="{{canNext}}" hint-placeholder-val="{{false}}">
+          <button onClick="{{next}}" style="flex:1;border:none;background:#ff563c;color:#201e1d;font-family:'Archivo',sans-serif;font-size:15px;font-weight:800;letter-spacing:.08em;padding:20px 32px;text-align:left;cursor:pointer" style-hover="background:#ff9783">VOLGENDE →</button>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{isDone}}" hint-placeholder-val="{{false}}">
+    <div style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:48px 56px;animation:eoFade .5s">
+      <sc-if value="{{onTime}}" hint-placeholder-val="{{true}}">
+        <div style="margin:-12px 0 28px">{{flyover}}</div>
+      </sc-if>
+      <div style="font-size:13px;font-weight:700;letter-spacing:.2em;color:#ff563c">REPORT TRANSMITTED — LOCAL AUTHORITIES NOTIFIED</div>
+      <sc-if value="{{overtime}}" hint-placeholder-val="{{false}}">
+        <div style="background:#ff563c;color:#201e1d;font-size:15px;font-weight:800;letter-spacing:.06em;padding:12px 16px;margin-top:14px;max-width:820px">TE LAAT INGEDIEND — {{housesLost}} HUIZEN VERLOREN. DE SCHADE IS BEPERKT, MAAR BORDEAUX IS GERAAKT.</div>
+      </sc-if>
+      <div style="height:2px;background:#605d5d;margin:20px 0 28px"></div>
+      <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
+      <div style="flex:1 1 440px;min-width:0;max-width:820px">
+      <sc-if value="{{onTime}}" hint-placeholder-val="{{true}}">
+        <div>
+          <div style="font-size:64px;font-weight:800;line-height:.95;letter-spacing:-.03em">MISSION<br>COMPLETE</div>
+          <div style="font-size:17px;line-height:1.6;color:#bab6b6;max-width:52ch;margin-top:24px">De brandweer en de lokale autoriteiten beschikken opnieuw over actuele satellietinformatie. Jullie analyse bepaalt mee waar geëvacueerd wordt en waar de blusvliegtuigen naartoe gaan.</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{overtime}}" hint-placeholder-val="{{false}}">
+        <div>
+          <div style="font-size:64px;font-weight:800;line-height:.95;letter-spacing:-.03em">SCHADE<br>BEPERKT</div>
+          <div style="font-size:17px;line-height:1.6;color:#bab6b6;max-width:52ch;margin-top:24px">Het rapport kwam te laat om Bordeaux te sparen, maar de analyse is alsnog aangekomen. De blusvliegtuigen en de evacuatieploegen werken nu met jullie gegevens en houden het vuur weg van de resterende wijken.</div>
+        </div>
+      </sc-if>
+
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;background:#444141;border:2px solid #444141;margin-top:32px;max-width:780px">
+        <div style="background:#201e1d;padding:22px 24px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.18em;color:#ff563c">SDIS 33 — BRANDWEER GIRONDE</div>
+          <sc-if value="{{onTime}}" hint-placeholder-val="{{true}}">
+            <div style="font-size:15px;line-height:1.6;color:#bab6b6;margin-top:12px">{{sdisText}}</div>
+          </sc-if>
+          <sc-if value="{{overtime}}" hint-placeholder-val="{{false}}">
+            <div style="font-size:15px;line-height:1.6;color:#bab6b6;margin-top:12px">Analyse laat ontvangen. De vlammen stonden al in de rand van Bordeaux, maar met jullie rastercellen konden we de laatste straten nog vrijhouden.</div>
+          </sc-if>
+        </div>
+        <div style="background:#201e1d;padding:22px 24px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.18em;color:#ff563c">PRÉFECTURE DE LA GIRONDE</div>
+          <sc-if value="{{onTime}}" hint-placeholder-val="{{true}}">
+            <div style="font-size:15px;line-height:1.6;color:#bab6b6;margin-top:12px">{{prefText}}</div>
+          </sc-if>
+          <sc-if value="{{overtime}}" hint-placeholder-val="{{false}}">
+            <div style="font-size:15px;line-height:1.6;color:#bab6b6;margin-top:12px">De evacuatie was al begonnen toen het rapport binnenkwam. Jullie analyse bepaalt nu welke wijken nog ontruimd worden en waar de waarschuwing voor luchtkwaliteit geldt.</div>
+          </sc-if>
+        </div>
+      </div>
+
+      <div style="font-size:14px;font-weight:700;letter-spacing:.16em;color:#9b9797;margin-top:28px">EARTH OBSERVATION RESPONSE TEAM — {{finalVerdict}}</div>
+
+      <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;border-top:2px solid #605d5d;margin-top:20px;padding-top:20px">
+        <div style="font-size:13px;font-weight:700;letter-spacing:.18em;color:{{finalColor}}">{{finalLabel}}</div>
+        <div style="font-size:56px;font-weight:800;letter-spacing:-.02em;line-height:1;color:{{finalColor}}">{{finalTime}}</div>
+      </div>
+
+      <sc-if value="{{notSaved}}" hint-placeholder-val="{{true}}">
+        <div style="margin-top:28px;max-width:560px">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.18em;color:#9b9797">TEAMNAAM</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">
+            <input value="{{team}}" onChange="{{setTeam}}" onKeyDown="{{teamKey}}" placeholder="Groepsnaam" style="flex:1 1 260px;min-width:0;border:2px solid #605d5d;background:#201e1d;color:#f8f4f4;font-family:'Archivo',sans-serif;font-size:15px;font-weight:600;padding:14px 16px;outline:none" style-focus="border-color:#79E6FB">
+            <button onClick="{{addToBoard}}" style="border:none;background:#79E6FB;color:#201e1d;font-family:'Archivo',sans-serif;font-size:14px;font-weight:800;letter-spacing:.08em;padding:14px 22px;text-align:left;cursor:pointer" style-hover="background:#b6f2fd">VOEG TOE AAN SCOREBORD</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{hasBoard}}" hint-placeholder-val="{{false}}">
+        <div style="margin-top:28px;max-width:560px;border:2px solid #444141">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.18em;color:#201e1d;background:#79E6FB;padding:10px 16px">SCOREBORD</div>
+          <sc-for list="{{board}}" as="b" hint-placeholder-count="3">
+            <div style="display:flex;align-items:center;gap:14px;border-top:2px solid #444141;padding:12px 16px;background:{{b.bg}}">
+              <div style="font-size:14px;font-weight:800;color:#7d7979;width:26px">{{b.rank}}</div>
+              <div style="flex:1;min-width:0;font-size:15px;font-weight:700;color:{{b.nameColor}}">{{b.name}}</div>
+              <div style="font-size:15px;font-weight:800;letter-spacing:.04em;color:{{b.color}}">{{b.time}}</div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <button onClick="{{restart}}" style="margin-top:32px;border:2px solid #605d5d;background:transparent;color:#bab6b6;font-family:'Archivo',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;padding:14px 22px;text-align:left;cursor:pointer" style-hover="border-color:#ff563c;color:#ff563c">OPNIEUW STARTEN</button>
+      </div>
+
+      <div style="display:grid;gap:2px;background:#444141;border:2px solid #444141;flex:1 1 340px;min-width:0;max-width:560px">
+        <figure style="margin:0;background:#201e1d">
+          <img src="uploads/bosbrand%20gelukt.webp" alt="Blusvliegtuig dropt water boven het naaldbos" style="display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain">
+          <figcaption style="font-size:16px;font-weight:600;line-height:1.45;color:#bab6b6;padding:12px 14px">Blusvliegtuigen ingezet op de oostelijke flank.</figcaption>
+        </figure>
+        <figure style="margin:0;background:#201e1d">
+          <img src="uploads/bosbrand%20gelukt3.webp" alt="Brandweerploegen blussen aan de bosrand" style="display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain">
+          <figcaption style="font-size:16px;font-weight:600;line-height:1.45;color:#bab6b6;padding:12px 14px">Ploegen houden de bosrand nat.</figcaption>
+        </figure>
+        <sc-if value="{{onTime}}" hint-placeholder-val="{{true}}">
+        <figure style="margin:0;background:#201e1d">
+          <img src="uploads/bosbrand%20gelukt2.webp" alt="Geëvacueerde bewoners in een opvangcentrum" style="display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain">
+          <figcaption style="font-size:16px;font-weight:600;line-height:1.45;color:#bab6b6;padding:12px 14px">Bewoners op tijd opgevangen in de evacuatiehal.</figcaption>
+        </figure>
+        </sc-if>
+        <sc-if value="{{overtime}}" hint-placeholder-val="{{false}}">
+        <figure style="margin:0;background:#201e1d">
+          <img src="uploads/bosbrand%20gefaaldPRESS.webp" alt="Uitgebrande woning in de brandzone" style="display:block;width:100%;height:auto;aspect-ratio:1620/1079;object-fit:contain">
+          <figcaption style="font-size:16px;font-weight:600;line-height:1.45;color:#bab6b6;padding:12px 14px">De vlammen bereikten de bewoonde zone voor de evacuatie rond was.</figcaption>
+        </figure>
+        </sc-if>
+      </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{overModal}}" hint-placeholder-val="{{false}}">
+    <div style="position:fixed;inset:0;z-index:90;overflow-y:auto;background:#201e1d;display:flex;flex-direction:column;justify-content:center;padding:48px 56px;animation:eoFade .5s">
+      <div style="display:flex;align-items:center;gap:12px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#ff563c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;animation:eoFlame .6s infinite alternate">
+          <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+        </svg>
+        <div style="font-size:13px;font-weight:700;letter-spacing:.2em;color:#ff563c">MISSION TIME EXPIRED — BORDEAUX BEREIKT</div>
+      </div>
+      <div style="height:2px;background:#605d5d;margin:20px 0 28px"></div>
+      <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
+      <div style="flex:1 1 440px;min-width:0;max-width:820px">
+      <div style="font-size:64px;font-weight:800;line-height:.95;letter-spacing:-.03em">JULLIE ZIJN<br>TE LAAT</div>
+      <div style="font-size:19px;line-height:1.6;color:#bab6b6;max-width:54ch;margin-top:24px">De tijd is op. Het vuur heeft Bordeaux bereikt en de evacuatie komt te laat. Om de schade nog te beperken moet het rapport alsnog ingediend worden. Vanaf nu brandt er elke minuut een huis af.</div>
+
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;background:#444141;border:2px solid #444141;margin-top:32px;max-width:780px">
+        <div style="background:#201e1d;padding:22px 24px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.18em;color:#ff563c">SDIS 33 — BRANDWEER GIRONDE</div>
+          <div style="font-size:16px;line-height:1.6;color:#bab6b6;margin-top:12px">De vlammen zijn overgeslagen naar Bordeaux.</div>
+        </div>
+        <div style="background:#201e1d;padding:22px 24px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.18em;color:#ff563c">PRÉFECTURE DE LA GIRONDE</div>
+          <div style="font-size:16px;line-height:1.6;color:#bab6b6;margin-top:12px">Zonder rapport konden we geen evacuatiebevel onderbouwen. Stuur ons alsnog jullie analyse, dan kunnen we de schade beperken.</div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:36px;margin-top:28px">
+        <div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.16em;color:#7d7979">NOG IN TE VULLEN</div>
+          <div style="font-size:34px;font-weight:800;letter-spacing:-.02em;margin-top:4px">{{openCount}} / {{totalCount}}</div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.16em;color:#7d7979">VANAF NU</div>
+          <div style="font-size:34px;font-weight:800;letter-spacing:-.02em;margin-top:4px;color:#ff563c">1 HUIS / MIN</div>
+        </div>
+      </div>
+
+      <button onClick="{{closeOverModal}}" style="margin-top:32px;border:none;background:#ff563c;color:#201e1d;font-family:'Archivo',sans-serif;font-size:17px;font-weight:800;letter-spacing:.06em;padding:18px 28px;min-width:340px;text-align:left;cursor:pointer" style-hover="background:#ff9783">RAPPORT VERDER AANVULLEN</button>
+      </div><figure style="margin:0;background:#201e1d;border:2px solid #444141;flex:1 1 340px;min-width:0;max-width:560px">
+        <img src="uploads/bosbrand%20gefaaldPRESS.webp" alt="Uitgebrande woning in de brandzone" style="display:block;width:100%;height:auto;aspect-ratio:1620/1079;object-fit:contain">
+        <figcaption style="font-size:16px;font-weight:600;line-height:1.45;color:#bab6b6;padding:12px 14px">De brand bereikte de bewoonde zone voor de evacuatie startte.</figcaption>
+      </figure>
+
+      
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{urgent}}" hint-placeholder-val="{{false}}">
+    <div style="position:fixed;inset:0;z-index:70;pointer-events:none;box-shadow:inset 0 0 180px 60px #ff563c;animation:eoVignette 1.1s 10 forwards"></div>
+    <div style="position:fixed;left:0;right:0;bottom:0;z-index:71;pointer-events:none;background:#ff563c;color:#201e1d;font-size:14px;font-weight:800;letter-spacing:.2em;padding:10px 32px;animation:eoAlarmOut 1.1s 10 forwards">MINDER DAN 5 MINUTEN — HET VUUR NADERT DE DORPEN</div>
+  </sc-if>
+
+  <sc-if value="{{hasPenalty}}" hint-placeholder-val="{{false}}">
+    <div style="position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:80;display:flex;align-items:center;gap:16px;background:#ff563c;color:#201e1d;padding:14px 22px;animation:eoFade .2s">
+      <div style="font-size:22px;font-weight:800;letter-spacing:.02em">{{penaltyCost}}</div>
+      <div style="font-size:13px;font-weight:700;letter-spacing:.14em">{{penaltyLabel}}</div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{hint}}" hint-placeholder-val="{{false}}">
+    <div style="position:fixed;right:24px;bottom:24px;z-index:20;background:#2d2b2b;border:2px solid #ff563c;padding:18px 22px;max-width:340px;animation:eoFade .25s">
+      <div style="display:flex;align-items:center;gap:10px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#ff563c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px">
+          <path d="M10.268 21a2 2 0 0 0 3.464 0"></path>
+          <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path>
+        </svg>
+        <div style="font-size:12px;font-weight:700;letter-spacing:.14em;color:#ff563c">HULP VRAGEN</div>
+      </div>
+      <div style="font-size:24px;font-weight:800;line-height:1.3;color:#f8f4f4;margin-top:12px">Ring de bel drie keer.</div>
+      <div style="font-size:17px;line-height:1.45;color:#bab6b6;margin-top:8px">De spelleider hoort jullie en komt naar het lokaal.</div>
+    </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;minuten&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:45,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Spel&quot;},&quot;schaalKm&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Schaal van het beeld&quot;},&quot;schaalBalkPct&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:4.6,&quot;tsType&quot;:&quot;number&quot;,&quot;step&quot;:0.1,&quot;unit&quot;:&quot;%&quot;,&quot;section&quot;:&quot;Schaal van het beeld&quot;},&quot;zoneInstellen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Verbrande zone&quot;},&quot;juisteZone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;0.3148,0.2755 0.2633,0.2978 0.2691,0.3206 0.3020,0.3323 0.3243,0.2988 0.3381,0.3227 0.4007,0.3402 0.4310,0.3445 0.4613,0.2877 0.4448,0.2617 0.4676,0.2749 0.4878,0.2436 0.4814,0.2139 0.5021,0.1895 0.4782,0.1821 0.4421,0.2028 0.4655,0.2229 0.4565,0.2383 0.4172,0.2389 0.4156,0.2182 0.4315,0.2102 0.4421,0.1831 0.4337,0.1683 0.4490,0.1513 0.4437,0.1168 0.3572,0.1592 0.3222,0.2197 0.2983,0.2399 0.3163,0.2622&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Verbrande zone&quot;},&quot;bufferKm&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:2.5,&quot;tsType&quot;:&quot;number&quot;,&quot;step&quot;:0.5,&quot;section&quot;:&quot;Verbrande zone&quot;}}">
+const LEVELS = ['LAAG','GEMIDDELD','HOOG','EXTREEM'];
+const DIRS = ['N','NO','O','ZO','Z','ZW','W','NW'];
+const CODE = '30051975';
+
+const STEPS = [
+  {type:'q', part:'DEEL 1 \u2014 FIRE RISK', no:'RISICOFACTOR 1', key:'fuel',
+   q:'Hoeveel brandbare vegetatie is aanwezig in het gebied?',
+   sub:'Je hebt een lidar-instrument nodig: dat stuurt laserpulsen naar het bos en meet uit de terugkeertijd hoe hoog de boomkruinen zijn. Welke van de drie meet met laser?',
+   sats:[{n:'GRACE', why:'GRACE meet massa- en waterveranderingen, niet de structuur van vegetatie.'},
+         {n:'Sentinel-3', why:'Sentinel-3 meet temperatuur en kleur van het oppervlak, maar geen 3D-structuur.'},
+         {n:'GEDI', ok:true, why:'Juist. GEDI is een lidar-instrument aan boord van het ISS. Het stuurt laserpulsen naar het bos en meet uit de terugkeertijd hoe hoog de boomkruinen zijn en hoe dicht de vegetatie staat. Hoe hoger en dichter de vegetatie, hoe meer brandstof voor het vuur.'}],
+   fig:'GEDI \u2014 3D-VEGETATIESTRUCTUUR', out:'VEGETATION FUEL LOAD', at:'level'},
+  {type:'q', part:'DEEL 1 \u2014 FIRE RISK', no:'RISICOFACTOR 2', key:'lst',
+   q:'Hoe warm is het aardoppervlak in het gebied?',
+   sub:'Temperatuur van het oppervlak lees je af in thermisch infrarood, rond 10 tot 12 micrometer golflengte. Welke van de drie heeft zo een thermische infraroodsensor aan boord?',
+   sats:[{n:'Sentinel-1', why:'Sentinel-1 is een radarsatelliet: die meet ruwheid en vocht, geen temperatuur.'},
+         {n:'Sentinel-3', ok:true, why:'Juist. Sentinel-3 heeft een thermische infraroodsensor die de temperatuur van het aardoppervlak meet. Een heet, droog oppervlak droogt de vegetatie uit en verhoogt het brandrisico.'},
+         {n:'Sentinel-5P', why:'Sentinel-5P meet gassen in de atmosfeer, niet de temperatuur van het oppervlak.'}],
+   fig:'SENTINEL-3 \u2014 LANDOPPERVLAKTETEMPERATUUR', out:'LAND SURFACE TEMPERATURE', at:'level'},
+  {type:'q', part:'DEEL 1 \u2014 FIRE RISK', no:'RISICOFACTOR 3', key:'wind',
+   q:'Hoe snel kan de brand zich verspreiden?',
+   sub:'Wind leid je af uit de verplaatsing van wolken tussen twee beelden. Daarvoor heb je een satelliet nodig die stil boven Europa hangt (geostationair) en elk kwartier een nieuw beeld maakt.',
+   sats:[{n:'GEDI', why:'GEDI kijkt naar vegetatiestructuur en vliegt maar af en toe over. Te traag voor weer.'},
+         {n:'Meteosat', ok:true, why:'Juist. Meteosat hangt geostationair boven Europa en maakt elke 15 minuten een nieuw beeld. Uit de verplaatsing van de wolken tussen opeenvolgende beelden leid je windrichting en windsnelheid af.'},
+         {n:'Sentinel-1', why:'Sentinel-1 ziet het oppervlak, niet de ontwikkeling van wolken en wind.'}],
+   fig:'METEOSAT \u2014 WINDSNELHEID EN WOLKENBEWEGING', out:'WIND SPEED \u2013 SPREAD POTENTIAL', at:'level'},
+  {type:'q', part:'DEEL 1 \u2014 FIRE RISK', no:'RISICOFACTOR 4', key:'soil',
+   q:'Hoe droog is de bodem?',
+   sub:'Radar werkt met microgolven (C-band, enkele centimeters golflengte). Die gaan door wolken en rook heen en het signaal wordt sterker als de bodem vochtig is. Welke van de drie is een radarsatelliet?',
+   sats:[{n:'GRACE', why:'GRACE meet grote, trage massaveranderingen \u2014 te grof voor het bodemvocht van dit bosgebied.'},
+         {n:'Meteosat', why:'Meteosat kijkt naar de atmosfeer, niet naar vocht in de bodem.'},
+         {n:'Sentinel-1', ok:true, why:'Juist. Sentinel-1 is een radarsatelliet. De microgolven gaan door wolken en rook heen, en een vochtige bodem weerkaatst het radarsignaal sterker dan een droge bodem.'}],
+   fig:'SENTINEL-1 \u2014 RADAR, BODEMVOCHT', out:'SOIL MOISTURE', at:'level'},
+  {type:'summary', part:'DEEL 1 \u2014 FIRE RISK', key:'riskSum'},
+  {type:'q', part:'DEEL 2 \u2014 FIRE MONITORING', no:'VRAAG 1', key:'hotspot',
+   q:'Waar bevinden de actieve brandhaarden zich?',
+   sub:'Vuur zie je door zichtbaar licht (RGB) te combineren met nabij- en kortgolvig infrarood (NIR en SWIR): in die golflengten lichten vlammen en verse brandwonden fel op, terwijl gezonde vegetatie donker blijft.',
+   sats:[{n:'Sentinel-1', why:'Radar ziet veranderingen aan het oppervlak, maar detecteert geen actieve vuurhaarden.'},
+         {n:'Sentinel-2', ok:true, why:'Juist. Sentinel-2 meet in zichtbaar licht (RGB), nabij-infrarood en kortgolvig infrarood (SWIR). In het infrarood lichten actieve vuurhaarden fel op, ook door dunne rook heen.'},
+         {n:'GRACE', why:'GRACE meet massaveranderingen en heeft geen beeld van het oppervlak.'}],
+   note:'Klik alle cellen aan waarin je een actieve brandhaard ziet en bevestig daarna. Elke foute cel kost 10 seconden.',
+   fig:'SENTINEL-2 \u2014 OPTISCH + NABIJ-INFRAROOD', out:'ACTIVE FIRE DETECTION', at:'grid', correct:['C3','D2','E2','E3']},
+  {type:'q', part:'DEEL 2 \u2014 FIRE MONITORING', no:'VRAAG 2', key:'dir',
+   q:'In welke richting zal de brand zich de komende uren verspreiden?',
+   sub:'Je hebt beelden van hetzelfde gebied met enkele uren tussentijd nodig om de rookpluim te zien schuiven. Alleen een geostationaire satelliet kijkt zo vaak naar hetzelfde punt.',
+   sats:[{n:'Meteosat', ok:true, why:'Juist. Meteosat kijkt voortdurend naar hetzelfde gebied, dus je ziet de rookpluim van beeld tot beeld verschuiven. De richting van de pluim volgt de wind en toont waar het vuur naartoe gaat.'},
+         {n:'GEDI', why:'GEDI meet vegetatiehoogte en komt veel te zelden over dit gebied.'},
+         {n:'GRACE', why:'GRACE ziet geen rook of wind.'}],
+   note:'Kijk naar de richting waarin de rookpluim zich ontwikkelt en draai het kompas mee. Een foute richting kost 1:00.',
+   fig:'METEOSAT \u2014 ROOKPLUIM, OPEENVOLGENDE BEELDEN', out:'MAIN WIND DIRECTION', at:'compass', correctDir:'O'},
+  {type:'q', part:'DEEL 3 \u2014 DAMAGE ASSESSMENT', no:'VRAAG 1', key:'area',
+   q:'Wat is de totale verbrande oppervlakte?',
+   sub:'De grens van de brandzone (burn scar) teken je op een optisch beeld van na de brand: in nabij-infrarood is verbrand gebied donker en gezonde vegetatie fel. Je hebt een resolutie van ongeveer 10 meter nodig om de rand precies te volgen.',
+   sats:[{n:'GRACE', why:'GRACE heeft geen beeld van het oppervlak.'},
+         {n:'Sentinel-1', why:'Radar ziet de brandzone wel ruw, maar de grens van het verbrande gebied is veel scherper in optisch beeld.'},
+         {n:'Sentinel-2', ok:true, why:'Juist. Sentinel-2 heeft een resolutie van 10 meter. In dit valse-kleurenbeeld met nabij-infrarood kleurt gezonde vegetatie rood, omdat planten veel nabij-infrarood weerkaatsen. Verbrande vegetatie weerkaatst bijna niets en kleurt zwart: die zwarte zone is het verbrande oppervlak.'}],
+   fig:'SENTINEL-2 \u2014 BURN SCAR, NA DE BRAND', out:'BURNED AREA', at:'poly',
+   legend:{title:'LEGENDE \u2014 VALSE KLEUREN MET NABIJ-INFRAROOD', rows:[
+     {c:'#c41e1e', t:'Rood: gezonde vegetatie. Bladeren weerkaatsen veel nabij-infrarood, dat in dit beeld als rood wordt weergegeven.'},
+     {c:'#0b0b0b', t:'Zwart of donkerbruin: verbrand gebied. Verkoolde grond en as weerkaatsen bijna geen licht. Dit is de zone die jullie omtekenen.'},
+     {c:'#9aa3a8', t:'Grijs of blauwgrijs: bebouwing, wegen en kale grond.'}]}},
+  {type:'q', part:'DEEL 3 \u2014 DAMAGE ASSESSMENT', no:'VRAAG 2', key:'air',
+   q:'De brand heeft grote hoeveelheden rook en gassen geproduceerd.',
+   sub:'Gassen zoals NO2 absorberen ultraviolet en zichtbaar licht op hun eigen golflengten. Je hebt dus een spectrometer nodig die de lucht analyseert in plaats van een camera die het oppervlak fotografeert.',
+   sats:[{n:'Sentinel-2', why:'Sentinel-2 ziet het oppervlak, niet de samenstelling van de lucht.'},
+         {n:'Sentinel-3', why:'Sentinel-3 meet temperatuur en kleur, geen luchtvervuiling.'},
+         {n:'Sentinel-5P', ok:true, why:'Juist. Sentinel-5P draagt een spectrometer die per golflengte meet hoeveel licht gassen zoals NO\u2082 en koolmonoxide absorberen. Zo breng je de rookpluim en de luchtvervuiling in kaart.'}],
+   fig:'SENTINEL-5P \u2014 NO\u2082 EN AEROSOLEN', out:'AIR POLLUTION RISK', at:'level',
+   legend:{title:'HOE LEES JE DIT BEELD? \u2014 AEROSOL OPTICAL DEPTH (AOD)', rows:[
+     {t:'Aerosolen zijn zwevende deeltjes in de lucht: rook, roet, as en stof. De AOD geeft aan hoeveel zonlicht die deeltjes tegenhouden op weg naar de grond.'},
+     {t:'Hoe hoger de waarde, hoe meer rook. Onder 0,1 is de lucht helder. Tussen 0,1 en 0,5 is ze wazig. Tussen 0,5 en 1 is ze rokerig. Boven 1 hangt er een dikke rookpluim waar de zon nauwelijks door komt.'},
+     {t:'Kijk op het beeld waar de hoogste waarden liggen en of die boven bewoond gebied hangen. Dat bepaalt het risico voor de luchtkwaliteit.'}]}},
+  {type:'report', part:'FINAL FIRE RESPONSE REPORT', key:'report'},
+];
+
+const COLS = ['A','B','C','D','E','F','G','H'];
+
+function fmt(sec) {
+  return String(Math.floor(sec/60)).padStart(2,'0') + ':' + String(sec%60).padStart(2,'0');
+}
+
+class Component extends DCLogic {
+  state = {phase:'lock', code:'', lockMsg:'', i:0, answers:{}, satMsg:'', secondsLeft:null,
+           hint:false, lockHint:false, subHints:{}, penalty:null, zoom:false,
+           team:'', saved:false, board:[], justAdded:null,
+           overtime:false, overModal:false, overSeconds:0};
+
+  componentDidMount() {
+    let saved = null;
+    try { saved = JSON.parse(localStorage.getItem('eo-state-v1') || 'null'); } catch (e) {}
+    if (saved && typeof saved.secondsLeft === 'number' && (saved.secondsLeft > 0 || saved.overtime)) this.setState(saved);
+    else this.setState({secondsLeft: (this.props.minuten ?? 45)*60});
+    this._t = setInterval(() => this.setState(s => {
+      if (s.phase !== 'lock' && s.phase !== 'task') return null;
+      if (s.overtime) return {overSeconds: (s.overSeconds||0) + 1};
+      const n = Math.max(0, (s.secondsLeft||0) - 1);
+      return n === 0 ? {secondsLeft: 0, overtime: true, overModal: true, overSeconds: 0, zoom: false, penalty: null} : {secondsLeft: n};
+    }), 1000);
+    try {
+      const board = JSON.parse(localStorage.getItem('eo-board-v1') || '[]');
+      if (Array.isArray(board) && board.length) this.setState({board});
+    } catch (e) {}
+    try { const rz = localStorage.getItem('eo-refzone-v1'); if (rz) this.setState({refLocal: rz}); } catch (e) {}
+    this._esc = (e) => { if (e.key === 'Escape') this.setState({zoom:false}); };
+    window.addEventListener('keydown', this._esc);
+  }
+  componentWillUnmount(){ clearInterval(this._t); clearTimeout(this._pt); window.removeEventListener('keydown', this._esc); }
+
+  componentDidUpdate() {
+    const s = this.state;
+    if (s.secondsLeft == null) return;
+    try {
+      localStorage.setItem('eo-state-v1', JSON.stringify({
+        phase: s.phase, i: s.i, answers: s.answers, secondsLeft: s.secondsLeft,
+        subHints: s.subHints, lockHint: s.lockHint,
+        overtime: s.overtime, overSeconds: s.overSeconds, overModal: s.overModal, penaltyTotal: s.penaltyTotal,
+      }));
+    } catch (e) {}
+  }
+
+  penalize = (secs, label) => {
+    this.setState(s => ({penaltyTotal: (s.penaltyTotal || 0) + secs}));
+    this.setState(s => {
+      if (s.overtime) return {overSeconds: (s.overSeconds||0) + secs, penalty:{label, cost: '+' + fmt(secs)}};
+      const n = Math.max(0, (s.secondsLeft||0) - secs);
+      if (n === 0 && (s.phase === 'lock' || s.phase === 'task')) return {secondsLeft: 0, overtime: true, overModal: true, overSeconds: 0, zoom: false, penalty: null};
+      return {secondsLeft: n, penalty:{label, cost: '\u2212' + fmt(secs)}};
+    });
+    clearTimeout(this._pt);
+    this._pt = setTimeout(() => this.setState({penalty:null}), 3200);
+  };
+
+  press = (d) => {
+    if (this.state.code.length >= 8) return;
+    this.setState(s => ({code: s.code + d, lockMsg:''}));
+  };
+  submitCode = () => {
+    const code = this.state.code;
+    if (code.length < 8) { this.setState({lockMsg:'CODE ONVOLLEDIG'}); return; }
+    if (code === CODE) {
+      this.setState({lockMsg:'ACCESS GRANTED \u2014 CONTROL ROOM UNLOCKED'});
+      setTimeout(() => this.setState({phase:'brief'}), 1500);
+    } else {
+      this.setState({lockMsg:'ACCESS DENIED'});
+      setTimeout(() => this.setState({code:'', lockMsg:''}), 1100);
+    }
+  };
+  clr = () => this.setState({code:'', lockMsg:''});
+  del = () => this.setState(s => ({code: s.code.slice(0,-1), lockMsg:''}));
+  askLockHint = () => { if (this.state.lockHint) return; this.setState({lockHint:true}); this.penalize(120, 'HINT TOEGANGSCODE'); };
+  askSubHint = (key) => {
+    if (this.state.subHints[key]) return;
+    this.setState(s => ({subHints: {...s.subHints, [key]: true}}));
+    this.penalize(30, 'HINT SATELLIETKEUZE');
+  };
+  start = () => this.setState({phase:'task', i:0});
+
+  pickSat = (step, sat) => {
+    const cur = this.state.answers[step.key] || {};
+    if (sat.ok) {
+      const a = {...this.state.answers};
+      a[step.key] = {...cur, sat: sat.n};
+      this.setState({answers:a, satMsg:''});
+    } else {
+      this.setState({satMsg: sat.why});
+      if (!cur.sat) this.penalize(60, 'FOUTE SATELLIET');
+    }
+  };
+  setVal = (key, val) => {
+    const a = {...this.state.answers};
+    a[key] = {...(a[key]||{}), val};
+    this.setState({answers:a});
+  };
+  toggleCell = (key, id) => {
+    const a = {...this.state.answers}, cur = a[key] || {};
+    if (cur.confirmed) return;
+    const cells = cur.cells || [];
+    a[key] = {...cur, cells: cells.indexOf(id) >= 0 ? cells.filter(c => c !== id) : cells.concat([id])};
+    this.setState({answers:a});
+  };
+  confirmCells = (step) => {
+    const a = {...this.state.answers}, cur = a[step.key] || {};
+    const cells = cur.cells || [];
+    if (!cells.length) return;
+    const wrong = cells.filter(c => (step.correct||[]).indexOf(c) < 0);
+    a[step.key] = {...cur, confirmed: true, val: cells.slice().sort().join(', ')};
+    this.setState({answers:a});
+    if (wrong.length) this.penalize(10 * wrong.length, wrong.length + ' FOUTE CEL(LEN)');
+  };
+  figPoint = (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    return {u: (e.clientX - r.left)/r.width, v: (e.clientY - r.top)/r.width, h: r.height/r.width};
+  };
+  addPoint = (e) => {
+    const step = STEPS[this.state.i];
+    const cur = this.state.answers[step.key] || {};
+    const p = this.figPoint(e);
+    const a = {...this.state.answers};
+    if (cur.closed) return;
+    a[step.key] = {...cur, points: (cur.points||[]).concat([{u:p.u, v:p.v}]), figH: p.h};
+    this.setState({answers:a});
+  };
+  closePoly = () => {
+    const step = STEPS[this.state.i];
+    const a = {...this.state.answers}, cur = a[step.key] || {};
+    const pts = cur.points || [];
+    if (pts.length < 3) return;
+    let sum = 0;
+    for (let i = 0; i < pts.length; i++) {
+      const p = pts[i], q = pts[(i+1)%pts.length];
+      sum += p.u*q.v - q.u*p.v;
+    }
+    const areaWu = Math.abs(sum/2);
+    const kmPerWu = (this.props.schaalKm ?? 5) / ((this.props.schaalBalkPct ?? 20)/100);
+    const km2 = areaWu * kmPerWu * kmPerWu;
+    a[step.key] = {...cur, closed: true, val: Math.round(km2*100), km2: Math.round(km2*10)/10};
+    if (this.props.zoneInstellen) {
+      const code = pts.map(p => p.u.toFixed(4) + ',' + p.v.toFixed(4)).join(' ');
+      try { localStorage.setItem('eo-refzone-v1', code); } catch (e) {}
+      this.setState({answers:a, refLocal: code, copied: false});
+      return;
+    }
+    this.setState({answers:a});
+  };
+  parseZone = (str) => (str || '').trim().split(/\s+/).map(t => t.split(',').map(Number)).filter(x => x.length === 2 && !isNaN(x[0]) && !isNaN(x[1])).map(([u,v]) => ({u, v}));
+  refZone = () => {
+    const fromProp = this.parseZone(this.props.juisteZone);
+    if (fromProp.length >= 3) return fromProp;
+    const fromLocal = this.parseZone(this.state.refLocal);
+    return fromLocal.length >= 3 ? fromLocal : [];
+  };
+  bufferU = () => {
+    const km = this.props.schaalKm ?? 5, pct = this.props.schaalBalkPct ?? 4.6;
+    const widthKm = km / (pct / 100);
+    return (this.props.bufferKm ?? 5) / widthKm;
+  };
+  zoneScore = (P, A, buf) => {
+    const inside = (Q, x, y) => { let c = false; for (let i = 0, j = Q.length-1; i < Q.length; j = i++) { const a = Q[i], b = Q[j]; if (((a.v > y) !== (b.v > y)) && (x < (b.u - a.u) * (y - a.v) / (b.v - a.v) + a.u)) c = !c; } return c; };
+    const dist = (Q, x, y) => { let d = Infinity; for (let i = 0, j = Q.length-1; i < Q.length; j = i++) { const a = Q[i], b = Q[j]; const dx = b.u - a.u, dy = b.v - a.v; const L = dx*dx + dy*dy; let t = L ? ((x - a.u)*dx + (y - a.v)*dy) / L : 0; t = Math.max(0, Math.min(1, t)); const ex = a.u + t*dx - x, ey = a.v + t*dy - y; d = Math.min(d, Math.sqrt(ex*ex + ey*ey)); } return d; };
+    const all = P.concat(A);
+    const x0 = Math.min(...all.map(p => p.u)) - buf, x1 = Math.max(...all.map(p => p.u)) + buf;
+    const y0 = Math.min(...all.map(p => p.v)) - buf, y1 = Math.max(...all.map(p => p.v)) + buf;
+    const N = 140; let a = 0, pa = 0, p = 0, pb = 0;
+    for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) {
+      const x = x0 + (i + .5) * (x1 - x0) / N, y = y0 + (j + .5) * (y1 - y0) / N;
+      const inA = inside(A, x, y), inP = inside(P, x, y);
+      if (inA) a++;
+      if (inP) { p++; if (inA) pa++; if (inA || dist(A, x, y) <= buf) pb++; }
+    }
+    if (!a || !p) return 0;
+    return (pa / a) * (pb / p);
+  };
+  overlap = (A, B) => {
+    const inside = (P, x, y) => { let c = false; for (let i = 0, j = P.length-1; i < P.length; j = i++) { const a = P[i], b = P[j]; if (((a.v > y) !== (b.v > y)) && (x < (b.u - a.u) * (y - a.v) / (b.v - a.v) + a.u)) c = !c; } return c; };
+    const all = A.concat(B);
+    const x0 = Math.min(...all.map(p => p.u)), x1 = Math.max(...all.map(p => p.u));
+    const y0 = Math.min(...all.map(p => p.v)), y1 = Math.max(...all.map(p => p.v));
+    const N = 140; let inter = 0, uni = 0;
+    for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) {
+      const x = x0 + (i + .5) * (x1 - x0) / N, y = y0 + (j + .5) * (y1 - y0) / N;
+      const a = inside(A, x, y), b = inside(B, x, y);
+      if (a && b) inter++; if (a || b) uni++;
+    }
+    return uni ? inter / uni : 0;
+  };
+  copyRef = () => {
+    const code = this.state.refLocal || '';
+    try { navigator.clipboard.writeText(code); } catch (e) {}
+    this.setState({copied: true});
+  };
+  undoPoint = () => {
+    const step = STEPS[this.state.i];
+    const a = {...this.state.answers}, cur = a[step.key] || {};
+    a[step.key] = {...cur, points: (cur.points||[]).slice(0,-1), closed:false, val: undefined, km2: undefined};
+    this.setState({answers:a});
+  };
+  clearPoly = () => {
+    const step = STEPS[this.state.i];
+    const a = {...this.state.answers};
+    a[step.key] = {...(a[step.key]||{}), points: [], closed: false, val: undefined, km2: undefined};
+    this.setState({answers:a});
+  };
+  resetScale = () => {
+    const step = STEPS[this.state.i];
+    const a = {...this.state.answers};
+    a[step.key] = {...(a[step.key]||{}), scale: [], scaleDone: false, points: [], closed: false, val: undefined, km2: undefined};
+    this.setState({answers:a});
+  };
+  toggleZoom = () => this.setState(s => ({zoom: !s.zoom}));
+  toggleMap = () => this.setState(s => ({showMap: !s.showMap}));
+  flyover = () => {
+    if (this._fly) return this._fly;
+    const e = React.createElement, N = 34, D = 5;
+    const FLAME = 'M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z';
+    const PLANE = 'M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z';
+    const trees = [];
+    for (let i = 0; i < N; i++) {
+      const x = (i + .5) / N;
+      const t = (D * (x + .14) / 1.26 + .5).toFixed(2) + 's';
+      const fill = {animation: 'eoSave .5s ' + t + ' forwards'};
+      trees.push(e('div', {key: i, style: {position: 'relative', width: 18, height: 30, flex: '0 0 auto'}},
+        e('svg', {viewBox: '0 0 10 16', style: {width: 18, height: 30, display: 'block'}},
+          e('polygon', {points: '5,0 9,7 1,7', fill: '#ff563c', style: fill}),
+          e('polygon', {points: '5,4 10,12 0,12', fill: '#ff563c', style: fill}),
+          e('rect', {x: 4, y: 12, width: 2, height: 4, fill: '#ff563c', style: fill})),
+        e('div', {style: {position: 'absolute', left: 1, top: -20, width: 16, height: 16, transformOrigin: '50% 100%', animation: 'eoOut .4s ' + t + ' forwards'}},
+          e('svg', {viewBox: '0 0 24 24', fill: 'none', stroke: '#ff563c', strokeWidth: 2.5, strokeLinecap: 'round', strokeLinejoin: 'round', style: {width: 16, height: 16, display: 'block', transformOrigin: '50% 100%', animation: 'eoFlick .5s infinite alternate'}},
+            e('path', {d: FLAME})))));
+    }
+    const plane = e('div', {style: {position: 'absolute', top: 0, left: '-14%', width: 64, animation: 'eoPlane ' + D + 's .5s linear forwards'}},
+      e('svg', {viewBox: '0 0 24 24', fill: '#f8f4f4', stroke: '#f8f4f4', strokeWidth: 1, strokeLinejoin: 'round', style: {width: 52, height: 52, display: 'block', animation: 'eoBob 1.2s ease-in-out infinite'}},
+        e('path', {d: PLANE})),
+      e('div', {style: {position: 'absolute', top: 40, left: -26, width: 44, height: 46, transformOrigin: '50% 0', background: 'linear-gradient(#79E6FB, rgba(121,230,251,0))', animation: 'eoDrop .5s linear infinite'}}));
+    this._fly = e('div', {style: {position: 'relative', height: 132, overflow: 'hidden', borderBottom: '2px solid #605d5d'}},
+      plane,
+      e('div', {style: {position: 'absolute', left: 0, right: 0, bottom: 0, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', paddingBottom: 6}}, trees));
+    return this._fly;
+  };
+  commitDir = (dir) => {
+    const step = STEPS[this.state.i];
+    const cur = this.state.answers[step.key] || {};
+    if (cur.val === step.correctDir) return;
+    if (dir === step.correctDir) { this.setVal(step.key, dir); this.setState({dirPreview: dir, dirMsg:''}); }
+    else { this.setState({dirPreview: dir, dirMsg:'Deze richting klopt niet met de rookpluim. Kijk opnieuw.'}); this.penalize(60, 'FOUTE WINDRICHTING'); }
+  };
+  dialAngle = (e) => {
+    if (!this._dial) return null;
+    const r = this._dial.getBoundingClientRect();
+    const dx = e.clientX - (r.left + r.width/2), dy = e.clientY - (r.top + r.height/2);
+    if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return null;
+    let a = Math.atan2(dx, -dy) * 180 / Math.PI;
+    if (a < 0) a += 360;
+    return DIRS[Math.round(a/45) % 8];
+  };
+  dialDown = (e) => {
+    this._dial = e.currentTarget; this._drag = true;
+    if (e.currentTarget.setPointerCapture && e.pointerId != null) e.currentTarget.setPointerCapture(e.pointerId);
+    const d = this.dialAngle(e); if (d) this.setState({dirPreview: d});
+  };
+  dialMove = (e) => { if (!this._drag) return; const d = this.dialAngle(e); if (d) this.setState({dirPreview: d}); };
+  dialUp = (e) => { if (!this._drag) return; this._drag = false; const d = this.dialAngle(e) || this.state.dirPreview; if (d) this.commitDir(d); };
+
+  next = () => this.setState(s => ({i: Math.min(STEPS.length-1, s.i+1), satMsg:''}));
+  back = () => this.setState(s => (s.i === 0 ? {phase:'brief'} : {i: s.i-1, satMsg:''}));
+  jump = (key) => this.setState({i: STEPS.findIndex(x => x.key === key), satMsg:''});
+  transmit = () => this.setState({phase:'done'});
+  restart = () => { try { localStorage.removeItem('eo-state-v1'); } catch (e) {} this.setState({phase:'lock', code:'', lockMsg:'', i:0, answers:{}, satMsg:'', hint:false, lockHint:false, subHints:{}, penalty:null, zoom:false, dirPreview:null, dirMsg:'', team:'', saved:false, justAdded:null, overtime:false, overModal:false, overSeconds:0, penaltyTotal:0, secondsLeft:(this.props.minuten ?? 45)*60}); this._fly = null; };
+  setTeam = (e) => this.setState({team: e.target.value});
+  teamKey = (e) => { if (e.key === 'Enter') this.addToBoard(); };
+  addToBoard = () => {
+    const name = (this.state.team || '').trim();
+    if (!name) return;
+    const over = !!this.state.overtime;
+    const secs = over ? -(this.state.overSeconds || 0) : (this.state.secondsLeft || 0);
+    const entry = {name, secs, over, id: Date.now()};
+    let board = [];
+    try { board = JSON.parse(localStorage.getItem('eo-board-v1') || '[]'); } catch (e) {}
+    board.push(entry);
+    board.sort((a, b) => b.secs - a.secs);
+    try { localStorage.setItem('eo-board-v1', JSON.stringify(board)); } catch (e) {}
+    this.setState({board, saved: true, justAdded: entry.id});
+  };
+  closeOverModal = () => this.setState({overModal: false});
+  toggleHint = () => { this.setState({hint:true}); setTimeout(() => this.setState({hint:false}), 5000); };
+
+  renderVals() {
+    const s = this.state, A = s.answers;
+    const step = STEPS[s.i] || STEPS[0];
+    const cur = A[step.key] || {};
+    const sec = s.secondsLeft == null ? (this.props.minuten ?? 45)*60 : s.secondsLeft;
+    const timer = s.overtime ? '+' + fmt(s.overSeconds||0) : fmt(sec);
+
+    const codeSlots = [0,1,2,3,4,5,6,7].map(i => ({
+      display: s.code.length > i ? s.code[i] : '',
+      gapAfter: s.lockHint && (i===1||i===3) ? '18px' : '6px',
+      border: s.lockMsg === 'ACCESS DENIED' ? '#ff563c' : s.code.length > i ? '#9b9797' : '#444141',
+      color: '#f8f4f4',
+    }));
+    const dateLabels = [{w:'116px', t:'DAG'},{w:'116px', t:'MAAND'},{w:'208px', t:'JAAR'}];
+    const keys = ['1','2','3','4','5','6','7','8','9','ENTER','0','\u2190'].map(label => ({
+      label,
+      onClick: label==='ENTER' ? this.submitCode : label==='\u2190' ? this.del : (() => this.press(label)),
+      bg: label==='ENTER' ? '#ff563c' : 'transparent',
+      color: label==='ENTER' ? '#201e1d' : '#f8f4f4',
+      border: label==='ENTER' ? '#ff563c' : '#605d5d',
+      align: 'center', size: label==='ENTER' ? '15px' : '19px',
+    }));
+
+    const totalMin = this.props.minuten ?? 45;
+    const minsLeft = Math.ceil(sec/60);
+    const trees = [];
+    const burnIdx = totalMin - minsLeft;
+    for (let i = 0; i < totalMin; i++) {
+      const burning = i === burnIdx;
+      const burnt = i < burnIdx;
+      trees.push({
+        fill: burnt ? '#3a3737' : burning ? '#ff563c' : '#41CD03',
+        flame: burning ? 'block' : 'none',
+      });
+    }
+
+    const satChosen = !!cur.sat;
+    const satOptions = (step.sats||[]).map(sat => {
+      const on = cur.sat === sat.n;
+      return {label: sat.n, onClick: () => this.pickSat(step, sat),
+        bg: on ? '#41CD03' : 'transparent', color: on ? '#201e1d' : '#f8f4f4',
+        border: on ? '#41CD03' : '#605d5d', check: on ? 'block' : 'none'};
+    });
+
+    const levelOptions = LEVELS.map(l => {
+      const on = cur.val === l;
+      return {label:l, onClick: () => this.setVal(step.key, l),
+        bg: on ? '#ff563c' : 'transparent', color: on ? '#201e1d' : '#f8f4f4', border: on ? '#ff563c' : '#605d5d'};
+    });
+
+    const chosenCells = cur.cells || [];
+    const gridCells = [];
+    for (let r=1; r<=5; r++) for (let c=0; c<8; c++) {
+      const id = COLS[c]+r, on = chosenCells.indexOf(id) >= 0;
+      const hit = cur.confirmed && (step.correct||[]).indexOf(id) >= 0;
+      gridCells.push({label:id, onClick: () => this.toggleCell(step.key, id),
+        bg: on ? 'rgba(255,86,60,.55)' : 'transparent',
+        color: on ? '#201e1d' : 'rgba(248,244,244,.5)',
+        border: hit ? '#f8f4f4' : on ? '#ff563c' : 'rgba(248,244,244,.22)'});
+    }
+    const cellsConfirmed = !!cur.confirmed;
+    const cellsPicked = chosenCells.length > 0;
+
+    const figH = cur.figH || 0.625;
+    const toXY = (p) => (p.u*100).toFixed(2) + ',' + ((p.v/figH)*100).toFixed(2);
+    const pts = cur.points || [];
+    const polyPoints = pts.map(toXY).join(' ');
+    const polyDots = pts.map(p => ({cx: (p.u*100).toFixed(2), cy: ((p.v/figH)*100).toFixed(2)}));
+    const polyClosed = !!cur.closed;
+    const polyCanClose = pts.length >= 3 && !cur.closed;
+    const polyHasPoints = pts.length > 0;
+    const urgent = sec <= 300 && sec > 0 && (s.phase === 'lock' || s.phase === 'task');
+
+    const shownDir = cur.val || s.dirPreview;
+    const dirOptions = DIRS.map((d,k) => {
+      const on = shownDir === d, ok = cur.val === d, ang = k*45;
+      return {label:d, onClick: () => this.commitDir(d),
+        bg: ok ? '#ff563c' : on ? '#7c1405' : 'transparent',
+        color: ok ? '#201e1d' : '#f8f4f4', border: on ? '#ff563c' : '#605d5d',
+        pos: 'translate(-50%,-50%) rotate(' + ang + 'deg) translateY(-78px) rotate(' + (-ang) + 'deg)'};
+    });
+    const dirIndex = DIRS.indexOf(shownDir);
+    const needleRot = 'translate(-50%,-100%) rotate(' + (dirIndex < 0 ? 0 : dirIndex*45) + 'deg)';
+
+    const answered = step.type !== 'q' ? true : (satChosen && cur.val != null && cur.val !== '');
+    const rows = [
+      {key:'fuel', label:'VEGETATION FUEL LOAD'},
+      {key:'lst', label:'LAND SURFACE TEMPERATURE'},
+      {key:'wind', label:'WIND SPEED \u2013 SPREAD POTENTIAL'},
+      {key:'soil', label:'SOIL MOISTURE'},
+    ].map(r => ({...r, value: (A[r.key]||{}).val || '\u2014'}));
+
+    const riskScore = ['fuel','lst','wind','soil'].reduce((t,k) => {
+      const v = (A[k]||{}).val;
+      if (k === 'soil') return t + (v==='LAAG'?3:v==='GEMIDDELD'?2:v==='HOOG'?1:v==='EXTREEM'?0:0);
+      return t + Math.max(0, LEVELS.indexOf(v));
+    }, 0);
+    const overallRisk = riskScore >= 10 ? 'EXTREEM' : riskScore >= 7 ? 'HOOG' : riskScore >= 4 ? 'GEMIDDELD' : 'LAAG';
+
+    const row = (key, label, value) => ({label, value: value || '\u2014', onClick: () => this.jump(key)});
+    const reportGroups = [
+      {title:'FIRE RISK', hasTotal: true, total: overallRisk, totalLabel:'RISK CONTRIBUTION', rows:[
+        row('fuel','VEGETATION FUEL LOAD',(A.fuel||{}).val),
+        row('lst','LAND SURFACE TEMPERATURE',(A.lst||{}).val),
+        row('wind','WIND SPEED \u2013 SPREAD POTENTIAL',(A.wind||{}).val),
+        row('soil','SOIL MOISTURE',(A.soil||{}).val),
+      ]},
+      {title:'FIRE MONITORING', hasTotal: false, rows:[
+        row('hotspot','BRANDHAARD \u2014 RASTERCEL',(A.hotspot||{}).val),
+        row('dir','MAIN SPREAD DIRECTION',(A.dir||{}).val),
+      ]},
+      {title:'DAMAGE ASSESSMENT', hasTotal: false, rows:[
+        row('area','BURNED AREA',(A.area||{}).val ? A.area.val + ' ha' : ''),
+        row('air','AIR POLLUTION RISK',(A.air||{}).val),
+      ]},
+    ];
+
+    const figSlots = STEPS.filter(x => x.type === 'q').map(x => ({
+      id: 'eo-' + x.key, display: x.key === step.key ? 'block' : 'none',
+      placeholder: x.fig,
+    }));
+
+    const rail = STEPS.filter(x => x.type === 'q').map((x,k) => {
+      const done = !!((A[x.key]||{}).val);
+      const active = x.key === step.key;
+      return {bg: active ? '#ff563c' : done ? '#9b9797' : '#444141'};
+    });
+
+    return {
+      isLock: s.phase==='lock', isBrief: s.phase==='brief', isTask: s.phase==='task', isDone: s.phase==='done',
+      overtime: !!s.overtime, notOvertime: !s.overtime, overModal: !!s.overModal,
+      closeOverModal: this.closeOverModal,
+      houses: (() => {
+        if (!s.overtime) return [];
+        const burnt = Math.floor((s.overSeconds||0)/60);
+        const out = [];
+        for (let i = 0; i < burnt; i++) out.push({fill:'#ff563c', anim:'none'});
+        out.push({fill:'#f8f4f4', anim:'eoHouseBurn .55s infinite'});
+        return out;
+      })(),
+      doneCount: ['fuel','lst','wind','soil','hotspot','dir','area','air'].filter(k => (A[k]||{}).val != null && (A[k]||{}).val !== '').length,
+      totalCount: 8,
+      codeSlots, keys, dateLabels, lockMsg: s.lockMsg,
+      lockHint: s.lockHint, noLockHint: !s.lockHint, askLockHint: this.askLockHint, submitCode: this.submitCode,
+      hasPenalty: !!s.penalty, penaltyLabel: s.penalty ? s.penalty.label : '', penaltyCost: s.penalty ? s.penalty.cost : '',
+      startTime: fmt((this.props.minuten ?? 45)*60),
+      lockMsgColor: s.lockMsg === 'ACCESS DENIED' ? '#ff563c' : s.lockMsg.indexOf('ACCESS GRANTED') === 0 ? '#00FF27' : '#f8f4f4',
+      lockMsgSize: s.lockMsg.indexOf('ACCESS GRANTED') === 0 ? '22px' : '13px',
+      lockShake: s.lockMsg === 'ACCESS DENIED' ? 'eoShake .35s' : 'none',
+      partsOverview: [
+        {tag:'DEEL 1', title:'FIRE RISK', count:'4 risicofactoren'},
+        {tag:'DEEL 2', title:'FIRE MONITORING', count:'2 vragen'},
+        {tag:'DEEL 3', title:'DAMAGE ASSESSMENT', count:'2 vragen'},
+      ],
+      start: this.start, timer, rail, hint: s.hint, toggleHint: this.toggleHint,
+      isQ: step.type==='q', isSummary: step.type==='summary', isReport: step.type==='report',
+      partTitle: step.part, stepNo: step.no || '', question: step.q || '',
+      sub: step.sub || '', subShown: !!s.subHints[step.key], subHidden: !s.subHints[step.key],
+      askSubHint: () => this.askSubHint(step.key),
+      hasNote: !!step.note, note: step.note || '',
+      satOptions, satChosen, satMsg: s.satMsg, hasSatMsg: !!s.satMsg,
+      okMsg: ((step.sats||[]).find(x => x.ok && x.n === cur.sat) || {}).why || '',
+      hasOkMsg: !!((step.sats||[]).find(x => x.ok && x.n === cur.sat) || {}).why,
+      figCaption: step.fig || '', outLabel: step.out || '',
+      isLevel: step.at==='level', isGrid: step.at==='grid', isCompass: step.at==='compass', isPoly: step.at==='poly',
+      levelOptions, gridCells, dirOptions, needleRot,
+      cellsConfirmed, cellsPicked, notConfirmed: !cellsConfirmed,
+      confirmCells: () => this.confirmCells(step),
+      polyPoints, polyDots, polyClosed, polyCanClose, polyOpen: !polyClosed,
+      ...(() => {
+        const ref = this.refZone();
+        const setup = !!this.props.zoneInstellen;
+        const refPoints = setup ? ref.map(toXY).join(' ') : '';
+        const buf = this.bufferU();
+        const bufView = '0 0 100 ' + (figH*100).toFixed(2);
+        const bufPoints = setup ? ref.map(p => (p.u*100).toFixed(2) + ',' + (p.v*100).toFixed(2)).join(' ') : '';
+        const bufStroke = (buf * 200).toFixed(2);
+        let hasScore = false, scorePct = 0, scoreText = '', scoreColor = '#79E6FB';
+        if (!setup && cur.closed && ref.length >= 3 && pts.length >= 3) {
+          hasScore = true;
+          scorePct = Math.round(this.zoneScore(pts, ref, buf) * 100);
+          if (scorePct >= 75) { scoreText = 'Goed afgebakend. Jullie polygoon omvat de verbrande zone en blijft binnen de marge.'; scoreColor = '#41CD03'; }
+          else if (scorePct >= 50) { scoreText = 'Bijna. Controleer de randen: volg de grens tussen zwart (verbrand) en rood (gezonde vegetatie).'; scoreColor = '#79E6FB'; }
+          else { scoreText = 'Ver naast de zone. Begin opnieuw en volg de zwarte vlek op het beeld.'; scoreColor = '#ff563c'; }
+        }
+        return {refPoints, bufView, bufPoints, bufStroke, setupMode: setup, hasScore, scorePct, scoreText, scoreColor,
+          hasRefCode: setup && !!s.refLocal, refCode: s.refLocal || '',
+          copyRef: this.copyRef, copyLabel: s.copied ? 'GEKOPIEERD' : 'KOPIEER CODE'};
+      })(),
+      polyHasPoints, scaleKm: this.props.schaalKm ?? 5,
+      scaleBarW: (this.props.schaalBalkPct ?? 4.6) + '%',
+      urgent, timerColor: (urgent || s.overtime) ? '#ff563c' : '#f8f4f4',
+      timerAnim: (urgent || s.overtime) ? 'eoAlarm 1s infinite' : 'none',
+      barAnim: (urgent || s.overtime) ? 'eoBar 1.1s infinite' : 'none',
+      addPoint: this.addPoint, closePoly: this.closePoly, clearPoly: this.clearPoly,
+      undoPoint: this.undoPoint,
+      polyArea: cur.val == null ? '\u2014' : cur.val,
+      polyKm2: cur.km2 == null ? '\u2014' : cur.km2,
+      trees, minsLeft,
+      hasDirMsg: !!s.dirMsg, dirMsg: s.dirMsg || '',
+      zoom: s.zoom, toggleZoom: this.toggleZoom,
+      figStyle: s.zoom
+        ? 'position:fixed;left:16px;top:16px;right:16px;bottom:16px;z-index:60;border:2px solid #605d5d;background:#201e1d'
+        : 'position:relative;width:min(100%, calc((100vh - 300px) * 1.6));aspect-ratio:16/10;border:2px solid #444141;background:#2d2b2b',
+      zoomLabel: s.zoom ? 'SLUITEN' : 'VOLLEDIG SCHERM',
+      showMap: !!s.showMap, toggleMap: this.toggleMap,
+      hasLegend: !!step.legend, legendTitle: (step.legend||{}).title || '',
+      legendRows: ((step.legend||{}).rows || []).map(r => ({text: r.t, sw: r.c || 'transparent', swDisplay: r.c ? 'block' : 'none'})),
+      currentValue: cur.val == null ? '\u2014' : String(cur.val),
+      hasValue: cur.val != null && cur.val !== '',
+      canNext: answered && step.type !== 'report',
+      nextStyle: answered ? 'background:#ff563c;color:#201e1d;cursor:pointer' : 'background:#2d2b2b;color:#605d5d;cursor:not-allowed',
+      next: this.next, back: this.back, summaryRows: rows, overallRisk,
+      reportGroups, figSlots, dialDown: this.dialDown, dialMove: this.dialMove, dialUp: this.dialUp,
+      transmit: this.transmit, restart: this.restart,
+      finalTime: s.overtime ? '+' + fmt(s.overSeconds||0) : fmt(sec),
+      finalLabel: s.overtime ? 'TIJD TE LAAT' : 'RESTERENDE TIJD',
+      finalVerdict: s.overtime ? 'DAMAGE LIMITED' : 'SUCCESS',
+      flyover: s.phase === 'done' && !s.overtime ? this.flyover() : null,
+      ...(() => {
+        const pen = s.penaltyTotal || 0;
+        const ref = this.refZone();
+        const ap = (A.area || {}).points || [];
+        const zone = (ref.length >= 3 && ap.length >= 3) ? this.zoneScore(ap, ref, this.bufferU()) * 100 : null;
+        let tier = 'mid';
+        if (pen <= 90 && (zone === null || zone >= 75)) tier = 'strong';
+        else if (pen >= 300 || (zone !== null && zone < 50)) tier = 'weak';
+        const T = {
+          strong: {
+            sdis: 'Analyse ontvangen en meteen bruikbaar. We hebben de blusvliegtuigen omgeleid naar de oostelijke flank en zetten twee extra ploegen in op de droogste zone. Jullie afbakening van de brandzone kwam exact overeen met wat onze ploegen ter plaatse melden.',
+            pref: 'Jullie rapport was helder en volledig. Het evacuatiebevel voor de dorpen in de verspreidingsrichting is binnen het kwartier vertrokken, en Bordeaux kreeg tijdig een waarschuwing voor luchtkwaliteit.'},
+          mid: {
+            sdis: 'Analyse ontvangen. De grote lijnen klopten en we hebben de blusvliegtuigen naar de oostelijke flank gestuurd. Op enkele plaatsen moesten onze verkenners de gegevens nog bijsturen voor we extra ploegen konden inzetten.',
+            pref: 'Op basis van jullie rapport is een evacuatiebevel uitgevaardigd voor de dorpen in de verspreidingsrichting. Een paar punten moesten we nog laten nakijken, waardoor de waarschuwing voor luchtkwaliteit iets later vertrok.'},
+          weak: {
+            sdis: 'Analyse ontvangen, maar met fouten. Onze ploegen troffen het vuur deels op andere plaatsen aan dan aangegeven, en we hebben de blusvliegtuigen moeten herschikken. Het vuur is onder controle, maar het kostte meer tijd dan nodig.',
+            pref: 'Het rapport kwam op tijd, maar we konden het niet zonder controle gebruiken. De evacuatie is gestart na bevestiging door de brandweer, en de waarschuwing voor luchtkwaliteit is pas later verstuurd.'},
+        };
+        return {sdisText: T[tier].sdis, prefText: T[tier].pref};
+      })(),
+      finalColor: s.overtime ? '#ff563c' : '#79E6FB',
+      housesLost: Math.floor((s.overSeconds||0)/60) + 1,
+      openCount: 8 - ['fuel','lst','wind','soil','hotspot','dir','area','air'].filter(k => (A[k]||{}).val != null && (A[k]||{}).val !== '').length,
+      onTime: !s.overtime,
+      team: s.team, notSaved: !s.saved, hasBoard: (s.board || []).length > 0,
+      setTeam: this.setTeam, teamKey: this.teamKey, addToBoard: this.addToBoard,
+      board: (s.board || []).map((b, ix) => {
+        const late = b.over || b.secs < 0;
+        return {
+          rank: (ix + 1) + '.', name: b.name,
+          time: (late ? '+' : '') + fmt(Math.abs(b.secs)),
+          bg: b.id === s.justAdded ? (late ? '#3a2422' : '#2b3a3d') : '#201e1d',
+          color: late ? '#ff563c' : (b.id === s.justAdded ? '#79E6FB' : '#f8f4f4'),
+          nameColor: b.id === s.justAdded ? (late ? '#ff563c' : '#79E6FB') : '#f8f4f4',
+        };
+      }),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

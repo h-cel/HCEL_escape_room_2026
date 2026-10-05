@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:oklch(0.14 0.02 250);}
+  @keyframes svBlink{0%,100%{opacity:1}50%{opacity:.25}}
+  @keyframes svShake{10%,90%{transform:translateX(-1px)}20%,80%{transform:translateX(2px)}30%,50%,70%{transform:translateX(-4px)}40%,60%{transform:translateX(4px)}}
+  @keyframes svPulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.15)}}
+  @keyframes svFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes svDots{0%,20%{opacity:.2}50%{opacity:1}100%{opacity:.2}}
+</style>
+</helmet>
+
+<div style="position:relative;min-height:100vh;width:100%;background:oklch(0.14 0.02 250);font-family:'Space Grotesk',sans-serif;color:oklch(0.95 0.01 250);overflow:hidden">
+  <div style="position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,255,255,0.012) 3px,rgba(255,255,255,0.012) 4px),radial-gradient(ellipse at 20% 10%,oklch(0.2 0.05 220 / .35),transparent 55%),radial-gradient(ellipse at 85% 90%,oklch(0.2 0.06 55 / .18),transparent 50%);z-index:0"></div>
+
+  <!-- LOCK SCREEN -->
+  <sc-if value="{{isLock}}" hint-placeholder-val="{{true}}">
+    <div style="position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:40px">
+      <div style="display:flex;align-items:center;gap:14px">
+        <div style="position:relative;width:44px;height:44px;flex:none">
+          <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid oklch(0.78 0.14 200 / .5)"></div>
+          <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid oklch(0.78 0.14 200 / .8);transform:rotate(55deg) scale(1,0.45)"></div>
+          <div style="position:absolute;top:2px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:oklch(0.78 0.14 200);box-shadow:0 0 8px oklch(0.78 0.14 200)"></div>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.14em;color:oklch(0.65 0.02 250)">SENTINEL&#8209;VEGA &nbsp;/&nbsp; MISSION TERMINAL</div>
+      </div>
+
+      <div style="width:380px;max-width:90vw;background:oklch(0.19 0.025 250);border:1px solid oklch(0.32 0.03 250);border-radius:10px;padding:32px 28px;text-align:center;animation:{{lockShake}}">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:oklch(0.62 0.02 250);margin-bottom:6px">ACCESS RESTRICTED</div>
+        <div style="font-size:20px;font-weight:700;margin-bottom:22px">ENTER TERMINAL CODE</div>
+
+        <div style="display:flex;justify-content:center;gap:12px;margin-bottom:24px">
+          <sc-for list="{{codeSlots}}" as="slot" hint-placeholder-count="4">
+            <div style="width:44px;height:54px;border-radius:8px;background:oklch(0.14 0.02 250);border:1px solid {{slot.borderColor}};display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:600;color:oklch(0.78 0.14 200)">{{slot.display}}</div>
+          </sc-for>
+        </div>
+
+        <sc-if value="{{lockMessage}}" hint-placeholder-val="{{false}}">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;margin-bottom:16px;color:{{lockMessageColor}}">{{lockMessage}}</div>
+        </sc-if>
+
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+          <sc-for list="{{keypadKeys}}" as="k" hint-placeholder-count="12">
+            <button onClick="{{k.onClick}}" style="height:52px;border-radius:8px;border:1px solid oklch(0.32 0.03 250);background:oklch(0.22 0.03 250);color:oklch(0.95 0.01 250);font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:600;cursor:pointer" style-hover="background:oklch(0.27 0.035 250)">{{k.label}}</button>
+          </sc-for>
+        </div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:oklch(0.5 0.02 250);letter-spacing:.05em">HINT: check the mission clock in the room</div>
+    </div>
+  </sc-if>
+
+  <!-- INTRO / BRIEFING -->
+  <sc-if value="{{isIntro}}">
+    <div style="position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:60px 40px;animation:svFade .5s ease-out">
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 16px;border-radius:100px;background:oklch(0.22 0.05 55 / .5);border:1px solid oklch(0.74 0.16 55 / .5)">
+        <div style="width:8px;height:8px;border-radius:50%;background:oklch(0.74 0.16 55);animation:svPulse 1.3s infinite"></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;color:oklch(0.85 0.1 55)">ACTIVE WILDFIRE ALERT</div>
+      </div>
+      <div style="font-size:44px;font-weight:700;text-align:center;max-width:680px;line-height:1.15">Wildfire detected near<br/>Port&nbsp;Meridian</div>
+      <div style="max-width:560px;text-align:center;font-size:16px;line-height:1.6;color:oklch(0.72 0.02 250)">Sentinel-Vega has flagged a thermal anomaly in the hills above the city. Analyze the incoming satellite passes, characterize the fire, and brief the Mayor's Office before it reaches populated ground.</div>
+      <div style="display:flex;gap:28px;margin:8px 0 12px;font-family:'JetBrains Mono',monospace;font-size:12px;color:oklch(0.62 0.02 250);letter-spacing:.04em">
+        <div>7 DATA TASKS</div><div style="color:oklch(0.35 0.02 250)">&#8226;</div><div>MISSION TIMER RUNNING</div><div style="color:oklch(0.35 0.02 250)">&#8226;</div><div>GAME MASTER ON STANDBY</div>
+      </div>
+      <button onClick="{{beginAnalysis}}" style="padding:16px 36px;border-radius:8px;border:none;background:oklch(0.78 0.14 200);color:oklch(0.14 0.02 250);font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;letter-spacing:.03em;cursor:pointer" style-hover="background:oklch(0.85 0.14 200)">BEGIN ANALYSIS</button>
+    </div>
+  </sc-if>
+
+  <!-- STAGE SCREENS -->
+  <sc-if value="{{isStage}}">
+    <div style="position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 32px;border-bottom:1px solid oklch(0.28 0.02 250)">
+        <div style="display:flex;align-items:center;gap:16px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;color:oklch(0.62 0.02 250)">SENTINEL&#8209;VEGA</div>
+          <div style="display:flex;gap:6px">
+            <sc-for list="{{stageDots}}" as="d" hint-placeholder-count="7">
+              <div style="width:22px;height:5px;border-radius:3px;background:{{d.color}}"></div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.08em;color:oklch(0.78 0.14 200)">{{timerDisplay}}</div>
+        <button onClick="{{toggleHint}}" style="padding:8px 16px;border-radius:6px;border:1px solid oklch(0.32 0.03 250);background:transparent;color:oklch(0.72 0.02 250);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;cursor:pointer" style-hover="border-color:oklch(0.78 0.14 200)">REQUEST HINT</button>
+      </div>
+
+      <div style="flex:1;display:grid;grid-template-columns:1.1fr 0.9fr;gap:0;min-height:0">
+        <div style="padding:32px;border-right:1px solid oklch(0.24 0.02 250);display:flex;flex-direction:column;gap:16px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:oklch(0.55 0.02 250);display:flex;align-items:center;gap:8px">
+            <div style="width:6px;height:6px;border-radius:50%;background:oklch(0.75 0.15 150);animation:svPulse 1.6s infinite"></div>
+            {{panelLabel}}
+          </div>
+
+          <!-- STAGE 0: thermal grid -->
+          <sc-if value="{{isStage0}}" hint-placeholder-val="{{false}}">
+            <div style="display:grid;grid-template-columns:repeat(8,1fr);gap:3px;background:oklch(0.11 0.015 250);padding:10px;border-radius:8px;border:1px solid oklch(0.28 0.02 250)">
+              <sc-for list="{{cellsThermal}}" as="c" hint-placeholder-count="40">
+                <div style="aspect-ratio:1;border-radius:2px;background:{{c.bg}};box-shadow:{{c.glow}}"></div>
+              </sc-for>
+            </div>
+            <div style="display:flex;gap:16px;font-family:'JetBrains Mono',monospace;font-size:10px;color:oklch(0.55 0.02 250)">
+              <div>COLS A&#8211;H &#8226; ROWS 1&#8211;5</div><div>PASS 06:42 UTC</div>
+            </div>
+          </sc-if>
+
+          <!-- STAGE 1: gauge -->
+          <sc-if value="{{isStage1}}" hint-placeholder-val="{{false}}">
+            <div style="background:oklch(0.11 0.015 250);border:1px solid oklch(0.28 0.02 250);border-radius:8px;padding:28px 22px 20px">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:oklch(0.55 0.02 250);margin-bottom:18px">BRIGHTNESS TEMPERATURE ANOMALY &#8226; GRID D3</div>
+              <div style="position:relative;height:14px;border-radius:7px;background:linear-gradient(90deg,oklch(0.45 0.14 250),oklch(0.6 0.14 260) 20%,oklch(0.7 0.16 60) 55%,oklch(0.78 0.18 40) 75%,oklch(0.9 0.15 90) 100%)">
+                <div style="position:absolute;top:-7px;left:80%;width:3px;height:28px;background:oklch(0.97 0 0);box-shadow:0 0 8px oklch(0.97 0 0)"></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:10px;color:oklch(0.5 0.02 250)">
+                <div>0&#176;C</div><div>150</div><div>300</div><div>450</div><div>600&#176;C</div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- STAGE 2: burn extent grid -->
+          <sc-if value="{{isStage2}}" hint-placeholder-val="{{false}}">
+            <div style="display:grid;grid-template-columns:repeat(8,1fr);gap:3px;background:oklch(0.11 0.015 250);padding:10px;border-radius:8px;border:1px solid oklch(0.28 0.02 250)">
+              <sc-for list="{{cellsBurn}}" as="c" hint-placeholder-count="40">
+                <div style="aspect-ratio:1;border-radius:2px;background:{{c.bg}}"></div>
+              </sc-for>
+            </div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:oklch(0.55 0.02 250)">EACH CELL = 9 KM&#178; &#8226; PASS 11:10 UTC</div>
+          </sc-if>
+
+          <!-- STAGE 3: two-pass comparison -->
+          <sc-if value="{{isStage3}}" hint-placeholder-val="{{false}}">
+            <div style="display:flex;gap:14px">
+              <div style="flex:1;background:oklch(0.11 0.015 250);border:1px solid oklch(0.28 0.02 250);border-radius:8px;padding:18px">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:oklch(0.55 0.02 250);margin-bottom:10px">PASS A &#8226; 06:00 UTC</div>
+                <div style="font-size:26px;font-weight:700;color:oklch(0.78 0.16 60)">GRID D3</div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:oklch(0.62 0.02 250);margin-top:6px">Leading edge position</div>
+              </div>
+              <div style="flex:1;background:oklch(0.11 0.015 250);border:1px solid oklch(0.28 0.02 250);border-radius:8px;padding:18px">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:oklch(0.55 0.02 250);margin-bottom:10px">PASS B &#8226; 09:00 UTC</div>
+                <div style="font-size:26px;font-weight:700;color:oklch(0.78 0.16 60)">GRID F3</div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:oklch(0.62 0.02 250);margin-top:6px">Leading edge position</div>
+              </div>
+            </div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:oklch(0.55 0.02 250)">DISTANCE MOVED: 6 KM &#8226; ELAPSED TIME: 3 H</div>
+          </sc-if>
+
+          <!-- STAGE 4: wind -->
+          <sc-if value="{{isStage4}}" hint-placeholder-val="{{false}}">
+            <div style="background:oklch(0.11 0.015 250);border:1px solid oklch(0.28 0.02 250);border-radius:8px;padding:26px;display:flex;flex-direction:column;align-items:center;gap:18px">
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px">
+                <sc-for list="{{windArrows}}" as="a" hint-placeholder-count="9">
+                  <div style="width:26px;height:26px;transform:rotate(315deg);color:oklch(0.78 0.14 200)">
+                    <div style="width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:20px solid oklch(0.78 0.14 200);margin:0 auto"></div>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:oklch(0.78 0.14 200)">SUSTAINED WIND: 22 KM/H</div>
+            </div>
+          </sc-if>
+
+          <!-- STAGE 5: dryness zones -->
+          <sc-if value="{{isStage5}}" hint-placeholder-val="{{false}}">
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{zones}}" as="z" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:12px;background:oklch(0.11 0.015 250);border:1px solid oklch(0.28 0.02 250);border-radius:8px;padding:12px 16px">
+                  <div style="width:100px;font-size:13px;font-weight:600">{{z.name}}</div>
+                  <div style="flex:1;height:8px;border-radius:4px;background:oklch(0.22 0.02 250);position:relative">
+                    <div style="position:absolute;inset:0 auto 0 0;width:{{z.width}};border-radius:4px;background:{{z.color}}"></div>
+                  </div>
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:12px;width:44px;text-align:right;color:oklch(0.62 0.02 250)">{{z.dryness}}%</div>
+                </div>
+              </sc-for>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:oklch(0.55 0.02 250)">DRYNESS INDEX (NDMI) &#8226; WIND FROM SE TOWARD NW</div>
+            </div>
+          </sc-if>
+        </div>
+
+        <div style="padding:32px;display:flex;flex-direction:column;justify-content:center;gap:18px;max-width:560px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:oklch(0.78 0.14 200)">TASK {{stageNumber}} OF 7</div>
+          <div style="font-size:26px;font-weight:700;line-height:1.2">{{stageTitle}}</div>
+          <div style="font-size:15px;line-height:1.6;color:oklch(0.7 0.02 250)">{{stageInstructions}}</div>
+
+          <sc-if value="{{isInputText}}" hint-placeholder-val="{{false}}">
+            <input value="{{inputValue}}" onChange="{{onInputChange}}" placeholder="e.g. D3" style="padding:14px 16px;border-radius:8px;border:1px solid oklch(0.32 0.03 250);background:oklch(0.11 0.015 250);color:oklch(0.95 0.01 250);font-family:'JetBrains Mono',monospace;font-size:16px;letter-spacing:.06em"></input>
+          </sc-if>
+
+          <sc-if value="{{isInputNumber}}" hint-placeholder-val="{{false}}">
+            <div style="display:flex;align-items:center;gap:10px">
+              <input value="{{inputValue}}" onChange="{{onInputChange}}" placeholder="0" style="width:160px;padding:14px 16px;border-radius:8px;border:1px solid oklch(0.32 0.03 250);background:oklch(0.11 0.015 250);color:oklch(0.95 0.01 250);font-family:'JetBrains Mono',monospace;font-size:16px"></input>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:oklch(0.62 0.02 250)">{{stageUnit}}</div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{isInputCompass}}" hint-placeholder-val="{{false}}">
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+              <sc-for list="{{compassOptions}}" as="opt" hint-placeholder-count="8">
+                <button onClick="{{opt.onClick}}" style="padding:12px 0;border-radius:6px;border:1px solid {{opt.borderColor}};background:{{opt.bg}};color:{{opt.color}};font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;cursor:pointer">{{opt.label}}</button>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{isInputZone}}" hint-placeholder-val="{{false}}">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{zoneOptions}}" as="opt" hint-placeholder-count="4">
+                <button onClick="{{opt.onClick}}" style="padding:13px 16px;border-radius:8px;border:1px solid {{opt.borderColor}};background:{{opt.bg}};color:{{opt.color}};font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;text-align:left;cursor:pointer">{{opt.label}}</button>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{feedbackMessage}}" hint-placeholder-val="{{false}}">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;color:{{feedbackColor}}">{{feedbackMessage}}</div>
+          </sc-if>
+
+          <button onClick="{{submitAnswer}}" style="align-self:flex-start;padding:14px 32px;border-radius:8px;border:none;background:oklch(0.78 0.14 200);color:oklch(0.14 0.02 250);font-size:15px;font-weight:700;letter-spacing:.02em;cursor:pointer" style-hover="background:oklch(0.85 0.14 200)">SUBMIT READING</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- FACT INTERSTITIAL -->
+  <sc-if value="{{isFact}}" hint-placeholder-val="{{false}}">
+    <div style="position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px">
+      <div style="width:560px;max-width:92vw;background:oklch(0.19 0.025 250);border:1px solid oklch(0.32 0.03 250);border-radius:12px;padding:36px;animation:svFade .4s ease-out">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px">
+          <div style="padding:5px 12px;border-radius:100px;background:oklch(0.3 0.08 55 / .4);border:1px solid oklch(0.74 0.16 55 / .5);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:oklch(0.85 0.1 55)">SATELLITE FACT CHECK</div>
+        </div>
+        <div style="font-size:20px;font-weight:600;line-height:1.4;margin-bottom:22px">{{factStatement}}</div>
+
+        <sc-if value="{{factAnswered}}" hint-placeholder-val="{{false}}">
+          <div style="padding:16px 18px;border-radius:8px;background:oklch(0.11 0.015 250);border-left:3px solid {{factResultColor}};margin-bottom:20px">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.06em;color:{{factResultColor}};margin-bottom:8px">{{factResultLabel}}</div>
+            <div style="font-size:14px;line-height:1.6;color:oklch(0.75 0.02 250)">{{factExplain}}</div>
+          </div>
+          <button onClick="{{continueFact}}" style="padding:13px 30px;border-radius:8px;border:none;background:oklch(0.78 0.14 200);color:oklch(0.14 0.02 250);font-size:14px;font-weight:700;cursor:pointer">CONTINUE MISSION</button>
+        </sc-if>
+
+        <sc-if value="{{factUnanswered}}" hint-placeholder-val="{{true}}">
+          <div style="display:flex;gap:12px">
+            <button onClick="{{answerFactTrue}}" style="flex:1;padding:14px 0;border-radius:8px;border:1px solid oklch(0.32 0.03 250);background:transparent;color:oklch(0.95 0.01 250);font-size:14px;font-weight:700;cursor:pointer" style-hover="border-color:oklch(0.78 0.14 200)">TRUE</button>
+            <button onClick="{{answerFactFalse}}" style="flex:1;padding:14px 0;border-radius:8px;border:1px solid oklch(0.32 0.03 250);background:transparent;color:oklch(0.95 0.01 250);font-size:14px;font-weight:700;cursor:pointer" style-hover="border-color:oklch(0.78 0.14 200)">FALSE</button>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- FINAL: COMPOSE MESSAGE -->
+  <sc-if value="{{isFinal}}" hint-placeholder-val="{{false}}">
+    <div style="position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;gap:22px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:oklch(0.78 0.14 200)">TASK 7 OF 7 &#8226; FINAL TRANSMISSION</div>
+      <div style="font-size:26px;font-weight:700">Brief the Mayor's Office</div>
+      <div style="width:620px;max-width:92vw;background:oklch(0.11 0.015 250);border:1px solid oklch(0.32 0.03 250);border-radius:10px;padding:28px 30px;font-family:'JetBrains Mono',monospace;font-size:14px;line-height:2.1;color:oklch(0.85 0.02 250)">
+        <div>MISSION CONTROL TO CITY HALL &#8212; PRIORITY TRAFFIC</div>
+        <div>FIRE CONFIRMED AT GRID <span style="color:oklch(0.78 0.14 200);font-weight:700">{{finalGrid}}</span></div>
+        <div>BRIGHTNESS TEMPERATURE <span style="color:oklch(0.78 0.14 200);font-weight:700">{{finalTemp}}&#176;C</span></div>
+        <div>BURNED EXTENT <span style="color:oklch(0.78 0.14 200);font-weight:700">{{finalArea}} KM&#178;</span></div>
+        <div>SPREAD RATE <span style="color:oklch(0.78 0.14 200);font-weight:700">{{finalSpeed}} KM/H</span></div>
+        <div>WIND PUSHING FIRE TOWARD <span style="color:oklch(0.78 0.14 200);font-weight:700">{{finalWind}}</span> AT 22 KM/H</div>
+        <div>MOST VULNERABLE ZONE: <span style="color:oklch(0.78 0.14 200);font-weight:700">{{finalZone}}</span></div>
+        <div style="margin-top:8px">RECOMMENDATION: IMMEDIATE EVACUATION ORDER</div>
+      </div>
+      <button onClick="{{transmit}}" style="padding:16px 40px;border-radius:8px;border:none;background:oklch(0.74 0.16 55);color:oklch(0.14 0.02 250);font-size:16px;font-weight:700;letter-spacing:.02em;cursor:pointer" style-hover="background:oklch(0.8 0.16 55)">TRANSMIT MESSAGE</button>
+    </div>
+  </sc-if>
+
+  <!-- SUCCESS -->
+  <sc-if value="{{isSuccess}}" hint-placeholder-val="{{false}}">
+    <div style="position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;gap:20px;animation:svFade .5s ease-out">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.12em;color:oklch(0.75 0.15 150)">CALL CONNECTED &#8226; CITY HALL</div>
+      <div style="font-size:38px;font-weight:700;text-align:center">Mission Complete</div>
+      <div style="max-width:520px;text-align:center;font-size:15px;line-height:1.6;color:oklch(0.72 0.02 250)">The Mayor's Office has ordered an immediate evacuation of Maple Hollow. Port Meridian is safe thanks to your analysis.</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:oklch(0.62 0.02 250);letter-spacing:.04em">TIME REMAINING AT COMPLETION: {{timerDisplay}}</div>
+      <button onClick="{{restart}}" style="margin-top:12px;padding:12px 28px;border-radius:8px;border:1px solid oklch(0.32 0.03 250);background:transparent;color:oklch(0.72 0.02 250);font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;cursor:pointer">RESTART SIMULATION</button>
+    </div>
+  </sc-if>
+
+  <!-- HINT TOAST -->
+  <sc-if value="{{hintVisible}}" hint-placeholder-val="{{false}}">
+    <div style="position:fixed;bottom:24px;right:24px;z-index:10;background:oklch(0.19 0.025 250);border:1px solid oklch(0.78 0.14 200 / .5);border-radius:8px;padding:16px 20px;max-width:280px;animation:svFade .3s ease-out">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;color:oklch(0.78 0.14 200);margin-bottom:4px">HINT REQUESTED</div>
+      <div style="font-size:13px;line-height:1.5;color:oklch(0.75 0.02 250)">The game master has been notified and will assist shortly.</div>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const COLS = ['A','B','C','D','E','F','G','H'];
+const FIRE_COL = 3, FIRE_ROW = 2;
+const STAGE_META = [
+  {key:'locate', label:'THERMAL PASS \u2022 OPTICAL + IR', title:'LOCATE THE ANOMALY', instr:"Sentinel-Vega has flagged a thermal anomaly. Read the grid reference of the hotspot (e.g. D3).", type:'text', answer:'D3', unit:''},
+  {key:'temp', label:'BRIGHTNESS TEMPERATURE GAUGE', title:'READ THE TEMPERATURE', instr:'Use the gauge to estimate the hotspot brightness temperature in \u00b0C.', type:'number', answer:480, tol:25, unit:'\u00b0C'},
+  {key:'extent', label:'BURN SCAR \u2022 LATEST PASS', title:'MEASURE THE BURNED EXTENT', instr:'Each grid cell covers 9 km\u00b2. Count the burn-scar cells and enter the total area.', type:'number', answer:81, tol:9, unit:'km\u00b2'},
+  {key:'speed', label:'PASS COMPARISON', title:'CALCULATE SPREAD SPEED', instr:"The fire's leading edge moved 6 km between the 06:00 and 09:00 passes. Enter the rate of spread.", type:'number', answer:2, tol:0.4, unit:'km/h'},
+  {key:'wind', label:'WIND VECTOR FIELD', title:'READ THE WIND', instr:'Wind vectors show a steady 22 km/h flow. Which direction is the fire being pushed toward?', type:'compass', answer:'NW', unit:''},
+  {key:'zone', label:'DRYNESS INDEX (NDMI)', title:'IDENTIFY THE VULNERABLE ZONE', instr:'Cross-reference dryness with wind direction. Which zone is most at risk?', type:'zone', answer:'Maple Hollow', unit:''},
+];
+const ZONES = [
+  {name:'Harbor District', dryness:38},
+  {name:'Cinder Ridge', dryness:55},
+  {name:'Maple Hollow', dryness:89},
+  {name:'Riverside Flats', dryness:21},
+];
+const FACTS = [
+  {statement:'A single Sentinel-2 satellite image can cover a swath wider than 290 km \u2014 roughly the width of a small country.', isTrue:true, explain:"True. Sentinel-2's wide 290 km swath lets it re-image all of Earth's land every five days, which is exactly why it can catch a new wildfire early."},
+  {statement:"The James Webb Space Telescope, humanity's most expensive space observatory, cost around $10 billion to build and launch.", isTrue:true, explain:'True. JWST is the most expensive science satellite ever flown. By comparison, a single Sentinel Earth-observation satellite costs a few hundred million euros \u2014 still a lot, but a fraction of JWST.'},
+  {statement:"ESA's Copernicus Earth-observation programme, which includes the Sentinel satellites, has a budget of several billion euros.", isTrue:true, explain:'True. Copernicus is one of the largest civilian Earth-observation programmes in the world, funded mainly by the EU and ESA, precisely because free, continuous satellite data saves far more money than it costs \u2014 in disasters like wildfires.'},
+  {statement:'Satellites in low Earth orbit travel slower than a commercial airplane.', isTrue:false, explain:"False. Low Earth orbit satellites travel at about 7.8 km/s \u2014 roughly 28,000 km/h. That's about 30 times faster than a commercial jet, and faster than a rifle bullet."},
+  {statement:'A Sentinel-1 satellite, with its radar antenna deployed, is roughly the size of a city bus.', isTrue:true, explain:"True. The spacecraft body is a few metres across, but its deployed radar antenna stretches over 12 metres \u2014 comparable to a bus."},
+  {statement:'There are currently more than 10,000 active satellites orbiting Earth.', isTrue:true, explain:'True. The number of active satellites has passed 10,000 in recent years, driven mostly by large broadband constellations \u2014 up from only a few hundred two decades ago.'},
+];
+
+class Component extends DCLogic {
+  state = {
+    phase: 'lock',
+    code: '',
+    lockMessage: '',
+    lockOk: false,
+    stageIndex: 0,
+    inputValue: '',
+    feedback: null,
+    factIndex: -1,
+    factAnswered: null,
+    secondsLeft: 45*60,
+    hintVisible: false,
+    answers: {},
+  };
+
+  componentDidMount() {
+    this._timer = setInterval(() => {
+      this.setState(s => s.phase === 'lock' || s.phase === 'success' ? null : {secondsLeft: Math.max(0, s.secondsLeft - 1)});
+    }, 1000);
+  }
+  componentWillUnmount() { clearInterval(this._timer); }
+
+  pressDigit = (d) => {
+    if (this.state.code.length >= 4) return;
+    const code = this.state.code + d;
+    this.setState({code, lockMessage:''});
+    if (code.length === 4) {
+      setTimeout(() => {
+        if (code === '1957') {
+          this.setState({lockMessage:'ACCESS GRANTED', lockOk:true});
+          setTimeout(() => this.setState({phase:'intro'}), 700);
+        } else {
+          this.setState({lockMessage:'ACCESS DENIED'});
+          setTimeout(() => this.setState({code:'', lockMessage:''}), 900);
+        }
+      }, 200);
+    }
+  };
+  clearCode = () => this.setState({code:'', lockMessage:''});
+
+  beginAnalysis = () => this.setState({phase:'stage'});
+
+  onInputChange = (e) => this.setState({inputValue: e.target.value});
+  selectChoice = (val) => this.setState({inputValue: val});
+
+  submitAnswer = () => {
+    const stage = STAGE_META[this.state.stageIndex];
+    const val = this.state.inputValue;
+    let correct = false;
+    if (stage.type === 'text') correct = val.trim().toUpperCase() === stage.answer;
+    else if (stage.type === 'number') correct = !isNaN(parseFloat(val)) && Math.abs(parseFloat(val) - stage.answer) <= stage.tol;
+    else correct = val === stage.answer;
+
+    if (correct) {
+      const answers = {...this.state.answers, [stage.key]: stage.type === 'text' ? val.trim().toUpperCase() : val};
+      this.setState({feedback:'correct', answers});
+      setTimeout(() => this.setState({phase:'fact', factIndex: this.state.stageIndex, feedback:null, inputValue:''}), 700);
+    } else {
+      this.setState({feedback:'incorrect'});
+      setTimeout(() => this.setState(s => s.feedback === 'incorrect' ? {feedback:null} : null), 1400);
+    }
+  };
+
+  answerFactTrue = () => this.setState({factAnswered: true});
+  answerFactFalse = () => this.setState({factAnswered: false});
+  continueFact = () => {
+    const nextIndex = this.state.stageIndex + 1;
+    this.setState({stageIndex: nextIndex, factAnswered: null, factIndex: -1, phase: nextIndex === 6 ? 'final' : 'stage'});
+  };
+
+  transmit = () => this.setState({phase:'success'});
+  restart = () => this.setState({phase:'lock', code:'', lockMessage:'', stageIndex:0, inputValue:'', feedback:null, factIndex:-1, factAnswered:null, secondsLeft:45*60, hintVisible:false, answers:{}});
+
+  toggleHint = () => {
+    this.setState({hintVisible:true});
+    setTimeout(() => this.setState({hintVisible:false}), 4000);
+  };
+
+  renderVals() {
+    const s = this.state;
+    const stage = STAGE_META[s.stageIndex] || STAGE_META[0];
+    const fmtTime = () => {
+      const m = Math.floor(s.secondsLeft/60), sec = s.secondsLeft%60;
+      return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+    };
+
+    const codeSlots = [0,1,2,3].map(i => ({
+      display: s.code.length > i ? '\u2022' : '',
+      borderColor: s.lockMessage === 'ACCESS DENIED' ? 'oklch(0.62 0.19 25)' : s.lockMessage === 'ACCESS GRANTED' ? 'oklch(0.75 0.15 150)' : 'oklch(0.32 0.03 250)',
+    }));
+    const keypadKeys = ['1','2','3','4','5','6','7','8','9','CLR','0','\u2190'].map(label => ({
+      label,
+      onClick: label === 'CLR' ? this.clearCode : label === '\u2190' ? (() => this.setState(st => ({code: st.code.slice(0,-1), lockMessage:''}))) : (() => this.pressDigit(label)),
+    }));
+
+    const cellsThermal = [];
+    for (let r = 0; r < 5; r++) for (let c = 0; c < 8; c++) {
+      const isHot = c === FIRE_COL && r === FIRE_ROW;
+      const isNear = Math.abs(c-FIRE_COL) <= 1 && Math.abs(r-FIRE_ROW) <= 1 && !isHot;
+      const shade = 0.16 + ((c*7+r*13) % 5) * 0.012;
+      cellsThermal.push({
+        bg: isHot ? 'oklch(0.9 0.16 70)' : isNear ? 'oklch(0.55 0.15 55)' : `oklch(${shade.toFixed(3)} 0.03 240)`,
+        glow: isHot ? '0 0 14px oklch(0.85 0.18 60 / .8)' : 'none',
+      });
+    }
+    const cellsBurn = [];
+    for (let r = 0; r < 5; r++) for (let c = 0; c < 8; c++) {
+      const burned = Math.abs(c-FIRE_COL) <= 1 && Math.abs(r-FIRE_ROW) <= 1;
+      const shade = 0.16 + ((c*7+r*13) % 5) * 0.012;
+      cellsBurn.push({bg: burned ? 'oklch(0.4 0.14 40)' : `oklch(${shade.toFixed(3)} 0.03 240)`});
+    }
+
+    const compassLabels = ['N','NE','E','SE','S','SW','W','NW'];
+    const compassOptions = compassLabels.map(label => {
+      const selected = s.inputValue === label;
+      return {
+        label,
+        onClick: () => this.selectChoice(label),
+        borderColor: selected ? 'oklch(0.78 0.14 200)' : 'oklch(0.32 0.03 250)',
+        bg: selected ? 'oklch(0.78 0.14 200 / .15)' : 'transparent',
+        color: selected ? 'oklch(0.85 0.14 200)' : 'oklch(0.85 0.02 250)',
+      };
+    });
+    const zoneOptions = ZONES.map(z => {
+      const selected = s.inputValue === z.name;
+      return {
+        label: z.name,
+        onClick: () => this.selectChoice(z.name),
+        borderColor: selected ? 'oklch(0.78 0.14 200)' : 'oklch(0.32 0.03 250)',
+        bg: selected ? 'oklch(0.78 0.14 200 / .12)' : 'transparent',
+        color: selected ? 'oklch(0.85 0.14 200)' : 'oklch(0.85 0.02 250)',
+      };
+    });
+    const zones = ZONES.map(z => ({...z, width: z.dryness + '%', color: z.dryness > 70 ? 'oklch(0.62 0.19 30)' : z.dryness > 45 ? 'oklch(0.72 0.14 60)' : 'oklch(0.6 0.12 200)'}));
+    const windArrows = new Array(9).fill(0);
+
+    const stageDots = STAGE_META.map((_, i) => ({
+      color: i < s.stageIndex ? 'oklch(0.78 0.14 200)' : i === s.stageIndex ? 'oklch(0.85 0.02 250)' : 'oklch(0.3 0.02 250)',
+    }));
+
+    const fact = s.factIndex >= 0 ? FACTS[s.factIndex] : null;
+
+    return {
+      isLock: s.phase === 'lock',
+      isIntro: s.phase === 'intro',
+      isStage: s.phase === 'stage',
+      isFact: s.phase === 'fact',
+      isFinal: s.phase === 'final',
+      isSuccess: s.phase === 'success',
+      lockShake: s.lockMessage === 'ACCESS DENIED' ? 'svShake .4s' : 'none',
+      lockMessage: s.lockMessage,
+      lockMessageColor: s.lockMessage === 'ACCESS DENIED' ? 'oklch(0.7 0.19 25)' : 'oklch(0.75 0.15 150)',
+      codeSlots, keypadKeys,
+      beginAnalysis: this.beginAnalysis,
+      timerDisplay: fmtTime(),
+      toggleHint: this.toggleHint,
+      hintVisible: s.hintVisible,
+      stageDots,
+      panelLabel: stage.label,
+      stageNumber: s.stageIndex + 1,
+      stageTitle: stage.title,
+      stageInstructions: stage.instr,
+      stageUnit: stage.unit,
+      isStage0: s.stageIndex === 0, isStage1: s.stageIndex === 1, isStage2: s.stageIndex === 2,
+      isStage3: s.stageIndex === 3, isStage4: s.stageIndex === 4, isStage5: s.stageIndex === 5,
+      isInputText: stage.type === 'text',
+      isInputNumber: stage.type === 'number',
+      isInputCompass: stage.type === 'compass',
+      isInputZone: stage.type === 'zone',
+      inputValue: s.inputValue,
+      onInputChange: this.onInputChange,
+      compassOptions, zoneOptions,
+      cellsThermal, cellsBurn, zones, windArrows,
+      feedbackMessage: s.feedback === 'correct' ? 'READING CONFIRMED' : s.feedback === 'incorrect' ? 'READING REJECTED \u2014 RECHECK SENSORS' : '',
+      feedbackColor: s.feedback === 'correct' ? 'oklch(0.75 0.15 150)' : 'oklch(0.65 0.19 25)',
+      submitAnswer: this.submitAnswer,
+      factStatement: fact ? fact.statement : '',
+      factAnswered: s.factAnswered !== null,
+      factUnanswered: s.factAnswered === null,
+      factResultLabel: fact && s.factAnswered !== null ? (s.factAnswered === fact.isTrue ? 'CORRECT' : 'NOT QUITE') : '',
+      factResultColor: fact && s.factAnswered !== null ? (s.factAnswered === fact.isTrue ? 'oklch(0.75 0.15 150)' : 'oklch(0.65 0.19 25)') : 'transparent',
+      factExplain: fact ? fact.explain : '',
+      answerFactTrue: this.answerFactTrue,
+      answerFactFalse: this.answerFactFalse,
+      continueFact: this.continueFact,
+      finalGrid: s.answers.locate || 'D3',
+      finalTemp: s.answers.temp || '480',
+      finalArea: s.answers.extent || '81',
+      finalSpeed: s.answers.speed || '2',
+      finalWind: s.answers.wind || 'NW',
+      finalZone: s.answers.zone || 'Maple Hollow',
+      transmit: this.transmit,
+      restart: this.restart,
+    };
+  }
+}
+
+</script>
+</body>
+</html>
