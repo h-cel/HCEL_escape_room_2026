@@ -39,7 +39,9 @@
 <div ref="{{rootRef}}" style="min-height:var(--eo-vh, 100vh);width:100%;background:#201e1d;color:#f8f4f4;font-family:'Archivo',system-ui,sans-serif">
 
   <sc-if value="{{isLock}}" hint-placeholder-val="{{true}}">
-    <div style="min-height:var(--eo-vh, 100vh);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 56px;animation:eoFade .4s">
+    <div style="position:relative;isolation:isolate;overflow:hidden;min-height:var(--eo-vh, 100vh);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 56px;animation:eoFade .4s">
+      <img src="uploads/esa-logo-wit.png" alt="" style="position:absolute;z-index:-1;left:50%;top:50%;width:min(1100px,90%);height:auto;transform:translate(-50%,-50%);opacity:.13;pointer-events:none;user-select:none">
+      <img src="uploads/hcel-logo-wit.png" alt="" style="position:absolute;z-index:-1;right:40px;top:20px;width:190px;height:auto;opacity:.85;pointer-events:none;user-select:none">
       <div style="font-size:12px;font-weight:600;letter-spacing:.22em;color:#9b9797">DEEL 2</div>
       <div style="height:2px;width:100%;max-width:560px;background:#605d5d;margin:16px 0 28px"></div>
       <div style="font-size:13px;font-weight:700;letter-spacing:.2em;color:#ff563c;margin-bottom:12px">ACCESS PROTOCOL — ESA NETWORK</div>
