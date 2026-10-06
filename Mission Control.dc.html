@@ -84,7 +84,7 @@
       </div>
 
       <sc-if value="{{noLockHint}}" hint-placeholder-val="{{true}}">
-        <button onClick="{{askLockHint}}" style="margin-top:28px;border:2px solid #605d5d;background:transparent;color:#bab6b6;font-family:'Archivo',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;padding:12px 18px;text-align:left;cursor:pointer" style-hover="border-color:#ff563c;color:#ff563c">HINT VRAGEN — KOST 2:00 MINUTEN</button>
+        <button onClick="{{askLockHint}}" style="margin-top:28px;border:2px solid #605d5d;background:transparent;color:#bab6b6;font-family:'Archivo',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;padding:12px 18px;text-align:left;cursor:pointer" style-hover="border-color:#ff563c;color:#ff563c">{{lockHintLabel}}</button>
       </sc-if>
     </div>
   </sc-if>
@@ -195,7 +195,7 @@
                     <div style="width:24px;height:24px;flex:0 0 auto;background:#ff563c;color:#201e1d;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center">1</div>
                     <div style="font-size:14px;font-weight:800;letter-spacing:.14em">KIES DE SATELLIET</div>
                   </div>
-                  <div style="font-size:12px;font-weight:600;letter-spacing:.08em;color:#7d7979">FOUT = −1:00</div>
+                  <div style="font-size:12px;font-weight:600;letter-spacing:.08em;color:#7d7979">{{satCostLabel}}</div>
                 </div>
                 <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px">
                   <sc-for list="{{satOptions}}" as="o" hint-placeholder-count="3">
@@ -214,7 +214,7 @@
                   <div style="font-size:14px;line-height:1.45;color:#9b9797;text-wrap:pretty">✕ {{satMsg}}</div>
                 </sc-if>
                 <sc-if value="{{showHintBtn}}" hint-placeholder-val="{{true}}">
-                  <button onClick="{{askSubHint}}" style="align-self:flex-start;border:none;background:transparent;font-family:'Archivo',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;padding:0;cursor:pointer;color:#7d7979" style-hover="color:#ff563c">HINT VRAGEN (−0:30)</button>
+                  <button onClick="{{askSubHint}}" style="align-self:flex-start;border:none;background:transparent;font-family:'Archivo',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;padding:0;cursor:pointer;color:#7d7979" style-hover="color:#ff563c">{{subHintLabel}}</button>
                 </sc-if>
                 <sc-if value="{{showSub}}" hint-placeholder-val="{{false}}">
                   <div style="border-left:4px solid #ff563c;padding:4px 0 4px 14px;font-size:16px;font-weight:600;line-height:1.4;color:#ffc4b8;text-wrap:pretty;animation:eoFade .3s">{{sub}}</div>
@@ -367,7 +367,7 @@
                       <div style="display:flex;align-items:center;gap:10px;flex:1 1 260px">
                         <div style="width:24px;height:24px;flex:0 0 auto;background:#ff563c;color:#201e1d;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center">3</div>
                         <div style="font-size:14px;font-weight:800;letter-spacing:.14em">KLIK DE CELLEN MET VUUR</div>
-                        <div style="font-size:12px;font-weight:600;letter-spacing:.08em;color:#7d7979">FOUT = −0:10 PER CEL</div>
+                        <div style="font-size:12px;font-weight:600;letter-spacing:.08em;color:#7d7979">{{cellCostLabel}}</div>
                       </div>
                       <sc-if value="{{notConfirmed}}" hint-placeholder-val="{{true}}">
                         <button onClick="{{confirmCells}}" style="border:none;background:#ff563c;color:#201e1d;font-family:'Archivo',sans-serif;font-size:14px;font-weight:800;letter-spacing:.08em;padding:12px 20px;min-width:220px;text-align:left;cursor:pointer" style-hover="background:#ff9783">SELECTIE BEVESTIGEN</button>
@@ -383,7 +383,7 @@
                       <div style="display:flex;align-items:center;gap:10px;flex:0 0 100%;flex-wrap:wrap">
                         <div style="width:24px;height:24px;flex:0 0 auto;background:#ff563c;color:#201e1d;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center">3</div>
                         <div style="font-size:14px;font-weight:800;letter-spacing:.14em">KIES DE RICHTING</div>
-                        <div style="font-size:12px;font-weight:600;letter-spacing:.08em;color:#7d7979">FOUT = −1:00</div>
+                        <div style="font-size:12px;font-weight:600;letter-spacing:.08em;color:#7d7979">{{dirCostLabel}}</div>
                       </div>
                       <div onPointerDown="{{dialDown}}" onPointerMove="{{dialMove}}" onPointerUp="{{dialUp}}" style="position:relative;width:196px;height:196px;border:2px solid #444141;border-radius:50%;cursor:grab;touch-action:none">
                         <div style="position:absolute;top:50%;left:50%;width:2px;height:66px;background:#ff563c;transform-origin:50% 100%;transform:{{needleRot}}"></div>
@@ -701,7 +701,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;minuten&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:45,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Spel&quot;},&quot;schermSchaal&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:150,&quot;tsType&quot;:&quot;number&quot;,&quot;unit&quot;:&quot;% (0 = automatisch)&quot;,&quot;section&quot;:&quot;Spel&quot;},&quot;instelmodus&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Spel&quot;},&quot;vraagVegetatie&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;vraagTemperatuur&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;vraagWind&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;vraagBodem&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;vraagBrandhaarden&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;vraagRichting&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;vraagOppervlakte&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;vraagLucht&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;studiegebieden&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;fuel:0.43,0.423,0.593,0.568 lst:0.156,0.292,0.525,0.636 wind:0.296,0.504,0.445,0.623 soil:0.173,0.266,0.53,0.598 dir:0.291,0.544,0.359,0.619 air:0.219,0.434,0.345,0.587&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Studiegebied&quot;},&quot;schaalKm&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Schaal van het beeld&quot;},&quot;schaalBalkPct&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:4.6,&quot;tsType&quot;:&quot;number&quot;,&quot;step&quot;:0.1,&quot;unit&quot;:&quot;%&quot;,&quot;section&quot;:&quot;Schaal van het beeld&quot;},&quot;zoneInstellen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Verbrande zone&quot;},&quot;juisteZone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;0.3148,0.2755 0.2633,0.2978 0.2691,0.3206 0.3020,0.3323 0.3243,0.2988 0.3381,0.3227 0.4007,0.3402 0.4310,0.3445 0.4613,0.2877 0.4448,0.2617 0.4676,0.2749 0.4878,0.2436 0.4814,0.2139 0.5021,0.1895 0.4782,0.1821 0.4421,0.2028 0.4655,0.2229 0.4565,0.2383 0.4172,0.2389 0.4156,0.2182 0.4315,0.2102 0.4421,0.1831 0.4337,0.1683 0.4490,0.1513 0.4437,0.1168 0.3572,0.1592 0.3222,0.2197 0.2983,0.2399 0.3163,0.2622&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Verbrande zone&quot;},&quot;bufferKm&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:2.5,&quot;tsType&quot;:&quot;number&quot;,&quot;step&quot;:0.5,&quot;section&quot;:&quot;Verbrande zone&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;minuten&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:45,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Spel&quot;},&quot;schermSchaal&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:150,&quot;tsType&quot;:&quot;number&quot;,&quot;unit&quot;:&quot;% (0 = automatisch)&quot;,&quot;section&quot;:&quot;Spel&quot;},&quot;instelmodus&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Spel&quot;},&quot;vraagVegetatie&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;vraagTemperatuur&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;vraagWind&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;vraagBodem&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;vraagBrandhaarden&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;vraagRichting&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;vraagOppervlakte&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;vraagLucht&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;studiegebieden&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;fuel:0.43,0.423,0.593,0.568 lst:0.156,0.292,0.525,0.636 wind:0.296,0.504,0.445,0.623 soil:0.173,0.266,0.53,0.598 dir:0.291,0.544,0.359,0.619 air:0.219,0.434,0.345,0.587&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Studiegebied&quot;},&quot;schaalKm&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Schaal van het beeld&quot;},&quot;schaalBalkPct&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:4.6,&quot;tsType&quot;:&quot;number&quot;,&quot;step&quot;:0.1,&quot;unit&quot;:&quot;%&quot;,&quot;section&quot;:&quot;Schaal van het beeld&quot;},&quot;zoneInstellen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Verbrande zone&quot;},&quot;juisteZone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;0.3148,0.2755 0.2633,0.2978 0.2691,0.3206 0.3020,0.3323 0.3243,0.2988 0.3381,0.3227 0.4007,0.3402 0.4310,0.3445 0.4613,0.2877 0.4448,0.2617 0.4676,0.2749 0.4878,0.2436 0.4814,0.2139 0.5021,0.1895 0.4782,0.1821 0.4421,0.2028 0.4655,0.2229 0.4565,0.2383 0.4172,0.2389 0.4156,0.2182 0.4315,0.2102 0.4421,0.1831 0.4337,0.1683 0.4490,0.1513 0.4437,0.1168 0.3572,0.1592 0.3222,0.2197 0.2983,0.2399 0.3163,0.2622&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Verbrande zone&quot;},&quot;bufferKm&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:2.5,&quot;tsType&quot;:&quot;number&quot;,&quot;step&quot;:0.5,&quot;section&quot;:&quot;Verbrande zone&quot;},&quot;strafHintCode&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:120,&quot;tsType&quot;:&quot;number&quot;,&quot;unit&quot;:&quot;seconden&quot;,&quot;section&quot;:&quot;Tijdstraffen&quot;},&quot;strafFouteCode&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;tsType&quot;:&quot;number&quot;,&quot;unit&quot;:&quot;seconden&quot;,&quot;section&quot;:&quot;Tijdstraffen&quot;},&quot;strafHintSatelliet&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:30,&quot;tsType&quot;:&quot;number&quot;,&quot;unit&quot;:&quot;seconden&quot;,&quot;section&quot;:&quot;Tijdstraffen&quot;},&quot;strafFouteSatelliet&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:60,&quot;tsType&quot;:&quot;number&quot;,&quot;unit&quot;:&quot;seconden&quot;,&quot;section&quot;:&quot;Tijdstraffen&quot;},&quot;strafFouteRichting&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:60,&quot;tsType&quot;:&quot;number&quot;,&quot;unit&quot;:&quot;seconden&quot;,&quot;section&quot;:&quot;Tijdstraffen&quot;},&quot;strafFouteCel&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:10,&quot;tsType&quot;:&quot;number&quot;,&quot;unit&quot;:&quot;seconden&quot;,&quot;section&quot;:&quot;Tijdstraffen&quot;}}">
 const LEVELS = ['LAAG','GEMIDDELD','HOOG','EXTREEM'];
 const DIRS = ['N','NO','O','ZO','Z','ZW','W','NW'];
 const CODE = '30051975';
@@ -790,6 +790,7 @@ const STEPS = [
 
 const COLS = ['A','B','C','D','E','F','G','H'];
 
+function mmss(sec) { return Math.floor(sec/60) + ':' + String(sec%60).padStart(2,'0'); }
 function fmt(sec) {
   return String(Math.floor(sec/60)).padStart(2,'0') + ':' + String(sec%60).padStart(2,'0');
 }
@@ -872,7 +873,9 @@ class Component extends DCLogic {
     } catch (e) {}
   }
 
+  straf = (name, def) => { const v = Number(this.cfg()[name]); return isFinite(v) && v >= 0 ? Math.round(v) : def; };
   penalize = (secs, label) => {
+    if (!secs) return;
     this.setState(s => ({penaltyTotal: (s.penaltyTotal || 0) + secs}));
     this.setState(s => {
       if (s.overtime) return {overSeconds: (s.overSeconds||0) + secs, penalty:{label, cost: '+' + fmt(secs)}};
@@ -896,16 +899,17 @@ class Component extends DCLogic {
       setTimeout(() => this.setState({phase:'brief'}), 1500);
     } else {
       this.setState({lockMsg:'ACCESS DENIED'});
+      this.penalize(this.straf('strafFouteCode', 0), 'FOUTE TOEGANGSCODE');
       setTimeout(() => this.setState({code:'', lockMsg:''}), 1100);
     }
   };
   clr = () => this.setState({code:'', lockMsg:''});
   del = () => this.setState(s => ({code: s.code.slice(0,-1), lockMsg:''}));
-  askLockHint = () => { if (this.state.lockHint) return; this.setState({lockHint:true}); this.penalize(120, 'HINT TOEGANGSCODE'); };
+  askLockHint = () => { if (this.state.lockHint) return; this.setState({lockHint:true}); this.penalize(this.straf('strafHintCode', 120), 'HINT TOEGANGSCODE'); };
   askSubHint = (key) => {
     if (this.state.subHints[key]) return;
     this.setState(s => ({subHints: {...s.subHints, [key]: true}}));
-    this.penalize(30, 'HINT SATELLIETKEUZE');
+    this.penalize(this.straf('strafHintSatelliet', 30), 'HINT SATELLIETKEUZE');
   };
   start = () => this.setState({phase:'task', i:0});
 
@@ -917,7 +921,7 @@ class Component extends DCLogic {
       this.setState({answers:a, satMsg:''});
     } else {
       this.setState({satMsg: sat.why});
-      if (!cur.sat) this.penalize(60, 'FOUTE SATELLIET');
+      if (!cur.sat) this.penalize(this.straf('strafFouteSatelliet', 60), 'FOUTE SATELLIET');
     }
   };
   setVal = (key, val) => {
@@ -939,7 +943,7 @@ class Component extends DCLogic {
     const wrong = cells.filter(c => (step.correct||[]).indexOf(c) < 0);
     a[step.key] = {...cur, confirmed: true, val: cells.slice().sort().join(', ')};
     this.setState({answers:a});
-    if (wrong.length) this.penalize(10 * wrong.length, wrong.length + ' FOUTE CEL(LEN)');
+    if (wrong.length) this.penalize(this.straf('strafFouteCel', 10) * wrong.length, wrong.length + ' FOUTE CEL(LEN)');
   };
   figPoint = (e) => {
     const r = e.currentTarget.getBoundingClientRect();
@@ -1075,7 +1079,7 @@ class Component extends DCLogic {
     const cur = this.state.answers[step.key] || {};
     if (cur.val === step.correctDir) return;
     if (dir === step.correctDir) { this.setVal(step.key, dir); this.setState({dirPreview: dir, dirMsg:''}); }
-    else { this.setState({dirPreview: dir, dirMsg:'Deze richting klopt niet met de rookpluim. Kijk opnieuw.'}); this.penalize(60, 'FOUTE WINDRICHTING'); }
+    else { this.setState({dirPreview: dir, dirMsg:'Deze richting klopt niet met de rookpluim. Kijk opnieuw.'}); this.penalize(this.straf('strafFouteRichting', 60), 'FOUTE WINDRICHTING'); }
   };
   dialAngle = (e) => {
     if (!this._dial) return null;
@@ -1271,6 +1275,11 @@ class Component extends DCLogic {
       lockHint: s.lockHint, noLockHint: !s.lockHint, askLockHint: this.askLockHint, submitCode: this.submitCode,
       hasPenalty: !!s.penalty, penaltyLabel: s.penalty ? s.penalty.label : '', penaltyCost: s.penalty ? s.penalty.cost : '',
       startTime: fmt((this.cfg().minuten ?? 45)*60),
+      lockHintLabel: this.straf('strafHintCode', 120) ? 'HINT VRAGEN — KOST ' + mmss(this.straf('strafHintCode', 120)) + ' MINUTEN' : 'HINT VRAGEN',
+      subHintLabel: this.straf('strafHintSatelliet', 30) ? 'HINT VRAGEN (−' + mmss(this.straf('strafHintSatelliet', 30)) + ')' : 'HINT VRAGEN',
+      satCostLabel: this.straf('strafFouteSatelliet', 60) ? 'FOUT = −' + mmss(this.straf('strafFouteSatelliet', 60)) : '',
+      dirCostLabel: this.straf('strafFouteRichting', 60) ? 'FOUT = −' + mmss(this.straf('strafFouteRichting', 60)) : '',
+      cellCostLabel: this.straf('strafFouteCel', 10) ? 'FOUT = −' + mmss(this.straf('strafFouteCel', 10)) + ' PER CEL' : '',
       lockMsgColor: s.lockMsg === 'ACCESS DENIED' ? '#ff563c' : s.lockMsg.indexOf('ACCESS GRANTED') === 0 ? '#00FF27' : '#f8f4f4',
       lockMsgSize: s.lockMsg.indexOf('ACCESS GRANTED') === 0 ? '22px' : '13px',
       lockShake: s.lockMsg === 'ACCESS DENIED' ? 'eoShake .35s' : 'none',

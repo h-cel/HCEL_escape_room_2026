@@ -10,6 +10,14 @@ window.EO_INSTELLINGEN = {
   schermSchaal: 100,           // grootte van het scherm in %, 0 = automatisch
   instelmodus: false,          // true = resetknop + studiegebieden tekenen
 
+  // --- Tijdstraffen (in seconden, 0 = geen straf) ---
+  strafHintCode: 60,          // hint vragen bij de toegangscode
+  strafFouteCode: 0,           // foute toegangscode ingeven
+  strafHintSatelliet: 10,      // hint vragen bij de satellietkeuze
+  strafFouteSatelliet: 20,     // foute satelliet kiezen
+  strafFouteRichting: 30,      // foute windrichting kiezen
+  strafFouteCel: 5,           // per foute cel bij brandhaarden
+
   // --- Vragen aan/uit ---
   vraagVegetatie: true,
   vraagTemperatuur: true,
