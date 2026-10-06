@@ -2,11 +2,15 @@ repo: jarovdnb/HCEL_escape_room
 branch: main
 
 ## Last sync
-date: 2026-10-05T08:04:54Z
+date: 2026-10-06T12:00:00Z
 
 ### Updated in this project
-- Volledig spel gepusht naar main (Mission Control, beelden, kiosk-starters)
-- Instelmodus verbrande zone standaard uit; juiste zone + marge 2,5 km ingebakken
+- Minder tekst; stappen 1-2-3 per vraag met leeshulp (boekicoon) en studiegebied-kader op elk beeld
+- Kaart studiegebied altijd zichtbaar; risicoanalyse duidelijk als eigen inschatting
+- Vragen aan/uit per tweak (brandhaarden uit); resetknop in instelmodus
+
+## Sync history
+- 2026-10-05T08:04:54Z: volledig spel gepusht naar main
 
 ## Screen map
 | Scherm | Repo-bestanden |

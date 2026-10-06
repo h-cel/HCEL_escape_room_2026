@@ -14,3 +14,16 @@ verwijderen wist het scorebord.
 
 ## Taal
 Antwoord in het Nederlands.
+
+## Projectstructuur (ook voor Claude Code)
+- `Mission Control.dc.html` — het volledige spel in één bestand: template bovenaan, logica in
+  `<script type="text/x-dc">` onderaan (`class Component`, `STEPS` = alle vragen, teksten en leeshulp).
+  Draait rechtstreeks in de browser via `support.js`; geen build-stap. Alle styling staat inline.
+- `instellingen.js` — speltijd, schermschaal, vragen aan/uit, studiegebieden, verbrande zone.
+  Gaat voor op de `data-props`-defaults in het spelbestand.
+- Satellietbeelden: `.image-slots.state.json` (base64, sleutels `eo-<vraag>`). Overige beelden in `uploads/`.
+- `support.js`, `image-slot.js`, `_ds/` — runtime en stijlen; niet aanpassen.
+- localStorage: `eo-state-v1` (lopend spel), `eo-board-v1` (scorebord), `eo-study-v1`, `eo-refzone-v1`.
+- Lokaal testen: open via een lokale server (bv. `python -m http.server`), niet via file://,
+  anders laden de satellietbeelden niet. De kiosk-starters regelen dit zelf.
+- Repo: github.com/jarovdnb/HCEL_escape_room, branch `main`.
