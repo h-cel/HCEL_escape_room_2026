@@ -19,8 +19,18 @@ Antwoord in het Nederlands.
 - `Mission Control.dc.html` — het volledige spel in één bestand: template bovenaan, logica in
   `<script type="text/x-dc">` onderaan (`class Component`, `STEPS` = alle vragen, teksten en leeshulp).
   Draait rechtstreeks in de browser via `support.js`; geen build-stap. Alle styling staat inline.
-- `instellingen.js` — speltijd, schermschaal, vragen aan/uit, studiegebieden, verbrande zone.
-  Gaat voor op de `data-props`-defaults in het spelbestand.
+- `instellingen.js` — zet `window.EO_INSTELLINGEN`; gaat voor op de `data-props`-defaults (tweaks)
+  in het spelbestand. Bedoeld om door de spelleider in Kladblok/TextEdit te bewerken: houd het
+  bestand eenvoudig, met Nederlandse commentaar per regel. Sleutels:
+  - Spel: `minuten`, `schermSchaal` (% , 0 = auto), `instelmodus` (resetknop + tekenen studiegebieden).
+  - Vragen aan/uit: `vraagVegetatie`, `vraagTemperatuur`, `vraagWind`, `vraagBodem`,
+    `vraagBrandhaarden`, `vraagRichting`, `vraagOppervlakte`, `vraagLucht` (= `prop` in `STEPS`).
+  - `studiegebieden`: `"<key>:links,boven,rechts,onder ..."` als fracties 0–1, keys uit `STEPS`
+    (fuel, lst, wind, soil, dir, air).
+  - Verbrande zone: `schaalKm`, `schaalBalkPct`, `zoneInstellen`, `bufferKm`, `juisteZone`
+    (`"u,v u,v ..."` als fracties van het beeld).
+  Nieuwe tweak toevoegen: in `data-props` én in `instellingen.js` (zelfde naam), en in de README-tabel.
+  Kaders/zone instellen: instelmodus aan, tekenen in het spel, gekopieerde code in `instellingen.js` plakken.
 - Satellietbeelden: `.image-slots.state.json` (base64, sleutels `eo-<vraag>`). Overige beelden in `uploads/`.
 - `support.js`, `image-slot.js`, `_ds/` — runtime en stijlen; niet aanpassen.
 - localStorage: `eo-state-v1` (lopend spel), `eo-board-v1` (scorebord), `eo-study-v1`, `eo-refzone-v1`.
