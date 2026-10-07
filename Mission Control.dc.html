@@ -404,22 +404,24 @@
                   </sc-if>
 
                   <sc-if value="{{isCompass}}" hint-placeholder-val="{{false}}">
-                    <div style="display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center">
-                      <div style="display:flex;align-items:center;gap:10px;flex:0 0 100%;flex-wrap:wrap">
+                    <div style="display:flex;gap:28px;align-items:flex-start">
+                      <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:12px">
+                      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
                         <div style="width:30px;height:30px;flex:0 0 auto;background:#b79cff;color:#201e1d;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center">3</div>
                         <div style="font-size:19px;font-weight:800;letter-spacing:.12em">KIES DE RICHTING</div>
                         <div style="font-size:12px;font-weight:600;letter-spacing:.08em;color:#7d7979">{{dirCostLabel}}</div>
                       </div>
-                      <div onPointerDown="{{dialDown}}" onPointerMove="{{dialMove}}" onPointerUp="{{dialUp}}" style="position:relative;width:196px;height:196px;border:2px solid #444141;border-radius:50%;cursor:grab;touch-action:none">
-                        <div style="position:absolute;top:50%;left:50%;width:2px;height:66px;background:#ffc83d;transform-origin:50% 100%;transform:{{needleRot}}"></div>
+                      <sc-if value="{{hasDirMsg}}" hint-placeholder-val="{{false}}">
+                        <div style="font-size:16px;line-height:1.45;color:#9b9797">✕ {{dirMsg}}</div>
+                      </sc-if>
+                      </div>
+                      <div onPointerDown="{{dialDown}}" onPointerMove="{{dialMove}}" onPointerUp="{{dialUp}}" style="position:relative;flex:0 0 auto;width:176px;height:176px;border:2px solid #444141;border-radius:50%;cursor:grab;touch-action:none">
+                        <div style="position:absolute;top:50%;left:50%;width:2px;height:58px;background:#ffc83d;transform-origin:50% 100%;transform:{{needleRot}}"></div>
                         <div style="position:absolute;top:50%;left:50%;width:8px;height:8px;background:#ffc83d;transform:translate(-50%,-50%)"></div>
                         <sc-for list="{{dirOptions}}" as="o" hint-placeholder-count="8">
                           <button onClick="{{o.onClick}}" style="position:absolute;top:50%;left:50%;transform:{{o.pos}};border:2px solid {{o.border}};background:{{o.bg}};color:{{o.color}};font-family:'Archivo',sans-serif;font-size:11px;font-weight:700;width:34px;height:26px;cursor:pointer;padding:0">{{o.label}}</button>
                         </sc-for>
                       </div>
-                      <sc-if value="{{hasDirMsg}}" hint-placeholder-val="{{false}}">
-                        <div style="flex:1 1 200px;font-size:14px;line-height:1.45;color:#9b9797">✕ {{dirMsg}}</div>
-                      </sc-if>
                     </div>
                   </sc-if>
 
@@ -1276,7 +1278,7 @@ class Component extends DCLogic {
       return {label:d, onClick: () => this.commitDir(d),
         bg: ok ? '#ffc83d' : on ? '#6b5210' : 'transparent',
         color: ok ? '#201e1d' : '#f8f4f4', border: on ? '#ffc83d' : '#605d5d',
-        pos: 'translate(-50%,-50%) rotate(' + ang + 'deg) translateY(-78px) rotate(' + (-ang) + 'deg)'};
+        pos: 'translate(-50%,-50%) rotate(' + ang + 'deg) translateY(-69px) rotate(' + (-ang) + 'deg)'};
     });
     const dirIndex = DIRS.indexOf(shownDir);
     const needleRot = 'translate(-50%,-100%) rotate(' + (dirIndex < 0 ? 0 : dirIndex*45) + 'deg)';
@@ -1462,7 +1464,7 @@ class Component extends DCLogic {
         : 'position:relative',
       figStyle: s.zoom
         ? 'position:relative;width:min(100%, calc((var(--eo-vh, 100vh) - 36px) * 1.6));aspect-ratio:16/10;border:2px solid #605d5d;background:#201e1d;overflow:hidden'
-        : 'position:relative;width:min(100%, calc((var(--eo-vh, 100vh) - ' + ((step.at === 'level' ? 380 : step.at === 'grid' ? 320 : 450) + 60) + 'px) * 1.6));aspect-ratio:16/10;border:2px solid #444141;background:#2d2b2b;overflow:hidden',
+        : 'position:relative;width:min(100%, calc((var(--eo-vh, 100vh) - ' + ((step.at === 'level' || step.at === 'compass' ? 380 : step.at === 'grid' ? 320 : 450) + 60) + 'px) * 1.6));aspect-ratio:16/10;border:2px solid #444141;background:#2d2b2b;overflow:hidden',
       zoomLabel: s.zoom ? 'SLUITEN' : 'VOLLEDIG SCHERM',
       rootRef: this.rootRef,
       showMap: !!s.showMap, toggleMap: this.toggleMap,
