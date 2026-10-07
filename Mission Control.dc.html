@@ -19,6 +19,7 @@
   a{color:#ffc83d}a:hover{color:#ffdc7a}
   @keyframes eoFade{from{opacity:0}to{opacity:1}}
   @keyframes eoRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  @keyframes eoRise2{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
   @keyframes eoBlink{0%,100%{opacity:1}50%{opacity:.2}}
   @keyframes eoShake{20%,80%{transform:translateX(3px)}40%,60%{transform:translateX(-3px)}}
   @keyframes eoAlarm{0%,100%{opacity:1}50%{opacity:.25}}
@@ -214,8 +215,8 @@
 
           <sc-if value="{{isQ}}" hint-placeholder-val="{{true}}">
             <div style="display:flex;flex-direction:column;gap:14px">
-              <div style="font-size:30px;font-weight:800;line-height:1.08;letter-spacing:-.02em;text-wrap:pretty;margin-bottom:32px">{{question}}</div>
-              <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:30px;font-weight:800;line-height:1.08;letter-spacing:-.02em;text-wrap:pretty;margin-bottom:32px;animation:{{qAnim}} 1.2s cubic-bezier(.22,.61,.36,1) .15s both">{{question}}</div>
+              <div style="display:flex;flex-direction:column;gap:8px;animation:{{qAnim}} 1.2s cubic-bezier(.22,.61,.36,1) 1.1s both">
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
                   <div style="display:flex;align-items:center;gap:10px">
                     <div style="width:30px;height:30px;flex:0 0 auto;background:#ffc83d;color:#00163f;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center">1</div>
@@ -1399,6 +1400,7 @@ class Component extends DCLogic {
         };
       })(),
       start: this.start, timer, rail, hint: s.hint, toggleHint: this.toggleHint,
+      qAnim: s.i % 2 ? 'eoRise2' : 'eoRise',
       isQ: step.type==='q', isSummary: step.type==='summary', isReport: step.type==='report', notReport: step.type!=='report',
       partTitle: step.part, stepNo: step.no || '', question: step.q || '',
       partLine: step.part + (step.no ? ' \u00b7 ' + step.no.split(' ')[0] + ' ' + (ST.filter(x => x.type === 'q' && x.part === step.part).indexOf(step) + 1) : ''),
