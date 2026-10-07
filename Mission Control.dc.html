@@ -33,6 +33,10 @@
   @keyframes eoDrop{0%{opacity:0;transform:scaleY(.2)}20%{opacity:.85;transform:scaleY(1)}100%{opacity:0;transform:scaleY(1.2) translateY(14px)}}
   @keyframes eoSave{0%{fill:#ff563c}100%{fill:#41CD03}}
   @keyframes eoOut{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.2)}}
+  @keyframes eoOrbit{from{transform:rotateZ(0deg)}to{transform:rotateZ(360deg)}}
+  @keyframes eoBill0{from{transform:rotateZ(0deg) rotateX(-70deg) rotateZ(14deg)}to{transform:rotateZ(-360deg) rotateX(-70deg) rotateZ(14deg)}}
+  @keyframes eoBill1{from{transform:rotateZ(0deg) rotateX(-76deg) rotateZ(-9deg)}to{transform:rotateZ(-360deg) rotateX(-76deg) rotateZ(-9deg)}}
+  @keyframes eoBill2{from{transform:rotateZ(0deg) rotateX(-66deg) rotateZ(-20deg)}to{transform:rotateZ(-360deg) rotateX(-66deg) rotateZ(-20deg)}}
   @keyframes eoFlick{from{transform:scale(.85)}to{transform:scale(1.1)}}
   input[type=range]{accent-color:#ffc83d}
   *:focus-visible{outline:2px solid #ffc83d;outline-offset:2px}
@@ -224,6 +228,30 @@
                   </div>
                   <div style="font-size:12px;font-weight:600;letter-spacing:.08em;color:#7a88a6">{{satCostLabel}}</div>
                 </div>
+                <sc-if value="{{satOrbit}}" hint-placeholder-val="{{false}}">
+                <div style="font-size:15px;line-height:1.4;color:#97a3bd">Klik op het label van de juiste satelliet terwijl ze rond de aarde draaien.</div>
+                <div onMouseEnter="{{orbitHold}}" onMouseLeave="{{orbitGo}}" style="position:relative;height:270px;perspective:1000px;margin:4px 0 6px">
+                  <div style="position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d">
+                    <div style="position:absolute;left:-62px;top:-62px;width:124px;height:124px;border-radius:50%;background:radial-gradient(circle at 62% 38%,#41a34a 0 9%,transparent 10%),radial-gradient(circle at 30% 62%,#3c9a45 0 13%,transparent 14%),radial-gradient(circle at 74% 72%,#4aa950 0 7%,transparent 8%),radial-gradient(circle at 34% 30%,#4f9bff,#1c5bc0 50%,#0b2a66 80%,#06173d);box-shadow:0 0 28px rgba(121,230,251,.35),inset -14px -10px 24px rgba(0,10,40,.7)"></div>
+                    <sc-for list="{{satOptions}}" as="o" hint-placeholder-count="3">
+                      <div style="position:absolute;left:0;top:0;transform-style:preserve-3d;transform:rotateZ({{o.tilt}}) rotateX({{o.inc}})">
+                        <div style="position:absolute;left:-{{o.r}};top:-{{o.r}};width:calc({{o.r}} * 2);height:calc({{o.r}} * 2);box-sizing:border-box;border-radius:50%;border:1px dashed rgba(184,194,214,.35)"></div>
+                        <div style="position:absolute;left:0;top:0;transform-style:preserve-3d;animation:eoOrbit {{o.dur}} linear {{o.delay}} infinite;animation-play-state:{{orbitPlay}}">
+                          <div style="position:absolute;left:{{o.r}};top:0;transform-style:preserve-3d">
+                            <div style="position:absolute;left:0;top:0;transform-style:preserve-3d;animation:{{o.bill}} {{o.dur}} linear {{o.delay}} infinite;animation-play-state:{{orbitPlay}}">
+                              <button onClick="{{o.onClick}}" style="position:absolute;left:0;top:0;transform:translate(-50%,-50%);display:flex;align-items:center;gap:6px;white-space:nowrap;border:2px solid {{o.border}};background:{{o.bgOrbit}};color:{{o.color}};font-family:'Archivo',sans-serif;font-size:14px;font-weight:700;padding:5px 9px 5px 6px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.45)">
+                                <svg viewBox="0 0 32 16" style="width:30px;height:15px;display:block;flex:0 0 auto"><rect x="0" y="4" width="10" height="8" fill="#79E6FB"></rect><rect x="22" y="4" width="10" height="8" fill="#79E6FB"></rect><rect x="10" y="7" width="12" height="2" fill="#b8c2d6"></rect><rect x="12" y="3" width="8" height="10" rx="1" fill="#ffc83d"></rect></svg>
+                                <span>{{o.label}}</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+                </sc-if>
+                <sc-if value="{{satChosen}}" hint-placeholder-val="{{true}}">
                 <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px">
                   <sc-for list="{{satOptions}}" as="o" hint-placeholder-count="3">
                     <button onClick="{{o.onClick}}" style="display:flex;align-items:center;justify-content:space-between;gap:6px;min-width:0;border:2px solid {{o.border}};background:{{o.bg}};color:{{o.color}};font-family:'Archivo',sans-serif;font-size:16px;font-weight:700;padding:10px 12px;text-align:left;cursor:pointer">
@@ -234,6 +262,7 @@
                     </button>
                   </sc-for>
                 </div>
+                </sc-if>
                 <sc-if value="{{hasOkMsg}}" hint-placeholder-val="{{false}}">
                   <div style="font-size:17px;line-height:1.45;color:#b8c2d6;text-wrap:pretty">{{okMsg}}</div>
                 </sc-if>
@@ -1287,9 +1316,13 @@ class Component extends DCLogic {
     }
 
     const satChosen = !!cur.sat;
-    const satOptions = (step.sats||[]).map(sat => {
-      const on = cur.sat === sat.n, bad = !on && s.satWrong === sat.n;
+    // banen rond de aardbol: straal, helling, kanteling, omlooptijd, startpositie (helling/kanteling ook in @keyframes eoBill0-2)
+    const ORBITS = [{r:118, inc:70, tilt:-14, dur:19, delay:-3}, {r:165, inc:76, tilt:9, dur:25, delay:-15}, {r:205, inc:66, tilt:20, dur:31, delay:-24}];
+    const satOptions = (step.sats||[]).map((sat, si) => {
+      const on = cur.sat === sat.n, bad = !on && s.satWrong === sat.n, ob = ORBITS[si % ORBITS.length];
       return {label: sat.n, onClick: () => this.pickSat(step, sat),
+        bill: 'eoBill' + (si % ORBITS.length), r: ob.r + 'px', inc: ob.inc + 'deg', tilt: ob.tilt + 'deg', dur: ob.dur + 's', delay: ob.delay + 's',
+        bgOrbit: bad ? '#ff563c' : '#0a2454',
         bg: on ? '#41CD03' : bad ? '#ff563c' : 'transparent', color: (on || bad) ? '#00163f' : '#f8f4f4',
         border: on ? '#41CD03' : bad ? '#ff563c' : '#3f5689', check: on ? 'block' : 'none'};
     });
@@ -1479,7 +1512,9 @@ class Component extends DCLogic {
       sub: step.sub || '', subShown: !!s.subHints[step.key], subHidden: !s.subHints[step.key],
       askSubHint: () => this.askSubHint(step.key),
       hasNote: !!step.note, note: step.note || '',
-      satOptions, satChosen, satMsg: s.satMsg, hasSatMsg: !!s.satMsg,
+      satOptions, satChosen, satOrbit: !satChosen, orbitPlay: s.orbitHold ? 'paused' : 'running',
+      orbitHold: () => this.setState({orbitHold:true}), orbitGo: () => this.setState({orbitHold:false}),
+      satMsg: s.satMsg, hasSatMsg: !!s.satMsg,
       okMsg: ((step.sats||[]).find(x => x.ok && x.n === cur.sat) || {}).why || '',
       hasOkMsg: !!((step.sats||[]).find(x => x.ok && x.n === cur.sat) || {}).why,
       figCaption: step.fig || '', outLabel: step.out || '',
