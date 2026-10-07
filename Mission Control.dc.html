@@ -227,7 +227,7 @@
                   <div style="font-size:12px;font-weight:600;letter-spacing:.08em;color:#7a88a6">{{satCostLabel}}</div>
                 </div>
                 <div style="font-size:15px;line-height:1.4;color:#97a3bd">Klik op de juiste satelliet terwijl ze rond de aarde draaien. Afstanden en snelheden zijn niet op schaal.</div>
-                <div data-eo-orbit="1" style="position:relative;height:280px;margin:4px 0 6px;overflow:hidden">
+                <div data-eo-orbit="1" style="position:relative;height:180px;margin:4px 0 6px;overflow:hidden">
                   <canvas style="position:absolute;left:0;top:0;width:100%;height:100%;display:block"></canvas>
                   <sc-for list="{{satOptions}}" as="o" hint-placeholder-count="3">
                     <button data-eo-sat="{{o.label}}" onClick="{{o.onClick}}" style="position:absolute;left:0;top:0;transform:translate(-9999px,0);display:flex;align-items:center;gap:6px;white-space:nowrap;border:2px solid {{o.border}};background:{{o.bgOrbit}};color:{{o.color}};font-family:'Archivo',sans-serif;font-size:14px;font-weight:700;padding:4px 9px 4px 6px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.45)">
@@ -780,12 +780,12 @@ const LEVELS = ['LAAG','GEMIDDELD','HOOG','EXTREEM'];
 const EARTH_T = 120;
 const SAT_ORBITS = {
   'Meteosat':    {r:2.35, inc:0,    node:0,    T:EARTH_T, geo:true},   // geostationair, 36 000 km boven lengte 0°
-  'Sentinel-1':  {r:1.30, inc:98.2, node:25,   T:24},                  // polair, zonsynchroon, 693 km
-  'Sentinel-2':  {r:1.36, inc:98.6, node:-35,  T:25},                  // polair, zonsynchroon, 786 km
-  'Sentinel-3':  {r:1.39, inc:98.6, node:70,   T:25.5},                // polair, zonsynchroon, 814 km
-  'Sentinel-5P': {r:1.41, inc:98.7, node:-70,  T:26},                  // polair, zonsynchroon, 824 km
-  'GRACE':       {r:1.22, inc:89,   node:-10,  T:23, pair:true},       // bijna polair, twee satellieten achter elkaar, 490 km
-  'GEDI':        {r:1.18, inc:51.6, node:40,   T:22},                  // aan boord van het ISS, 420 km
+  'Sentinel-1':  {r:1.15, inc:98.2, node:25,   T:24},                  // polair, zonsynchroon, 693 km
+  'Sentinel-2':  {r:1.17, inc:98.6, node:-35,  T:25},                  // polair, zonsynchroon, 786 km
+  'Sentinel-3':  {r:1.19, inc:98.6, node:70,   T:25.5},                // polair, zonsynchroon, 814 km
+  'Sentinel-5P': {r:1.21, inc:98.7, node:-70,  T:26},                  // polair, zonsynchroon, 824 km
+  'GRACE':       {r:1.12, inc:89,   node:-10,  T:23, pair:true},       // bijna polair, twee satellieten achter elkaar, 490 km
+  'GEDI':        {r:1.10, inc:51.6, node:40,   T:22},                  // aan boord van het ISS, 420 km
 };
 const DIRS = ['N','NO','O','ZO','Z','ZW','W','NW'];
 const CODE = '30051975';
@@ -986,7 +986,7 @@ class Component extends DCLogic {
     }
     const t = now / 1000, el = 16 * Math.PI / 180, ce = Math.cos(el), se = Math.sin(el);
     const rot = 2 * Math.PI * t / EARTH_T;
-    const R = Math.max(30, Math.min(84, (W - 140) / 4.9, (H - 30) / 2 / 1.45)), cx = W / 2, cy = H / 2 + 6;
+    const R = Math.max(30, Math.min(84, (W - 140) / 4.9, (H - 48) / 2 / 1.21)), cx = W / 2, cy = H / 2 + 12;
     // inertiaal (x naar kijker, y rechts, z noord) -> scherm; d = diepte naar kijker
     const proj = (x, y, z) => ({sx: cx + y * R, sy: cy - (-x * se + z * ce) * R, d: x * ce + z * se});
     const pos = (o, u) => { const i = o.inc * Math.PI / 180, n = o.node * Math.PI / 180, cu = Math.cos(u), su = Math.sin(u);
