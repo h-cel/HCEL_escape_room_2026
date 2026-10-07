@@ -615,28 +615,8 @@
       </div>
       </div>
 
-      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;background:#1c3567;border:2px solid #1c3567;margin-top:32px;max-width:780px;animation:eoRise 1.4s cubic-bezier(.22,.61,.36,1) 2.8s both">
-        <div style="background:#00163f;padding:22px 24px">
-          <div style="font-size:11px;font-weight:700;letter-spacing:.18em;color:#ffc83d">SDIS 33 — BRANDWEER GIRONDE</div>
-          <sc-if value="{{onTime}}" hint-placeholder-val="{{true}}">
-            <div style="font-size:15px;line-height:1.6;color:#b8c2d6;margin-top:12px">{{sdisText}}</div>
-          </sc-if>
-          <sc-if value="{{overtime}}" hint-placeholder-val="{{false}}">
-            <div style="font-size:15px;line-height:1.6;color:#b8c2d6;margin-top:12px">Analyse laat ontvangen. De vlammen stonden al in de rand van Bordeaux, maar met jullie analyse konden we de laatste straten nog vrijhouden.</div>
-          </sc-if>
-        </div>
-        <div style="background:#00163f;padding:22px 24px">
-          <div style="font-size:11px;font-weight:700;letter-spacing:.18em;color:#ffc83d">PRÉFECTURE DE LA GIRONDE</div>
-          <sc-if value="{{onTime}}" hint-placeholder-val="{{true}}">
-            <div style="font-size:15px;line-height:1.6;color:#b8c2d6;margin-top:12px">{{prefText}}</div>
-          </sc-if>
-          <sc-if value="{{overtime}}" hint-placeholder-val="{{false}}">
-            <div style="font-size:15px;line-height:1.6;color:#b8c2d6;margin-top:12px">De evacuatie was al begonnen toen het rapport binnenkwam. Jullie analyse bepaalt nu welke wijken nog ontruimd worden en waar de waarschuwing voor luchtkwaliteit geldt.</div>
-          </sc-if>
-        </div>
-      </div>
-
-      <div style="animation:eoRise 1.4s cubic-bezier(.22,.61,.36,1) 3.6s both">
+      <div style="display:flex;flex-wrap:wrap;gap:32px 56px;align-items:flex-end;margin-top:8px">
+      <div style="flex:1 1 520px;min-width:0;animation:eoRise 1.4s cubic-bezier(.22,.61,.36,1) 2.8s both">
       <div style="font-size:14px;font-weight:700;letter-spacing:.16em;color:#97a3bd;margin-top:28px">AARDOBSERVATIETEAM — {{finalVerdict}}</div>
 
       <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;border-top:2px solid #3f5689;margin-top:20px;padding-top:20px">
@@ -668,6 +648,29 @@
       </sc-if>
 
       <button onClick="{{restart}}" style="margin-top:32px;border:2px solid #3f5689;background:transparent;color:#b8c2d6;font-family:'Archivo',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;padding:14px 22px;text-align:left;cursor:pointer" style-hover="border-color:#ffc83d;color:#ffc83d">OPNIEUW STARTEN</button>
+      </div>
+      <div style="flex:0 1 440px;min-width:0;animation:eoRise 1.4s cubic-bezier(.22,.61,.36,1) 3.8s both">
+        <div style="display:grid;grid-template-columns:minmax(0,1fr);gap:2px;background:#1c3567;border:2px solid #1c3567">
+          <div style="background:#00163f;padding:14px 16px">
+            <div style="font-size:10px;font-weight:700;letter-spacing:.18em;color:#ffc83d">SDIS 33 — BRANDWEER GIRONDE</div>
+            <sc-if value="{{onTime}}" hint-placeholder-val="{{true}}">
+              <div style="font-size:13px;line-height:1.5;color:#97a3bd;margin-top:8px">{{sdisText}}</div>
+            </sc-if>
+            <sc-if value="{{overtime}}" hint-placeholder-val="{{false}}">
+              <div style="font-size:13px;line-height:1.5;color:#97a3bd;margin-top:8px">Analyse laat ontvangen. De vlammen stonden al in de rand van Bordeaux, maar met jullie analyse konden we de laatste straten nog vrijhouden.</div>
+            </sc-if>
+          </div>
+          <div style="background:#00163f;padding:14px 16px">
+            <div style="font-size:10px;font-weight:700;letter-spacing:.18em;color:#ffc83d">PRÉFECTURE DE LA GIRONDE</div>
+            <sc-if value="{{onTime}}" hint-placeholder-val="{{true}}">
+              <div style="font-size:13px;line-height:1.5;color:#97a3bd;margin-top:8px">{{prefText}}</div>
+            </sc-if>
+            <sc-if value="{{overtime}}" hint-placeholder-val="{{false}}">
+              <div style="font-size:13px;line-height:1.5;color:#97a3bd;margin-top:8px">De evacuatie was al begonnen toen het rapport binnenkwam. Jullie analyse bepaalt nu welke wijken nog ontruimd worden en waar de waarschuwing voor luchtkwaliteit geldt.</div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
       </div>
       </div>
 
