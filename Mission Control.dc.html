@@ -413,16 +413,36 @@
                         <div style="font-size:19px;font-weight:800;letter-spacing:.12em">KIES DE RICHTING</div>
                         <div style="font-size:12px;font-weight:600;letter-spacing:.08em;color:#7a88a6">{{dirCostLabel}}</div>
                       </div>
+                      <div style="font-size:16px;line-height:1.45;color:#b8c2d6">Draai de naald in de richting waarin de brand zich verspreidt.</div>
+                      <sc-if value="{{canConfirmDir}}" hint-placeholder-val="{{false}}">
+                        <button onClick="{{confirmDir}}" style="align-self:flex-start;border:none;background:#ffc83d;color:#00163f;font-family:'Archivo',sans-serif;font-size:14px;font-weight:800;letter-spacing:.08em;padding:12px 20px;min-width:220px;text-align:left;cursor:pointer" style-hover="background:#ffdc7a">RICHTING BEVESTIGEN: {{dirPreviewLabel}}</button>
+                      </sc-if>
                       <sc-if value="{{hasDirMsg}}" hint-placeholder-val="{{false}}">
-                        <div style="font-size:16px;line-height:1.45;color:#97a3bd">✕ {{dirMsg}}</div>
+                        <div style="font-size:16px;line-height:1.45;color:#ff563c">✕ {{dirMsg}}</div>
+                      </sc-if>
+                      <sc-if value="{{dirDone}}" hint-placeholder-val="{{false}}">
+                        <div style="font-size:16px;line-height:1.45;color:#41CD03">✓ Juist: de brand verspreidt zich naar het {{dirName}}.</div>
                       </sc-if>
                       </div>
-                      <div onPointerDown="{{dialDown}}" onPointerMove="{{dialMove}}" onPointerUp="{{dialUp}}" style="position:relative;flex:0 0 auto;width:176px;height:176px;border:2px solid #1c3567;border-radius:50%;cursor:grab;touch-action:none">
-                        <div style="position:absolute;top:50%;left:50%;width:2px;height:58px;background:#ffc83d;transform-origin:50% 100%;transform:{{needleRot}}"></div>
-                        <div style="position:absolute;top:50%;left:50%;width:8px;height:8px;background:#ffc83d;transform:translate(-50%,-50%)"></div>
-                        <sc-for list="{{dirOptions}}" as="o" hint-placeholder-count="8">
-                          <button onClick="{{o.onClick}}" style="position:absolute;top:50%;left:50%;transform:{{o.pos}};border:2px solid {{o.border}};background:{{o.bg}};color:{{o.color}};font-family:'Archivo',sans-serif;font-size:11px;font-weight:700;width:34px;height:26px;cursor:pointer;padding:0">{{o.label}}</button>
+                      <div style="flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:10px">
+                      <div onPointerDown="{{dialDown}}" onPointerMove="{{dialMove}}" onPointerUp="{{dialUp}}" style="position:relative;width:188px;height:188px;border-radius:50%;cursor:{{dialCursor}};touch-action:none;user-select:none;background:radial-gradient(circle at 50% 38%, #163a7a 0%, #0b2552 55%, #071a3d 100%);box-shadow:inset 0 0 0 5px #1c3567, inset 0 0 0 7px #3f5689, inset 0 0 18px rgba(0,0,0,.6), 0 10px 24px rgba(0,0,0,.45)">
+                        <sc-for list="{{dialTicks}}" as="t" hint-placeholder-count="72">
+                          <div style="position:absolute;top:50%;left:50%;width:{{t.w}};height:{{t.h}};background:{{t.c}};transform:translate(-50%,-50%) rotate({{t.a}}deg) translateY(-82px);pointer-events:none"></div>
                         </sc-for>
+                        <sc-for list="{{dirOptions}}" as="o" hint-placeholder-count="8">
+                          <button onClick="{{o.onClick}}" onPointerDown="{{o.stop}}" style="position:absolute;top:50%;left:50%;transform:{{o.pos}};border:none;border-radius:50%;background:{{o.bg}};color:{{o.color}};font-family:'Archivo',sans-serif;font-size:{{o.size}};font-weight:800;width:30px;height:30px;line-height:30px;cursor:pointer;padding:0;text-align:center">{{o.label}}</button>
+                        </sc-for>
+                        <div style="position:absolute;top:50%;left:50%;width:0;height:0;transform:rotate({{needleDeg}}deg);transition:{{needleTrans}};pointer-events:none">
+                          <svg width="22" height="112" viewBox="0 0 22 112" style="position:absolute;left:-11px;top:-56px;display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.5))">
+                            <polygon points="11,0 20,56 2,56" fill="{{needleColor}}"></polygon>
+                            <polygon points="11,0 11,56 2,56" fill="rgba(0,0,0,.18)"></polygon>
+                            <polygon points="11,112 20,56 2,56" fill="#b8c2d6"></polygon>
+                            <polygon points="11,112 11,56 2,56" fill="rgba(0,0,0,.18)"></polygon>
+                          </svg>
+                        </div>
+                        <div style="position:absolute;top:50%;left:50%;width:14px;height:14px;border-radius:50%;background:#f8f4f4;border:3px solid #00163f;transform:translate(-50%,-50%);pointer-events:none"></div>
+                      </div>
+                      <div style="font-size:12px;font-weight:700;letter-spacing:.14em;color:#97a3bd">{{dialHint}}</div>
                       </div>
                     </div>
                   </sc-if>
@@ -1164,34 +1184,49 @@ class Component extends DCLogic {
       e('div', {style: {position: 'absolute', left: 0, right: 0, bottom: 0, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', paddingBottom: 6}}, trees));
     return this._fly;
   };
+  dirSolved = () => {
+    const step = this.steps()[this.state.i];
+    return ((this.state.answers[step.key] || {}).val) === step.correctDir;
+  };
   commitDir = (dir) => {
     const step = this.steps()[this.state.i];
-    const cur = this.state.answers[step.key] || {};
-    if (cur.val === step.correctDir) return;
+    if (!dir || this.dirSolved()) return;
     if (dir === step.correctDir) { this.setVal(step.key, dir); this.setState({dirPreview: dir, dirMsg:''}); }
     else { this.setState({dirPreview: dir, dirMsg:'Deze richting klopt niet met de rookpluim. Kijk opnieuw.'}); this.penalize(this.straf('strafFouteRichting', 60), 'FOUTE WINDRICHTING'); }
+  };
+  confirmDir = () => this.commitDir(this.state.dirPreview);
+  // naald draaien: hoek blijft doorlopend (geen sprong van 359 naar 0), bij loslaten vastklikken op 45°
+  near = (a, ref) => a + 360 * Math.round(((ref || 0) - a) / 360);
+  dirOf = (a) => DIRS[((Math.round(a / 45) % 8) + 8) % 8];
+  pickDir = (d) => {
+    if (this.dirSolved()) return;
+    const a = this.near(DIRS.indexOf(d) * 45, this.state.dirAngle);
+    this.setState({dirAngle: a, dirPreview: d, dirMsg: ''});
   };
   dialAngle = (e) => {
     if (!this._dial) return null;
     const r = this._dial.getBoundingClientRect();
     const dx = e.clientX - (r.left + r.width/2), dy = e.clientY - (r.top + r.height/2);
     if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return null;
-    let a = Math.atan2(dx, -dy) * 180 / Math.PI;
-    if (a < 0) a += 360;
-    return DIRS[Math.round(a/45) % 8];
+    return this.near(Math.atan2(dx, -dy) * 180 / Math.PI, this.state.dirAngle);
   };
   dialDown = (e) => {
+    if (this.dirSolved()) return;
     this._dial = e.currentTarget; this._drag = true;
     if (e.currentTarget.setPointerCapture && e.pointerId != null) e.currentTarget.setPointerCapture(e.pointerId);
-    const d = this.dialAngle(e); if (d) this.setState({dirPreview: d});
+    const a = this.dialAngle(e); this.setState(a == null ? {dirDrag: true} : {dirDrag: true, dirAngle: a, dirPreview: this.dirOf(a), dirMsg: ''});
   };
-  dialMove = (e) => { if (!this._drag) return; const d = this.dialAngle(e); if (d) this.setState({dirPreview: d}); };
-  dialUp = (e) => { if (!this._drag) return; this._drag = false; const d = this.dialAngle(e) || this.state.dirPreview; if (d) this.commitDir(d); };
+  dialMove = (e) => { if (!this._drag) return; const a = this.dialAngle(e); if (a != null) this.setState({dirAngle: a, dirPreview: this.dirOf(a)}); };
+  dialUp = (e) => {
+    if (!this._drag) return; this._drag = false;
+    const a = this.state.dirAngle;
+    this.setState(a == null ? {dirDrag: false} : {dirDrag: false, dirAngle: Math.round(a / 45) * 45, dirPreview: this.dirOf(a)});
+  };
 
   next = () => this.setState(s => ({studyDraw:false, i: Math.min(this.steps().length-1, s.i+1), satMsg:'', satWrong:null}));
   back = () => this.setState(s => (s.i === 0 ? {phase:'brief', briefStep:1} : {i: s.i-1, satMsg:'', satWrong:null}));
   transmit = () => this.setState({phase:'done'});
-  restart = () => { try { localStorage.removeItem('eo-state-v1'); } catch (e) {} this.setState({phase:'lock', code:'', lockMsg:'', i:0, answers:{}, satMsg:'', satWrong:null, hint:false, lockHint:false, subHints:{}, penalty:null, zoom:false, dirPreview:null, dirMsg:'', team:'', saved:false, justAdded:null, overtime:false, overModal:false, overSeconds:0, penaltyTotal:0, studyDraw:false, showMap:false, briefReady:false, briefStep:0, briefSlots:[null,null,null], briefPick:null, briefWrong:null, briefDrag:null, secondsLeft:(this.cfg().minuten ?? 45)*60}); this._fly = null; };
+  restart = () => { try { localStorage.removeItem('eo-state-v1'); } catch (e) {} this.setState({phase:'lock', code:'', lockMsg:'', i:0, answers:{}, satMsg:'', satWrong:null, hint:false, lockHint:false, subHints:{}, penalty:null, zoom:false, dirPreview:null, dirAngle:null, dirDrag:false, dirMsg:'', team:'', saved:false, justAdded:null, overtime:false, overModal:false, overSeconds:0, penaltyTotal:0, studyDraw:false, showMap:false, briefReady:false, briefStep:0, briefSlots:[null,null,null], briefPick:null, briefWrong:null, briefDrag:null, secondsLeft:(this.cfg().minuten ?? 45)*60}); this._fly = null; };
   setTeam = (e) => this.setState({team: e.target.value});
   teamKey = (e) => { if (e.key === 'Enter') this.addToBoard(); };
   addToBoard = () => {
@@ -1287,16 +1322,22 @@ class Component extends DCLogic {
     const polyHasPoints = pts.length > 0;
     const urgent = sec <= 300 && sec > 0 && (s.phase === 'lock' || s.phase === 'task');
 
-    const shownDir = cur.val || s.dirPreview;
+    const dirSolvedNow = step.at === 'compass' && cur.val === step.correctDir;
+    const shownDir = dirSolvedNow ? cur.val : s.dirPreview;
+    const dirWrong = !!s.dirMsg;
     const dirOptions = DIRS.map((d,k) => {
-      const on = shownDir === d, ok = cur.val === d, ang = k*45;
-      return {label:d, onClick: () => this.commitDir(d),
-        bg: ok ? '#ffc83d' : on ? '#6b5210' : 'transparent',
-        color: ok ? '#00163f' : '#f8f4f4', border: on ? '#ffc83d' : '#3f5689',
-        pos: 'translate(-50%,-50%) rotate(' + ang + 'deg) translateY(-69px) rotate(' + (-ang) + 'deg)'};
+      const on = shownDir === d, ang = k*45, main = k % 2 === 0;
+      return {label:d, onClick: () => this.pickDir(d), stop: (e) => e.stopPropagation(),
+        bg: on ? (dirSolvedNow ? '#41CD03' : dirWrong ? '#ff563c' : '#ffc83d') : 'transparent',
+        color: on ? '#00163f' : d === 'N' ? '#ff563c' : main ? '#f8f4f4' : '#97a3bd',
+        size: main ? '15px' : '11px',
+        pos: 'translate(-50%,-50%) rotate(' + ang + 'deg) translateY(-62px) rotate(' + (-ang) + 'deg)'};
     });
-    const dirIndex = DIRS.indexOf(shownDir);
-    const needleRot = 'translate(-50%,-100%) rotate(' + (dirIndex < 0 ? 0 : dirIndex*45) + 'deg)';
+    const dialTicks = Array.from({length: 72}, (_, k) => ({a: k*5,
+      w: k % 9 === 0 ? '3px' : '1px', h: k % 9 === 0 ? '10px' : k % 3 === 0 ? '7px' : '4px',
+      c: k % 9 === 0 ? '#ffc83d' : k % 3 === 0 ? '#97a3bd' : '#3f5689'}));
+    const needleDeg = s.dirAngle != null && !dirSolvedNow ? s.dirAngle : (DIRS.indexOf(shownDir) < 0 ? 0 : this.near(DIRS.indexOf(shownDir) * 45, s.dirAngle));
+    const DIR_NAMES = {N:'noorden', NO:'noordoosten', O:'oosten', ZO:'zuidoosten', Z:'zuiden', ZW:'zuidwesten', W:'westen', NW:'noordwesten'};
 
     const zoneMin = Number(this.cfg().minZoneScore ?? 70);
     const zoneRef = this.refZone();
@@ -1440,7 +1481,7 @@ class Component extends DCLogic {
       hasOkMsg: !!((step.sats||[]).find(x => x.ok && x.n === cur.sat) || {}).why,
       figCaption: step.fig || '', outLabel: step.out || '',
       isLevel: step.at==='level', isGrid: step.at==='grid', isCompass: step.at==='compass', isPoly: step.at==='poly',
-      levelOptions, gridCells, dirOptions, needleRot,
+      levelOptions, gridCells, dirOptions,
       cellsConfirmed, cellsPicked, notConfirmed: !cellsConfirmed,
       confirmCells: () => this.confirmCells(step),
       polyPoints, polyDots, polyClosed, polyCanClose, polyOpen: !polyClosed,
@@ -1474,13 +1515,18 @@ class Component extends DCLogic {
       polyKm2: cur.km2 == null ? '\u2014' : cur.km2,
       trees, minsLeft,
       hasDirMsg: !!s.dirMsg, dirMsg: s.dirMsg || '',
+      dialTicks, needleDeg, needleTrans: s.dirDrag ? 'none' : 'transform .45s cubic-bezier(.34,1.56,.64,1)',
+      needleColor: dirSolvedNow ? '#41CD03' : '#ffc83d', dialCursor: dirSolvedNow ? 'default' : s.dirDrag ? 'grabbing' : 'grab',
+      canConfirmDir: !dirSolvedNow && !!s.dirPreview && !s.dirDrag && !dirWrong, confirmDir: this.confirmDir, dirPreviewLabel: s.dirPreview || '',
+      dirDone: dirSolvedNow, dirName: DIR_NAMES[cur.val] || '',
+      dialHint: dirSolvedNow ? 'RICHTING VASTGELEGD' : 'SLEEP DE NAALD',
       zoom: s.zoom, toggleZoom: this.toggleZoom,
       figWrap: s.zoom
         ? 'position:fixed;inset:0;z-index:60;background:rgba(0,22,63,.96);display:flex;align-items:center;justify-content:center;padding:16px'
         : 'position:relative',
       figStyle: s.zoom
         ? 'position:relative;width:min(100%, calc((var(--eo-vh, 100vh) - 36px) * 1.6));aspect-ratio:16/10;border:2px solid #3f5689;background:#00163f;overflow:hidden'
-        : 'position:relative;width:min(100%, calc((var(--eo-vh, 100vh) - ' + ((step.at === 'level' || step.at === 'compass' ? 380 : step.at === 'grid' ? 320 : 450) + 60) + 'px) * 1.6));aspect-ratio:16/10;border:2px solid #1c3567;background:#0a2454;overflow:hidden',
+        : 'position:relative;width:min(100%, calc((var(--eo-vh, 100vh) - ' + ((step.at === 'compass' ? 420 : step.at === 'level' ? 380 : step.at === 'grid' ? 320 : 450) + 60) + 'px) * 1.6));aspect-ratio:16/10;border:2px solid #1c3567;background:#0a2454;overflow:hidden',
       zoomLabel: s.zoom ? 'SLUITEN' : 'VOLLEDIG SCHERM',
       rootRef: this.rootRef,
       showMap: !!s.showMap, toggleMap: this.toggleMap,
