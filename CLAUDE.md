@@ -36,7 +36,7 @@ Antwoord in het Nederlands.
   Nieuwe tweak toevoegen: in `data-props` én in `instellingen.js` (zelfde naam), en in de README-tabel.
   Kaders/zone instellen: instelmodus aan, tekenen in het spel, gekopieerde code in `instellingen.js` plakken.
 - Intro (fase `brief`): `briefStep` 0 = alarmscherm (`uploads/alert-vuur.webp`), 1 = uitleg + volgordepuzzel
-  (`PARTS`, `PART_DECK`); stap-voor-stap verschijnen via `animation:eoFade … <delay>s both`.
+  (`PARTS`, `PART_DECK`); stap-voor-stap verschijnen via `animation:eoRise … <delay>s both` (ook op het eindscherm).
 - Satellietbeelden: `.image-slots.state.json` (base64, sleutels `eo-<vraag>`). Overige beelden in `uploads/`.
 - `support.js`, `image-slot.js`, `_ds/` — runtime en stijlen; niet aanpassen.
 - localStorage: `eo-state-v1` (lopend spel), `eo-board-v1` (scorebord), `eo-study-v1`, `eo-refzone-v1`.

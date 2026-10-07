@@ -18,6 +18,7 @@
   body{margin:0;background:#201e1d;}
   a{color:#ffc83d}a:hover{color:#ffdc7a}
   @keyframes eoFade{from{opacity:0}to{opacity:1}}
+  @keyframes eoRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
   @keyframes eoBlink{0%,100%{opacity:1}50%{opacity:.2}}
   @keyframes eoShake{20%,80%{transform:translateX(3px)}40%,60%{transform:translateX(-3px)}}
   @keyframes eoAlarm{0%,100%{opacity:1}50%{opacity:.25}}
@@ -91,23 +92,23 @@
 
   <sc-if value="{{isBriefA}}" hint-placeholder-val="{{false}}">
     <div style="min-height:var(--eo-vh, 100vh);display:flex;flex-direction:column;justify-content:center;padding:48px 56px;box-sizing:border-box">
-      <div style="display:flex;align-items:center;gap:12px;animation:eoFade .4s both">
+      <div style="display:flex;align-items:center;gap:12px;animation:eoRise 1s cubic-bezier(.22,.61,.36,1) both">
         <div style="width:12px;height:12px;background:#ff563c;animation:eoBlink 1.1s infinite"></div>
         <div style="font-size:15px;font-weight:700;letter-spacing:.2em;color:#ff563c">ALARM: BRANDHAARD GEDETECTEERD</div>
       </div>
       <div style="height:2px;background:#605d5d;margin:20px 0 28px"></div>
       <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:center">
-        <img src="uploads/alert-vuur.webp" alt="Bosbrand in de Gironde" style="display:block;flex:1 1 560px;min-width:0;max-width:900px;max-height:calc(var(--eo-vh, 100vh) - 220px);object-fit:cover;border:2px solid #444141;animation:eoFade .6s both">
+        <img src="uploads/alert-vuur.webp" alt="Bosbrand in de Gironde" style="display:block;flex:1 1 560px;min-width:0;max-width:900px;max-height:calc(var(--eo-vh, 100vh) - 220px);object-fit:cover;border:2px solid #444141;animation:eoRise 1.2s cubic-bezier(.22,.61,.36,1) both">
         <div style="flex:1 1 360px;min-width:0;display:flex;flex-direction:column;gap:24px">
-          <div style="font-size:56px;font-weight:800;line-height:1;letter-spacing:-.03em;color:#ff563c;animation:eoFade .5s .6s both">BRANDHAARD<br>GEDETECTEERD!</div>
-          <div style="display:flex;gap:16px;align-items:center;animation:eoFade .5s 1.3s both">
+          <div style="font-size:56px;font-weight:800;line-height:1;letter-spacing:-.03em;color:#ff563c;animation:eoRise 1.2s cubic-bezier(.22,.61,.36,1) 1s both">BRANDHAARD<br>GEDETECTEERD!</div>
+          <div style="display:flex;gap:16px;align-items:center;animation:eoRise 1.2s cubic-bezier(.22,.61,.36,1) 2.2s both">
             <img src="uploads/bosbrandinfo.avif" alt="Situering van de brandzone tussen Cap Ferret en Bordeaux" style="display:block;width:200px;height:auto;flex:0 0 auto;border:2px solid #444141">
             <div style="font-size:22px;line-height:1.4;color:#f8f4f4"><strong style="color:#79E6FB;font-weight:800">Nabij Gironde</strong>, ten westen van Bordeaux<br><span style="color:#bab6b6">24 juli 2026</span></div>
           </div>
-          <div style="font-size:26px;font-weight:700;line-height:1.35;color:#f8f4f4;animation:eoFade .5s 2.3s both">De lokale autoriteiten wachten op jullie analyse.</div>
+          <div style="font-size:26px;font-weight:700;line-height:1.35;color:#f8f4f4;animation:eoRise 1.2s cubic-bezier(.22,.61,.36,1) 3.4s both">De lokale autoriteiten wachten op jullie analyse.</div>
           <div style="min-height:58px;display:flex">
             <sc-if value="{{briefReady}}" hint-placeholder-val="{{false}}">
-              <button onClick="{{briefNext}}" style="align-self:flex-start;animation:eoFade .5s both;border:none;background:#ffc83d;color:#201e1d;font-family:'Archivo',sans-serif;font-size:16px;font-weight:800;letter-spacing:.06em;padding:18px 28px;min-width:280px;text-align:left;cursor:pointer" style-hover="background:#ffdc7a">VERDER →</button>
+              <button onClick="{{briefNext}}" style="align-self:flex-start;animation:eoRise 1s cubic-bezier(.22,.61,.36,1) both;border:none;background:#ffc83d;color:#201e1d;font-family:'Archivo',sans-serif;font-size:16px;font-weight:800;letter-spacing:.06em;padding:18px 28px;min-width:280px;text-align:left;cursor:pointer" style-hover="background:#ffdc7a">VERDER →</button>
             </sc-if>
           </div>
         </div>
@@ -117,19 +118,19 @@
 
   <sc-if value="{{isBriefB}}" hint-placeholder-val="{{false}}">
     <div style="min-height:var(--eo-vh, 100vh);display:flex;flex-direction:column;justify-content:center;padding:40px 56px;box-sizing:border-box">
-      <div style="font-size:15px;font-weight:700;letter-spacing:.2em;color:#ffc83d;animation:eoFade .4s both">CRISISCENTRUM BOSBRAND</div>
+      <div style="font-size:15px;font-weight:700;letter-spacing:.2em;color:#ffc83d;animation:eoRise 1s cubic-bezier(.22,.61,.36,1) both">CRISISCENTRUM BOSBRAND</div>
       <div style="height:2px;background:#605d5d;margin:16px 0 24px"></div>
-      <div style="font-size:34px;font-weight:800;line-height:1.15;letter-spacing:-.02em;max-width:36ch;animation:eoFade .5s .2s both">Jullie stellen zelf een rapport op aan de hand van vragen.</div>
-      <div style="margin-top:24px;max-width:1100px;box-sizing:border-box;background:#f8f4f4;color:#201e1d;padding:18px 18px 20px;animation:eoFade .5s .8s both">
+      <div style="font-size:34px;font-weight:800;line-height:1.15;letter-spacing:-.02em;max-width:36ch;animation:eoRise 1.2s cubic-bezier(.22,.61,.36,1) .3s both">Jullie stellen zelf een rapport op aan de hand van vragen.</div>
+      <div style="margin-top:24px;max-width:1100px;box-sizing:border-box;background:#f8f4f4;color:#201e1d;padding:18px 18px 20px;animation:eoRise 1.2s cubic-bezier(.22,.61,.36,1) 1.2s both">
         <div style="font-size:15px;font-weight:700;letter-spacing:.18em;color:#605d5d">ZO WERKT ELKE VRAAG</div>
         <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;background:#bab6b6;border:2px solid #bab6b6;margin-top:10px">
-          <div style="background:#f8f4f4;padding:20px 20px;display:flex;align-items:center;gap:14px;animation:eoFade .4s 1.3s both"><div style="width:34px;height:34px;flex:0 0 auto;background:#ffc83d;color:#201e1d;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center">1</div><div style="font-size:19px;font-weight:800;letter-spacing:.06em;color:#201e1d">KIES DE JUISTE SATELLIET</div></div>
-          <div style="background:#f8f4f4;padding:20px 20px;display:flex;align-items:center;gap:14px;animation:eoFade .4s 1.8s both"><div style="width:34px;height:34px;flex:0 0 auto;background:#79E6FB;color:#201e1d;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center">2</div><div style="font-size:19px;font-weight:800;letter-spacing:.06em;color:#201e1d">BEKIJK HET BEELD</div></div>
-          <div style="background:#f8f4f4;padding:20px 20px;display:flex;align-items:center;gap:14px;animation:eoFade .4s 2.3s both"><div style="width:34px;height:34px;flex:0 0 auto;background:#b79cff;color:#201e1d;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center">3</div><div style="font-size:19px;font-weight:800;letter-spacing:.06em;color:#201e1d">GEEF JULLIE ANTWOORD</div></div>
+          <div style="background:#f8f4f4;padding:20px 20px;display:flex;align-items:center;gap:14px;animation:eoRise 1s cubic-bezier(.22,.61,.36,1) 2s both"><div style="width:34px;height:34px;flex:0 0 auto;background:#ffc83d;color:#201e1d;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center">1</div><div style="font-size:19px;font-weight:800;letter-spacing:.06em;color:#201e1d">KIES DE JUISTE SATELLIET</div></div>
+          <div style="background:#f8f4f4;padding:20px 20px;display:flex;align-items:center;gap:14px;animation:eoRise 1s cubic-bezier(.22,.61,.36,1) 2.7s both"><div style="width:34px;height:34px;flex:0 0 auto;background:#79E6FB;color:#201e1d;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center">2</div><div style="font-size:19px;font-weight:800;letter-spacing:.06em;color:#201e1d">BEKIJK HET BEELD</div></div>
+          <div style="background:#f8f4f4;padding:20px 20px;display:flex;align-items:center;gap:14px;animation:eoRise 1s cubic-bezier(.22,.61,.36,1) 3.4s both"><div style="width:34px;height:34px;flex:0 0 auto;background:#b79cff;color:#201e1d;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center">3</div><div style="font-size:19px;font-weight:800;letter-spacing:.06em;color:#201e1d">GEEF JULLIE ANTWOORD</div></div>
         </div>
       </div>
 
-      <div style="margin-top:28px;max-width:1100px;animation:eoFade .5s 3s both">
+      <div style="margin-top:28px;max-width:1100px;animation:eoRise 1.2s cubic-bezier(.22,.61,.36,1) 4.3s both">
         <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap">
           <div style="font-size:15px;font-weight:700;letter-spacing:.18em;color:#ffc83d">EERSTE OPDRACHT</div>
           <div style="font-size:22px;font-weight:700;color:#f8f4f4">Het rapport bestaat uit 3 delen. Sleep elk deel naar de juiste plaats.</div>
@@ -153,7 +154,7 @@
 
       <div style="min-height:58px;margin-top:20px;display:flex">
         <sc-if value="{{briefSolved}}" hint-placeholder-val="{{false}}">
-          <button onClick="{{start}}" style="align-self:flex-start;animation:eoFade .5s both;border:none;background:#ffc83d;color:#201e1d;font-family:'Archivo',sans-serif;font-size:16px;font-weight:800;letter-spacing:.06em;padding:18px 28px;min-width:280px;text-align:left;cursor:pointer" style-hover="background:#ffdc7a">START DE ANALYSE</button>
+          <button onClick="{{start}}" style="align-self:flex-start;animation:eoRise 1s cubic-bezier(.22,.61,.36,1) both;border:none;background:#ffc83d;color:#201e1d;font-family:'Archivo',sans-serif;font-size:16px;font-weight:800;letter-spacing:.06em;padding:18px 28px;min-width:280px;text-align:left;cursor:pointer" style-hover="background:#ffdc7a">START DE ANALYSE</button>
         </sc-if>
       </div>
     </div>
@@ -534,7 +535,7 @@
   </sc-if>
 
   <sc-if value="{{isDone}}" hint-placeholder-val="{{false}}">
-    <div style="min-height:var(--eo-vh, 100vh);display:flex;flex-direction:column;justify-content:center;padding:48px 56px;animation:eoFade .5s">
+    <div style="min-height:var(--eo-vh, 100vh);display:flex;flex-direction:column;justify-content:center;padding:48px 56px;animation:eoRise 1.4s cubic-bezier(.22,.61,.36,1) both">
       <sc-if value="{{onTime}}" hint-placeholder-val="{{true}}">
         <div style="margin:-12px 0 28px">{{flyover}}</div>
       </sc-if>
@@ -558,7 +559,7 @@
         </div>
       </sc-if>
 
-      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;background:#444141;border:2px solid #444141;margin-top:32px;max-width:780px;animation:eoFade .5s 1.1s both">
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;background:#444141;border:2px solid #444141;margin-top:32px;max-width:780px;animation:eoRise 1.4s cubic-bezier(.22,.61,.36,1) 2s both">
         <div style="background:#201e1d;padding:22px 24px">
           <div style="font-size:11px;font-weight:700;letter-spacing:.18em;color:#ffc83d">SDIS 33 — BRANDWEER GIRONDE</div>
           <sc-if value="{{onTime}}" hint-placeholder-val="{{true}}">
@@ -579,7 +580,7 @@
         </div>
       </div>
 
-      <div style="animation:eoFade .5s 1.6s both">
+      <div style="animation:eoRise 1.4s cubic-bezier(.22,.61,.36,1) 3s both">
       <div style="font-size:14px;font-weight:700;letter-spacing:.16em;color:#9b9797;margin-top:28px">AARDOBSERVATIETEAM — {{finalVerdict}}</div>
 
       <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;border-top:2px solid #605d5d;margin-top:20px;padding-top:20px">
@@ -614,7 +615,7 @@
       </div>
       </div>
 
-      <div style="display:grid;gap:2px;background:#444141;border:2px solid #444141;flex:1 1 340px;min-width:0;max-width:560px;animation:eoFade .5s .6s both">
+      <div style="display:grid;gap:2px;background:#444141;border:2px solid #444141;flex:1 1 340px;min-width:0;max-width:560px;animation:eoRise 1.4s cubic-bezier(.22,.61,.36,1) 1s both">
         <figure style="margin:0;background:#201e1d">
           <img src="uploads/bosbrand%20gelukt.webp" alt="Blusvliegtuig dropt water boven het naaldbos" style="display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain">
           <figcaption style="font-size:16px;font-weight:600;line-height:1.45;color:#bab6b6;padding:12px 14px">Blusvliegtuigen ingezet op de oostelijke flank.</figcaption>
@@ -898,7 +899,7 @@ class Component extends DCLogic {
 
   componentDidUpdate() {
     if (this._fit) this._fit();
-    if (this.state.phase === 'brief' && !this.state.briefReady && !this._briefT) this._briefT = setTimeout(() => { this._briefT = null; this.setState({briefReady: true}); }, 2800);
+    if (this.state.phase === 'brief' && !this.state.briefReady && !this._briefT) this._briefT = setTimeout(() => { this._briefT = null; this.setState({briefReady: true}); }, 4200);
     const s = this.state;
     if (s.secondsLeft == null) return;
     try {
