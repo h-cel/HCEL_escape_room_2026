@@ -18,6 +18,7 @@
   body{margin:0;background:#201e1d;}
   a{color:#ffc83d}a:hover{color:#ffdc7a}
   @keyframes eoFade{from{opacity:0}to{opacity:1}}
+  @keyframes eoDrop{from{opacity:0;transform:translateY(-24px) rotate(var(--r)) scale(1.06)}to{opacity:1;transform:rotate(var(--r))}}
   @keyframes eoRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
   @keyframes eoBlink{0%,100%{opacity:1}50%{opacity:.2}}
   @keyframes eoShake{20%,80%{transform:translateX(3px)}40%,60%{transform:translateX(-3px)}}
@@ -559,7 +560,7 @@
         </div>
       </sc-if>
 
-      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;background:#444141;border:2px solid #444141;margin-top:32px;max-width:780px;animation:eoRise 1.4s cubic-bezier(.22,.61,.36,1) 2s both">
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;background:#444141;border:2px solid #444141;margin-top:32px;max-width:780px;animation:eoRise 1.4s cubic-bezier(.22,.61,.36,1) 2.8s both">
         <div style="background:#201e1d;padding:22px 24px">
           <div style="font-size:11px;font-weight:700;letter-spacing:.18em;color:#ffc83d">SDIS 33 — BRANDWEER GIRONDE</div>
           <sc-if value="{{onTime}}" hint-placeholder-val="{{true}}">
@@ -580,7 +581,7 @@
         </div>
       </div>
 
-      <div style="animation:eoRise 1.4s cubic-bezier(.22,.61,.36,1) 3s both">
+      <div style="animation:eoRise 1.4s cubic-bezier(.22,.61,.36,1) 3.6s both">
       <div style="font-size:14px;font-weight:700;letter-spacing:.16em;color:#9b9797;margin-top:28px">AARDOBSERVATIETEAM — {{finalVerdict}}</div>
 
       <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;border-top:2px solid #605d5d;margin-top:20px;padding-top:20px">
@@ -615,25 +616,25 @@
       </div>
       </div>
 
-      <div style="display:grid;gap:2px;background:#444141;border:2px solid #444141;flex:1 1 340px;min-width:0;max-width:560px;animation:eoRise 1.4s cubic-bezier(.22,.61,.36,1) 1s both">
-        <figure style="margin:0;background:#201e1d">
-          <img src="uploads/bosbrand%20gelukt.webp" alt="Blusvliegtuig dropt water boven het naaldbos" style="display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain">
-          <figcaption style="font-size:16px;font-weight:600;line-height:1.45;color:#bab6b6;padding:12px 14px">Blusvliegtuigen ingezet op de oostelijke flank.</figcaption>
+      <div style="position:relative;flex:1 1 400px;min-width:0;max-width:640px;height:min(680px, calc(var(--eo-vh, 100vh) - 150px));min-height:520px">
+        <figure style="position:absolute;top:0;left:0;width:64%;margin:0;box-sizing:border-box;background:#f8f4f4;padding:10px 10px 0;box-shadow:0 14px 30px rgba(0,0,0,.55);z-index:1;--r:-4deg;transform:rotate(-4deg);animation:eoDrop 1.1s cubic-bezier(.22,.61,.36,1) 1s backwards;transition:transform .3s" style-hover="z-index:10;transform:rotate(0deg) scale(1.04)">
+          <img src="uploads/bosbrand%20gelukt.webp" alt="Blusvliegtuig dropt water boven het naaldbos" style="display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover">
+          <figcaption style="font-size:15px;font-weight:600;line-height:1.35;color:#201e1d;padding:10px 4px 12px">Blusvliegtuigen ingezet op de oostelijke flank.</figcaption>
         </figure>
-        <figure style="margin:0;background:#201e1d">
-          <img src="uploads/bosbrand%20gelukt3.webp" alt="Brandweerploegen blussen aan de bosrand" style="display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain">
-          <figcaption style="font-size:16px;font-weight:600;line-height:1.45;color:#bab6b6;padding:12px 14px">Ploegen houden de bosrand nat.</figcaption>
+        <figure style="position:absolute;top:28%;right:0;width:64%;margin:0;box-sizing:border-box;background:#f8f4f4;padding:10px 10px 0;box-shadow:0 14px 30px rgba(0,0,0,.55);z-index:2;--r:3deg;transform:rotate(3deg);animation:eoDrop 1.1s cubic-bezier(.22,.61,.36,1) 1.7s backwards;transition:transform .3s" style-hover="z-index:10;transform:rotate(0deg) scale(1.04)">
+          <img src="uploads/bosbrand%20gelukt3.webp" alt="Brandweerploegen blussen aan de bosrand" style="display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover">
+          <figcaption style="font-size:15px;font-weight:600;line-height:1.35;color:#201e1d;padding:10px 4px 12px">Ploegen houden de bosrand nat.</figcaption>
         </figure>
         <sc-if value="{{onTime}}" hint-placeholder-val="{{true}}">
-        <figure style="margin:0;background:#201e1d">
-          <img src="uploads/bosbrand%20gelukt2.webp" alt="Geëvacueerde bewoners in een opvangcentrum" style="display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain">
-          <figcaption style="font-size:16px;font-weight:600;line-height:1.45;color:#bab6b6;padding:12px 14px">Bewoners op tijd opgevangen in de evacuatiehal.</figcaption>
+        <figure style="position:absolute;top:56%;left:6%;width:64%;margin:0;box-sizing:border-box;background:#f8f4f4;padding:10px 10px 0;box-shadow:0 14px 30px rgba(0,0,0,.55);z-index:3;--r:-2deg;transform:rotate(-2deg);animation:eoDrop 1.1s cubic-bezier(.22,.61,.36,1) 2.4s backwards;transition:transform .3s" style-hover="z-index:10;transform:rotate(0deg) scale(1.04)">
+          <img src="uploads/bosbrand%20gelukt2.webp" alt="Geëvacueerde bewoners in een opvangcentrum" style="display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover">
+          <figcaption style="font-size:15px;font-weight:600;line-height:1.35;color:#201e1d;padding:10px 4px 12px">Bewoners op tijd opgevangen in de evacuatiehal.</figcaption>
         </figure>
         </sc-if>
         <sc-if value="{{overtime}}" hint-placeholder-val="{{false}}">
-        <figure style="margin:0;background:#201e1d">
-          <img src="uploads/bosbrand%20gefaaldPRESS.webp" alt="Uitgebrande woning in de brandzone" style="display:block;width:100%;height:auto;aspect-ratio:1620/1079;object-fit:contain">
-          <figcaption style="font-size:16px;font-weight:600;line-height:1.45;color:#bab6b6;padding:12px 14px">De vlammen bereikten de bewoonde zone voor de evacuatie rond was.</figcaption>
+        <figure style="position:absolute;top:56%;left:6%;width:64%;margin:0;box-sizing:border-box;background:#f8f4f4;padding:10px 10px 0;box-shadow:0 14px 30px rgba(0,0,0,.55);z-index:3;--r:-2deg;transform:rotate(-2deg);animation:eoDrop 1.1s cubic-bezier(.22,.61,.36,1) 2.4s backwards;transition:transform .3s" style-hover="z-index:10;transform:rotate(0deg) scale(1.04)">
+          <img src="uploads/bosbrand%20gefaaldPRESS.webp" alt="Uitgebrande woning in de brandzone" style="display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover">
+          <figcaption style="font-size:15px;font-weight:600;line-height:1.35;color:#201e1d;padding:10px 4px 12px">De vlammen bereikten de bewoonde zone voor de evacuatie rond was.</figcaption>
         </figure>
         </sc-if>
       </div>
