@@ -12,10 +12,11 @@ build-stap.
 | Fase | Inhoud | Satellieten |
 | --- | --- | --- |
 | **Toegang** | Hang de satellieten in de volgorde van lancering en kraak de 8-cijferige toegangscode. | — |
-| **Deel 1 — Risicoanalyse** | Vier factoren beoordelen: vegetatie, oppervlaktetemperatuur, wind, bodemvocht. | Sentinel-1, -2, -3 |
-| **Deel 2 — Fire monitoring** | Brandhaarden aanduiden en de verspreidingsrichting bepalen. | Sentinel-2 |
-| **Deel 3 — Damage assessment** | De verbrande zone intekenen en de luchtkwaliteit beoordelen. | Sentinel-2, Sentinel-5P |
-| **Eindrapport** | Fire Response Report en een plaats op het scorebord. | — |
+| **Intro** | Alarmscherm (foto `uploads/alert-vuur.webp` + locatie), daarna uitleg en de delen van het rapport in de juiste volgorde slepen. | — |
+| **Deel 1 — Risicoanalyse** (waarom is de brand ontstaan?) | Vier factoren beoordelen: vegetatie, oppervlaktetemperatuur, wind, bodemvocht. | Sentinel-1, -2, -3 |
+| **Deel 2 — Brandopvolging** (hoe verloopt de brand?) | Brandhaarden aanduiden en de verspreidingsrichting bepalen. | Sentinel-2 |
+| **Deel 3 — Schadebeoordeling** (wat is de impact?) | De verbrande zone intekenen en het risico op luchtvervuiling beoordelen. | Sentinel-2, Sentinel-5P |
+| **Eindrapport** | Rapport verzenden naar de autoriteiten en een plaats op het scorebord. | — |
 
 Bij elke vraag kiest het team eerst de juiste satelliet en beantwoordt het dan de vraag op het beeld.
 Een leeshulp (boekicoon) legt uit hoe je het beeld leest. Foute antwoorden kosten speeltijd. Wie
@@ -49,6 +50,7 @@ TextEdit, pas een waarde aan, bewaar het en herstart het spel.
 | `studiegebieden` | Het blauwe kader per beeld (fracties links, boven, rechts, onder). |
 | `schaalKm`, `schaalBalkPct` | Schaalbalk voor de vraag over de oppervlakte. |
 | `juisteZone`, `bufferKm` | De correcte verbrande zone en de toegestane marge eromheen. |
+| `minZoneScore` | Minimale score (%) voor de verbrande zone; lager = opnieuw tekenen (standaard 70). |
 | `zoneInstellen` | `true` om de juiste zone opnieuw te tekenen. |
 
 **Studiegebied of zone opnieuw instellen:** zet `instelmodus: true`, teken het kader of de zone in

@@ -24,7 +24,7 @@ window.EO_INSTELLINGEN = {
   vraagTemperatuur: true,
   vraagWind: true,
   vraagBodem: true,
-  vraagBrandhaarden: false,    // celselectie
+  vraagBrandhaarden: true,     // celselectie
   vraagRichting: true,
   vraagOppervlakte: true,
   vraagLucht: true,
@@ -38,6 +38,7 @@ window.EO_INSTELLINGEN = {
   schaalBalkPct: 4.6,          // breedte van de schaalbalk in % van het beeld
   zoneInstellen: false,        // true = juiste zone opnieuw tekenen
   bufferKm: 2.5,               // toegestane marge rond de juiste zone in km
+  minZoneScore: 70,            // minimale score (%) om verder te mogen, anders opnieuw tekenen
   juisteZone: "0.3148,0.2755 0.2633,0.2978 0.2691,0.3206 0.3020,0.3323 0.3243,0.2988 0.3381,0.3227 0.4007,0.3402 0.4310,0.3445 0.4613,0.2877 0.4448,0.2617 0.4676,0.2749 0.4878,0.2436 0.4814,0.2139 0.5021,0.1895 0.4782,0.1821 0.4421,0.2028 0.4655,0.2229 0.4565,0.2383 0.4172,0.2389 0.4156,0.2182 0.4315,0.2102 0.4421,0.1831 0.4337,0.1683 0.4490,0.1513 0.4437,0.1168 0.3572,0.1592 0.3222,0.2197 0.2983,0.2399 0.3163,0.2622",
 
 };
