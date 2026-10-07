@@ -45,6 +45,7 @@ fi
 # Apart profiel: bewaart het scorebord, raakt de gewone browser niet aan
 "$BROWSER" \
   --kiosk \
+  --autoplay-policy=no-user-gesture-required \
   --allow-file-access-from-files \
   --disable-pinch \
   --overscroll-history-navigation=0 \

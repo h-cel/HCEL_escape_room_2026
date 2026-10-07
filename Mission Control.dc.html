@@ -33,6 +33,8 @@
   @keyframes eoDrop{0%{opacity:0;transform:scaleY(.2)}20%{opacity:.85;transform:scaleY(1)}100%{opacity:0;transform:scaleY(1.2) translateY(14px)}}
   @keyframes eoSave{0%{fill:#ff563c}100%{fill:#41CD03}}
   @keyframes eoOut{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.2)}}
+  @keyframes eoWiggle{0%,100%{transform:rotate(0)}20%{transform:rotate(-6deg)}40%{transform:rotate(5deg)}60%{transform:rotate(-3deg)}80%{transform:rotate(2deg)}}
+  @keyframes eoWave{0%,100%{opacity:.25}50%{opacity:1}}
   @keyframes eoFlick{from{transform:scale(.85)}to{transform:scale(1.1)}}
   input[type=range]{accent-color:#ffc83d}
   *:focus-visible{outline:2px solid #ffc83d;outline-offset:2px}
@@ -44,6 +46,10 @@
   <sc-if value="{{isLock}}" hint-placeholder-val="{{true}}">
     <div style="position:relative;isolation:isolate;overflow:hidden;min-height:var(--eo-vh, 100vh);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 56px;box-sizing:border-box;animation:eoFade .4s">
       <img src="uploads/esa-logo-wit.png" alt="" style="position:absolute;z-index:-1;left:50%;top:50%;width:min(1100px,90%);height:auto;transform:translate(-50%,-50%);opacity:.13;pointer-events:none;user-select:none">
+      <button onClick="{{playXylo}}" onMouseEnter="{{hoverXylo}}" onMouseLeave="{{leaveXylo}}" title="Xylofoon" aria-label="Speel de xylofoon af" style="position:absolute;right:40px;bottom:32px;display:flex;align-items:flex-end;gap:4px;border:none;background:transparent;padding:6px;cursor:pointer;transition:transform .15s" style-hover="transform:scale(1.08)">
+        <svg viewBox="0 0 140 90" style="width:130px;height:auto;display:block;transform-origin:50% 80%;animation:{{xyloAnim}}"><rect x="6" y="22" width="128" height="6" rx="3" fill="#b8c2d6" transform="rotate(-6 70 25)"></rect><rect x="6" y="60" width="128" height="6" rx="3" fill="#b8c2d6" transform="rotate(6 70 63)"></rect><rect x="14" y="10" width="13" height="60" rx="3" fill="#ff563c"></rect><rect x="32" y="14" width="13" height="52" rx="3" fill="#ffa23d"></rect><rect x="50" y="18" width="13" height="44" rx="3" fill="#ffc83d"></rect><rect x="68" y="22" width="13" height="36" rx="3" fill="#41CD03"></rect><rect x="86" y="26" width="13" height="28" rx="3" fill="#79E6FB"></rect><rect x="104" y="30" width="13" height="20" rx="3" fill="#b79cff"></rect><line x1="100" y1="86" x2="128" y2="40" stroke="#f8f4f4" stroke-width="3" stroke-linecap="round"></line><circle cx="128" cy="38" r="6" fill="#f8f4f4"></circle></svg>
+        <svg viewBox="0 0 40 32" style="width:46px;height:auto;display:block;margin-bottom:44px;opacity:{{xyloSpk}};transition:opacity .25s"><path d="M3 11h7l9-7v24l-9-7H3z" fill="#f8f4f4"></path><path d="M24 10q4 6 0 12" fill="none" stroke="#ffc83d" stroke-width="2.6" stroke-linecap="round" style="animation:eoWave 1.3s ease-in-out infinite"></path><path d="M29 6q7 10 0 20" fill="none" stroke="#ffc83d" stroke-width="2.6" stroke-linecap="round" style="animation:eoWave 1.3s ease-in-out .25s infinite"></path></svg>
+      </button>
       <img src="uploads/hcel-logo-wit.png" alt="" style="position:absolute;z-index:-1;right:40px;top:20px;width:190px;height:auto;opacity:.85;pointer-events:none;user-select:none">
       <div style="font-size:12px;font-weight:600;letter-spacing:.22em;color:#97a3bd">DEEL 2</div>
       <div style="height:2px;width:100%;max-width:560px;background:#3f5689;margin:14px 0 22px"></div>
@@ -1076,6 +1082,9 @@ class Component extends DCLogic {
   };
   clr = () => this.setState({code:'', lockMsg:''});
   del = () => this.setState(s => ({code: s.code.slice(0,-1), lockMsg:''}));
+  leaveXylo = () => this.setState({xyloHover:false});
+  hoverXylo = () => { this.setState({xyloHover:true}); const a = this._xylo; if (a && !a.paused && !a.ended) return; this.playXylo(); };
+  playXylo = () => { try { if (!this._xylo) { const a = this._xylo = new Audio('uploads/xylofoon.m4a'); a.onplaying = () => this.setState({xyloOn:true}); a.onpause = a.onended = () => this.setState({xyloOn:false}); } this._xylo.currentTime = 0; const p = this._xylo.play(); if (p && p.catch) p.catch(() => {}); } catch (e) {} };
   askLockHint = () => { if (this.state.lockHint) return; this.setState({lockHint:true}); this.penalize(this.straf('strafHintCode', 120), 'HINT TOEGANGSCODE'); };
   askSubHint = (key) => {
     if (this.state.subHints[key]) return;
@@ -1504,7 +1513,7 @@ class Component extends DCLogic {
       doneCount: QK.filter(k => (A[k]||{}).val != null && (A[k]||{}).val !== '').length,
       totalCount: QK.length,
       codeSlots, keys, dateLabels, lockMsg: s.lockMsg,
-      lockHint: s.lockHint, noLockHint: !s.lockHint, askLockHint: this.askLockHint, submitCode: this.submitCode,
+      lockHint: s.lockHint, noLockHint: !s.lockHint, playXylo: this.playXylo, hoverXylo: this.hoverXylo, leaveXylo: this.leaveXylo, xyloAnim: s.xyloHover ? 'eoWiggle .9s ease-in-out infinite' : 'none', xyloSpk: s.xyloOn ? 1 : 0, askLockHint: this.askLockHint, submitCode: this.submitCode,
       hasPenalty: !!s.penalty, penaltyLabel: s.penalty ? s.penalty.label : '', penaltyCost: s.penalty ? s.penalty.cost : '',
       startTime: fmt((this.cfg().minuten ?? 45)*60),
       lockHintLabel: this.straf('strafHintCode', 120) ? 'HINT VRAGEN — KOST ' + mmss(this.straf('strafHintCode', 120)) + ' MINUTEN' : 'HINT VRAGEN',
