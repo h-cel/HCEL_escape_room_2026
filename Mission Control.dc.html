@@ -33,10 +33,6 @@
   @keyframes eoDrop{0%{opacity:0;transform:scaleY(.2)}20%{opacity:.85;transform:scaleY(1)}100%{opacity:0;transform:scaleY(1.2) translateY(14px)}}
   @keyframes eoSave{0%{fill:#ff563c}100%{fill:#41CD03}}
   @keyframes eoOut{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.2)}}
-  @keyframes eoOrbit{from{transform:rotateZ(0deg)}to{transform:rotateZ(360deg)}}
-  @keyframes eoBill0{from{transform:rotateZ(0deg) rotateX(-70deg) rotateZ(14deg)}to{transform:rotateZ(-360deg) rotateX(-70deg) rotateZ(14deg)}}
-  @keyframes eoBill1{from{transform:rotateZ(0deg) rotateX(-76deg) rotateZ(-9deg)}to{transform:rotateZ(-360deg) rotateX(-76deg) rotateZ(-9deg)}}
-  @keyframes eoBill2{from{transform:rotateZ(0deg) rotateX(-66deg) rotateZ(-20deg)}to{transform:rotateZ(-360deg) rotateX(-66deg) rotateZ(-20deg)}}
   @keyframes eoFlick{from{transform:scale(.85)}to{transform:scale(1.1)}}
   input[type=range]{accent-color:#ffc83d}
   *:focus-visible{outline:2px solid #ffc83d;outline-offset:2px}
@@ -229,26 +225,15 @@
                   <div style="font-size:12px;font-weight:600;letter-spacing:.08em;color:#7a88a6">{{satCostLabel}}</div>
                 </div>
                 <sc-if value="{{satOrbit}}" hint-placeholder-val="{{false}}">
-                <div style="font-size:15px;line-height:1.4;color:#97a3bd">Klik op het label van de juiste satelliet terwijl ze rond de aarde draaien.</div>
-                <div onMouseEnter="{{orbitHold}}" onMouseLeave="{{orbitGo}}" style="position:relative;height:270px;perspective:1000px;margin:4px 0 6px">
-                  <div style="position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d">
-                    <div style="position:absolute;left:-62px;top:-62px;width:124px;height:124px;border-radius:50%;background:radial-gradient(circle at 62% 38%,#41a34a 0 9%,transparent 10%),radial-gradient(circle at 30% 62%,#3c9a45 0 13%,transparent 14%),radial-gradient(circle at 74% 72%,#4aa950 0 7%,transparent 8%),radial-gradient(circle at 34% 30%,#4f9bff,#1c5bc0 50%,#0b2a66 80%,#06173d);box-shadow:0 0 28px rgba(121,230,251,.35),inset -14px -10px 24px rgba(0,10,40,.7)"></div>
-                    <sc-for list="{{satOptions}}" as="o" hint-placeholder-count="3">
-                      <div style="position:absolute;left:0;top:0;transform-style:preserve-3d;transform:rotateZ({{o.tilt}}) rotateX({{o.inc}})">
-                        <div style="position:absolute;left:-{{o.r}};top:-{{o.r}};width:calc({{o.r}} * 2);height:calc({{o.r}} * 2);box-sizing:border-box;border-radius:50%;border:1px dashed rgba(184,194,214,.35)"></div>
-                        <div style="position:absolute;left:0;top:0;transform-style:preserve-3d;animation:eoOrbit {{o.dur}} linear {{o.delay}} infinite;animation-play-state:{{orbitPlay}}">
-                          <div style="position:absolute;left:{{o.r}};top:0;transform-style:preserve-3d">
-                            <div style="position:absolute;left:0;top:0;transform-style:preserve-3d;animation:{{o.bill}} {{o.dur}} linear {{o.delay}} infinite;animation-play-state:{{orbitPlay}}">
-                              <button onClick="{{o.onClick}}" style="position:absolute;left:0;top:0;transform:translate(-50%,-50%);display:flex;align-items:center;gap:6px;white-space:nowrap;border:2px solid {{o.border}};background:{{o.bgOrbit}};color:{{o.color}};font-family:'Archivo',sans-serif;font-size:14px;font-weight:700;padding:5px 9px 5px 6px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.45)">
-                                <svg viewBox="0 0 32 16" style="width:30px;height:15px;display:block;flex:0 0 auto"><rect x="0" y="4" width="10" height="8" fill="#79E6FB"></rect><rect x="22" y="4" width="10" height="8" fill="#79E6FB"></rect><rect x="10" y="7" width="12" height="2" fill="#b8c2d6"></rect><rect x="12" y="3" width="8" height="10" rx="1" fill="#ffc83d"></rect></svg>
-                                <span>{{o.label}}</span>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </sc-for>
-                  </div>
+                <div style="font-size:15px;line-height:1.4;color:#97a3bd">Klik op de juiste satelliet terwijl ze rond de aarde draaien. Afstanden en snelheden zijn niet op schaal.</div>
+                <div data-eo-orbit="1" style="position:relative;height:280px;margin:4px 0 6px;overflow:hidden">
+                  <canvas style="position:absolute;left:0;top:0;width:100%;height:100%;display:block"></canvas>
+                  <sc-for list="{{satOptions}}" as="o" hint-placeholder-count="3">
+                    <button data-eo-sat="{{o.label}}" onClick="{{o.onClick}}" style="position:absolute;left:0;top:0;transform:translate(-9999px,0);display:flex;align-items:center;gap:6px;white-space:nowrap;border:2px solid {{o.border}};background:{{o.bgOrbit}};color:{{o.color}};font-family:'Archivo',sans-serif;font-size:14px;font-weight:700;padding:4px 9px 4px 6px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.45)">
+                      <svg viewBox="0 0 32 16" style="width:28px;height:14px;display:block;flex:0 0 auto"><rect x="0" y="4" width="10" height="8" fill="#79E6FB"></rect><rect x="22" y="4" width="10" height="8" fill="#79E6FB"></rect><rect x="10" y="7" width="12" height="2" fill="#b8c2d6"></rect><rect x="12" y="3" width="8" height="10" rx="1" fill="#ffc83d"></rect></svg>
+                      <span>{{o.label}}</span>
+                    </button>
+                  </sc-for>
                 </div>
                 </sc-if>
                 <sc-if value="{{satChosen}}" hint-placeholder-val="{{true}}">
@@ -801,6 +786,19 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;minuten&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:45,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Spel&quot;},&quot;schermSchaal&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:150,&quot;tsType&quot;:&quot;number&quot;,&quot;unit&quot;:&quot;% (0 = automatisch)&quot;,&quot;section&quot;:&quot;Spel&quot;},&quot;instelmodus&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Spel&quot;},&quot;toonStudiegebiedKaart&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Spel&quot;},&quot;vraagVegetatie&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;vraagTemperatuur&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;vraagWind&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;vraagBodem&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;vraagBrandhaarden&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;vraagRichting&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;vraagOppervlakte&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;vraagLucht&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vragen aan/uit&quot;},&quot;studiegebieden&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;fuel:0.43,0.423,0.593,0.568 lst:0.156,0.292,0.525,0.636 wind:0.296,0.504,0.445,0.623 soil:0.173,0.266,0.53,0.598 dir:0.296,0.504,0.445,0.623 air:0.219,0.434,0.345,0.587&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Studiegebied&quot;},&quot;schaalKm&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Schaal van het beeld&quot;},&quot;schaalBalkPct&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:4.6,&quot;tsType&quot;:&quot;number&quot;,&quot;step&quot;:0.1,&quot;unit&quot;:&quot;%&quot;,&quot;section&quot;:&quot;Schaal van het beeld&quot;},&quot;zoneInstellen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Verbrande zone&quot;},&quot;juisteZone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;0.3148,0.2755 0.2633,0.2978 0.2691,0.3206 0.3020,0.3323 0.3243,0.2988 0.3381,0.3227 0.4007,0.3402 0.4310,0.3445 0.4613,0.2877 0.4448,0.2617 0.4676,0.2749 0.4878,0.2436 0.4814,0.2139 0.5021,0.1895 0.4782,0.1821 0.4421,0.2028 0.4655,0.2229 0.4565,0.2383 0.4172,0.2389 0.4156,0.2182 0.4315,0.2102 0.4421,0.1831 0.4337,0.1683 0.4490,0.1513 0.4437,0.1168 0.3572,0.1592 0.3222,0.2197 0.2983,0.2399 0.3163,0.2622&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Verbrande zone&quot;},&quot;bufferKm&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:2.5,&quot;tsType&quot;:&quot;number&quot;,&quot;step&quot;:0.5,&quot;section&quot;:&quot;Verbrande zone&quot;},&quot;minZoneScore&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:70,&quot;tsType&quot;:&quot;number&quot;,&quot;unit&quot;:&quot;%&quot;,&quot;section&quot;:&quot;Verbrande zone&quot;},&quot;strafHintCode&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:120,&quot;tsType&quot;:&quot;number&quot;,&quot;unit&quot;:&quot;seconden&quot;,&quot;section&quot;:&quot;Tijdstraffen&quot;},&quot;strafFouteCode&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;tsType&quot;:&quot;number&quot;,&quot;unit&quot;:&quot;seconden&quot;,&quot;section&quot;:&quot;Tijdstraffen&quot;},&quot;strafHintSatelliet&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:30,&quot;tsType&quot;:&quot;number&quot;,&quot;unit&quot;:&quot;seconden&quot;,&quot;section&quot;:&quot;Tijdstraffen&quot;},&quot;strafFouteSatelliet&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:60,&quot;tsType&quot;:&quot;number&quot;,&quot;unit&quot;:&quot;seconden&quot;,&quot;section&quot;:&quot;Tijdstraffen&quot;},&quot;strafFouteRichting&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:60,&quot;tsType&quot;:&quot;number&quot;,&quot;unit&quot;:&quot;seconden&quot;,&quot;section&quot;:&quot;Tijdstraffen&quot;},&quot;strafFouteCel&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:10,&quot;tsType&quot;:&quot;number&quot;,&quot;unit&quot;:&quot;seconden&quot;,&quot;section&quot;:&quot;Tijdstraffen&quot;}}">
 const LEVELS = ['LAAG','GEMIDDELD','HOOG','EXTREEM'];
+
+// Banen bij de satellietkeuze (r in aardstralen, ingekort; inc = helling, node = klimmende knoop, T = omlooptijd in s).
+// De aarde draait in EARTH_T s; een geostationaire satelliet draait even snel mee en blijft boven dezelfde plek.
+const EARTH_T = 120;
+const SAT_ORBITS = {
+  'Meteosat':    {r:2.35, inc:0,    node:0,    T:EARTH_T, geo:true},   // geostationair, 36 000 km boven lengte 0°
+  'Sentinel-1':  {r:1.30, inc:98.2, node:25,   T:24},                  // polair, zonsynchroon, 693 km
+  'Sentinel-2':  {r:1.36, inc:98.6, node:-35,  T:25},                  // polair, zonsynchroon, 786 km
+  'Sentinel-3':  {r:1.39, inc:98.6, node:70,   T:25.5},                // polair, zonsynchroon, 814 km
+  'Sentinel-5P': {r:1.41, inc:98.7, node:-70,  T:26},                  // polair, zonsynchroon, 824 km
+  'GRACE':       {r:1.22, inc:89,   node:-10,  T:23, pair:true},       // bijna polair, twee satellieten achter elkaar, 490 km
+  'GEDI':        {r:1.18, inc:51.6, node:40,   T:22},                  // aan boord van het ISS, 420 km
+};
 const DIRS = ['N','NO','O','ZO','Z','ZW','W','NW'];
 const CODE = '30051975';
 const PARTS = [
@@ -906,6 +904,7 @@ class Component extends DCLogic {
            briefStep:0, briefSlots:[null,null,null], briefPick:null, briefWrong:null, briefDrag:null};
 
   componentDidMount() {
+    this._orbRaf = requestAnimationFrame(this.orbitFrame);
     let saved = null;
     try { saved = JSON.parse(localStorage.getItem('eo-state-v1') || 'null'); } catch (e) {}
     if (saved && typeof saved.secondsLeft === 'number' && (saved.secondsLeft > 0 || saved.overtime)) this.setState(saved);
@@ -961,7 +960,7 @@ class Component extends DCLogic {
     if (!this.state.resetArm) { this.setState({resetArm: true}); clearTimeout(this._rt); this._rt = setTimeout(() => this.setState({resetArm: false}), 3000); return; }
     clearTimeout(this._rt); this.setState({resetArm: false, studyDraw: false, showMap: false}); this.restart();
   };
-  componentWillUnmount(){ clearInterval(this._t); clearTimeout(this._pt); window.removeEventListener('keydown', this._esc); window.removeEventListener('resize', this._fit); }
+  componentWillUnmount(){ cancelAnimationFrame(this._orbRaf); clearInterval(this._t); clearTimeout(this._pt); window.removeEventListener('keydown', this._esc); window.removeEventListener('resize', this._fit); }
 
   componentDidUpdate() {
     if (this._fit) this._fit();
@@ -978,6 +977,85 @@ class Component extends DCLogic {
     } catch (e) {}
   }
 
+  // Satellietkeuze: draaiende aarde (orthografisch, NASA Blue Marble) met satellieten op hun echte baantype.
+  orbitFrame = (now) => {
+    this._orbRaf = requestAnimationFrame(this.orbitFrame);
+    const box = document.querySelector('[data-eo-orbit]');
+    if (!box) return;
+    const cv = box.querySelector('canvas'), W = box.clientWidth, H = box.clientHeight;
+    if (!cv || !W || !H) return;
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
+    const ctx = cv.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    if (!this._tex && !this._texLoading) {
+      this._texLoading = true;
+      const img = new Image();
+      img.onload = () => { const c = document.createElement('canvas'); c.width = img.width; c.height = img.height; const x = c.getContext('2d'); x.drawImage(img, 0, 0);
+        this._tex = {w: img.width, h: img.height, d: new Uint32Array(x.getImageData(0, 0, img.width, img.height).data.buffer)}; };
+      img.src = 'uploads/aarde.jpg';
+    }
+    const t = now / 1000, el = 16 * Math.PI / 180, ce = Math.cos(el), se = Math.sin(el);
+    const rot = 2 * Math.PI * t / EARTH_T;
+    const R = Math.max(30, Math.min(84, (W - 140) / 4.9, (H - 30) / 2 / 1.45)), cx = W / 2, cy = H / 2 + 6;
+    // inertiaal (x naar kijker, y rechts, z noord) -> scherm; d = diepte naar kijker
+    const proj = (x, y, z) => ({sx: cx + y * R, sy: cy - (-x * se + z * ce) * R, d: x * ce + z * se});
+    const pos = (o, u) => { const i = o.inc * Math.PI / 180, n = o.node * Math.PI / 180, cu = Math.cos(u), su = Math.sin(u);
+      return [o.r * (Math.cos(n) * cu - Math.sin(n) * su * Math.cos(i)), o.r * (Math.sin(n) * cu + Math.cos(n) * su * Math.cos(i)), o.r * su * Math.sin(i)]; };
+    const btns = Array.from(box.querySelectorAll('[data-eo-sat]'));
+    const sats = btns.map((b, k) => { const o = SAT_ORBITS[b.getAttribute('data-eo-sat')] || {r:1.3, inc:98, node:k * 60, T:24};
+      const u = o.geo ? rot : 2 * Math.PI * t / o.T + k * 2.1; return {b, o, u}; });
+    const drawOrbits = (front) => {
+      ctx.lineWidth = 1; ctx.setLineDash([3, 4]);
+      sats.forEach(({o}) => { ctx.strokeStyle = o.geo ? 'rgba(255,200,61,.45)' : 'rgba(184,194,214,.4)'; ctx.beginPath(); let pen = false;
+        for (let a = 0; a <= 96; a++) { const q = proj(...pos(o, a / 96 * 2 * Math.PI));
+          const vis = front ? q.d >= 0 : q.d < 0;
+          if (vis) { if (pen) ctx.lineTo(q.sx, q.sy); else ctx.moveTo(q.sx, q.sy); pen = true; } else pen = false; }
+        ctx.stroke(); });
+      ctx.setLineDash([]);
+    };
+    const drawSats = (front) => sats.forEach(({o, u}) => [0].concat(o.pair ? [-0.09] : []).forEach(du => {
+      const q = proj(...pos(o, u + du)); if ((q.d >= 0) !== front) return;
+      if (!front && Math.hypot(q.sx - cx, q.sy - cy) < R) return;
+      ctx.fillStyle = '#ffc83d'; ctx.beginPath(); ctx.arc(q.sx, q.sy, 3.2, 0, 2 * Math.PI); ctx.fill(); }));
+    drawOrbits(false); drawSats(false);
+    // aarde
+    const g = ctx.createRadialGradient(cx, cy, R * .9, cx, cy, R * 1.25);
+    g.addColorStop(0, 'rgba(121,230,251,.35)'); g.addColorStop(1, 'rgba(121,230,251,0)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, R * 1.25, 0, 2 * Math.PI); ctx.fill();
+    const P = Math.round(R * dpr);
+    if (!this._globe || this._globe.P !== P) {
+      const n = 2 * P, lat = new Float32Array(n * n), lon = new Float32Array(n * n), sh = new Float32Array(n * n);
+      for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) {
+        const k = j * n + i, rx = (i + .5 - P) / P, up = -(j + .5 - P) / P, r2 = rx * rx + up * up;
+        if (r2 > 1) { sh[k] = -1; continue; }
+        const dp = Math.sqrt(1 - r2), x = dp * ce - up * se, y = rx, z = dp * se + up * ce;
+        lat[k] = Math.asin(Math.max(-1, Math.min(1, z))); lon[k] = Math.atan2(y, x);
+        sh[k] = Math.min(1.25, .45 + .95 * Math.max(0, -rx * .45 + up * .35 + dp * .82));
+      }
+      const c = document.createElement('canvas'); c.width = c.height = n;
+      const x = c.getContext('2d');
+      this._globe = {P, n, lat, lon, sh, c, x, img: x.createImageData(n, n)};
+    }
+    const G = this._globe, out = new Uint32Array(G.img.data.buffer), T = this._tex, TAU = 2 * Math.PI;
+    for (let k = 0; k < G.n * G.n; k++) {
+      const f = G.sh[k]; if (f < 0) { out[k] = 0; continue; }
+      let px = 0xff8a4a1c;
+      if (T) { let L = G.lon[k] - rot; L -= TAU * Math.floor((L + Math.PI) / TAU);
+        const tu = Math.min(T.w - 1, ((L + Math.PI) / TAU * T.w) | 0), tv = Math.min(T.h - 1, ((Math.PI / 2 - G.lat[k]) / Math.PI * T.h) | 0);
+        px = T.d[tv * T.w + tu]; }
+      const r = Math.min(255, (px & 255) * f), gg = Math.min(255, ((px >> 8) & 255) * f), b = Math.min(255, ((px >> 16) & 255) * f);
+      out[k] = (0xff000000 | (b << 16) | (gg << 8) | r) >>> 0;
+    }
+    G.x.putImageData(G.img, 0, 0);
+    ctx.drawImage(G.c, cx - R, cy - R, 2 * R, 2 * R);
+    drawOrbits(true); drawSats(true);
+    // labels boven de satelliet; achter de aarde gedimd
+    sats.forEach(({b, o, u}) => { const q = proj(...pos(o, u)), hid = q.d < 0 && Math.hypot(q.sx - cx, q.sy - cy) < R * 1.05;
+      b.style.transform = 'translate(' + q.sx.toFixed(1) + 'px,' + (q.sy - 7).toFixed(1) + 'px) translate(-50%,-100%)';
+      b.style.opacity = hid ? '.35' : '1'; b.style.zIndex = q.d >= 0 ? '2' : '1'; });
+  };
   straf = (name, def) => { const v = Number(this.cfg()[name]); return isFinite(v) && v >= 0 ? Math.round(v) : def; };
   penalize = (secs, label) => {
     if (!secs) return;
@@ -1316,12 +1394,9 @@ class Component extends DCLogic {
     }
 
     const satChosen = !!cur.sat;
-    // banen rond de aardbol: straal, helling, kanteling, omlooptijd, startpositie (helling/kanteling ook in @keyframes eoBill0-2)
-    const ORBITS = [{r:118, inc:70, tilt:-14, dur:19, delay:-3}, {r:165, inc:76, tilt:9, dur:25, delay:-15}, {r:205, inc:66, tilt:20, dur:31, delay:-24}];
     const satOptions = (step.sats||[]).map((sat, si) => {
-      const on = cur.sat === sat.n, bad = !on && s.satWrong === sat.n, ob = ORBITS[si % ORBITS.length];
+      const on = cur.sat === sat.n, bad = !on && s.satWrong === sat.n;
       return {label: sat.n, onClick: () => this.pickSat(step, sat),
-        bill: 'eoBill' + (si % ORBITS.length), r: ob.r + 'px', inc: ob.inc + 'deg', tilt: ob.tilt + 'deg', dur: ob.dur + 's', delay: ob.delay + 's',
         bgOrbit: bad ? '#ff563c' : '#0a2454',
         bg: on ? '#41CD03' : bad ? '#ff563c' : 'transparent', color: (on || bad) ? '#00163f' : '#f8f4f4',
         border: on ? '#41CD03' : bad ? '#ff563c' : '#3f5689', check: on ? 'block' : 'none'};
@@ -1512,8 +1587,7 @@ class Component extends DCLogic {
       sub: step.sub || '', subShown: !!s.subHints[step.key], subHidden: !s.subHints[step.key],
       askSubHint: () => this.askSubHint(step.key),
       hasNote: !!step.note, note: step.note || '',
-      satOptions, satChosen, satOrbit: !satChosen, orbitPlay: s.orbitHold ? 'paused' : 'running',
-      orbitHold: () => this.setState({orbitHold:true}), orbitGo: () => this.setState({orbitHold:false}),
+      satOptions, satChosen, satOrbit: !satChosen,
       satMsg: s.satMsg, hasSatMsg: !!s.satMsg,
       okMsg: ((step.sats||[]).find(x => x.ok && x.n === cur.sat) || {}).why || '',
       hasOkMsg: !!((step.sats||[]).find(x => x.ok && x.n === cur.sat) || {}).why,
