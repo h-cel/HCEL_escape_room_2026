@@ -226,7 +226,8 @@
                 </div>
                 <sc-if value="{{satOrbit}}" hint-placeholder-val="{{false}}">
                 <div style="font-size:15px;line-height:1.4;color:#97a3bd">Klik op de juiste satelliet terwijl ze rond de aarde draaien. Afstanden en snelheden zijn niet op schaal.</div>
-                <div data-eo-orbit="1" style="position:relative;height:280px;margin:4px 0 6px;overflow:hidden">
+                </sc-if>
+                <div data-eo-orbit="1" style="position:relative;height:{{orbitH}};margin:4px 0 6px;overflow:hidden">
                   <canvas style="position:absolute;left:0;top:0;width:100%;height:100%;display:block"></canvas>
                   <sc-for list="{{satOptions}}" as="o" hint-placeholder-count="3">
                     <button data-eo-sat="{{o.label}}" onClick="{{o.onClick}}" style="position:absolute;left:0;top:0;transform:translate(-9999px,0);display:flex;align-items:center;gap:6px;white-space:nowrap;border:2px solid {{o.border}};background:{{o.bgOrbit}};color:{{o.color}};font-family:'Archivo',sans-serif;font-size:14px;font-weight:700;padding:4px 9px 4px 6px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.45)">
@@ -235,19 +236,6 @@
                     </button>
                   </sc-for>
                 </div>
-                </sc-if>
-                <sc-if value="{{satChosen}}" hint-placeholder-val="{{true}}">
-                <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px">
-                  <sc-for list="{{satOptions}}" as="o" hint-placeholder-count="3">
-                    <button onClick="{{o.onClick}}" style="display:flex;align-items:center;justify-content:space-between;gap:6px;min-width:0;border:2px solid {{o.border}};background:{{o.bg}};color:{{o.color}};font-family:'Archivo',sans-serif;font-size:16px;font-weight:700;padding:10px 12px;text-align:left;cursor:pointer">
-                      <span style="overflow-wrap:anywhere">{{o.label}}</span>
-                      <span style="display:{{o.check}};flex:0 0 auto">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="#00163f" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;display:block"><path d="M20 6 9 17l-5-5"></path></svg>
-                      </span>
-                    </button>
-                  </sc-for>
-                </div>
-                </sc-if>
                 <sc-if value="{{hasOkMsg}}" hint-placeholder-val="{{false}}">
                   <div style="font-size:17px;line-height:1.45;color:#b8c2d6;text-wrap:pretty">{{okMsg}}</div>
                 </sc-if>
@@ -1397,7 +1385,7 @@ class Component extends DCLogic {
     const satOptions = (step.sats||[]).map((sat, si) => {
       const on = cur.sat === sat.n, bad = !on && s.satWrong === sat.n;
       return {label: sat.n, onClick: () => this.pickSat(step, sat),
-        bgOrbit: bad ? '#ff563c' : '#0a2454',
+        bgOrbit: on ? '#41CD03' : bad ? '#ff563c' : '#0a2454',
         bg: on ? '#41CD03' : bad ? '#ff563c' : 'transparent', color: (on || bad) ? '#00163f' : '#f8f4f4',
         border: on ? '#41CD03' : bad ? '#ff563c' : '#3f5689', check: on ? 'block' : 'none'};
     });
@@ -1587,7 +1575,7 @@ class Component extends DCLogic {
       sub: step.sub || '', subShown: !!s.subHints[step.key], subHidden: !s.subHints[step.key],
       askSubHint: () => this.askSubHint(step.key),
       hasNote: !!step.note, note: step.note || '',
-      satOptions, satChosen, satOrbit: !satChosen,
+      satOptions, satChosen, satOrbit: !satChosen, orbitH: satChosen ? '210px' : '280px',
       satMsg: s.satMsg, hasSatMsg: !!s.satMsg,
       okMsg: ((step.sats||[]).find(x => x.ok && x.n === cur.sat) || {}).why || '',
       hasOkMsg: !!((step.sats||[]).find(x => x.ok && x.n === cur.sat) || {}).why,
