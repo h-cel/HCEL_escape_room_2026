@@ -9,6 +9,7 @@ window.EO_INSTELLINGEN = {
   minuten: 45,                 // speeltijd in minuten
   schermSchaal: 100,           // grootte van het scherm in %, 0 = automatisch
   instelmodus: false,          // true = resetknop + studiegebieden tekenen
+  toonStudiegebiedKaart: false, // true = kaartje "Studiegebied" linksonder bij elke vraag
 
   // --- Tijdstraffen (in seconden, 0 = geen straf) ---
   strafHintCode: 60,          // hint vragen bij de toegangscode
@@ -30,7 +31,7 @@ window.EO_INSTELLINGEN = {
 
   // --- Studiegebied (blauw kader per beeld) ---
   // per vraag: links,boven,rechts,onder als fractie van het beeld (0 tot 1)
-  studiegebieden: "fuel:0.43,0.423,0.593,0.568 lst:0.156,0.292,0.525,0.636 wind:0.296,0.504,0.445,0.623 soil:0.173,0.266,0.53,0.598 dir:0.291,0.544,0.359,0.619 air:0.219,0.434,0.345,0.587",
+  studiegebieden: "fuel:0.43,0.423,0.593,0.568 lst:0.156,0.292,0.525,0.636 wind:0.296,0.504,0.445,0.623 soil:0.173,0.266,0.53,0.598 dir:0.296,0.504,0.445,0.623 air:0.219,0.434,0.345,0.587",
 
   // --- Verbrande zone (vraag oppervlakte) ---
   schaalKm: 5,                 // lengte van de schaalbalk in km

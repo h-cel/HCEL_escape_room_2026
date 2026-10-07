@@ -22,7 +22,8 @@ Antwoord in het Nederlands.
 - `instellingen.js` — zet `window.EO_INSTELLINGEN`; gaat voor op de `data-props`-defaults (tweaks)
   in het spelbestand. Bedoeld om door de spelleider in Kladblok/TextEdit te bewerken: houd het
   bestand eenvoudig, met Nederlandse commentaar per regel. Sleutels:
-  - Spel: `minuten`, `schermSchaal` (% , 0 = auto), `instelmodus` (resetknop + tekenen studiegebieden).
+  - Spel: `minuten`, `schermSchaal` (% , 0 = auto), `instelmodus` (resetknop + tekenen studiegebieden),
+    `toonStudiegebiedKaart` (kaartje linksonder bij elke vraag).
   - Tijdstraffen in seconden (0 = geen): `strafHintCode`, `strafFouteCode`, `strafHintSatelliet`,
     `strafFouteSatelliet`, `strafFouteRichting`, `strafFouteCel`; gelezen via `this.straf(naam, default)`,
     labels op het scherm (`…Label` in de render-data) volgen mee.

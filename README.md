@@ -43,6 +43,7 @@ TextEdit, pas een waarde aan, bewaar het en herstart het spel.
 | `minuten` | Speeltijd in minuten (standaard 45). |
 | `schermSchaal` | Grootte van het scherm in %; `0` = automatisch. Handig op kleine laptops. |
 | `instelmodus` | `true` toont de resetknop en laat je studiegebieden en de verbrande zone tekenen. Zet op `false` tijdens het spel. |
+| `toonStudiegebiedKaart` | `true` toont linksonder bij elke vraag een klein kaartje van het studiegebied (klik = vergroten). Standaard `false`. |
 | `straf…` | Tijdstraf in seconden voor hints en foute antwoorden (`0` = geen straf): `strafHintCode`, `strafFouteCode`, `strafHintSatelliet`, `strafFouteSatelliet`, `strafFouteRichting`, `strafFouteCel`. De labels op het scherm passen zich aan. |
 | `vraag…` | Zet afzonderlijke vragen aan (`true`) of uit (`false`). |
 | `studiegebieden` | Het blauwe kader per beeld (fracties links, boven, rechts, onder). |
