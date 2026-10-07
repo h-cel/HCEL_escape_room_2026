@@ -406,8 +406,8 @@
                   </sc-if>
 
                   <sc-if value="{{isCompass}}" hint-placeholder-val="{{false}}">
-                    <div style="display:flex;gap:28px;align-items:flex-start">
-                      <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:12px">
+                    <div style="display:flex;gap:48px;align-items:flex-start">
+                      <div style="flex:0 1 440px;min-width:0;display:flex;flex-direction:column;gap:12px">
                       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
                         <div style="width:30px;height:30px;flex:0 0 auto;background:#b79cff;color:#00163f;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center">3</div>
                         <div style="font-size:19px;font-weight:800;letter-spacing:.12em">KIES DE RICHTING</div>
@@ -568,17 +568,17 @@
       <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
       <div style="flex:1 1 100%;min-width:0">
       <div style="display:flex;flex-wrap:wrap;gap:32px 48px;align-items:center">
-      <div style="flex:0 1 520px;min-width:0">
+      <div style="flex:0 1 640px;min-width:0">
       <sc-if value="{{onTime}}" hint-placeholder-val="{{true}}">
         <div>
           <div style="font-size:64px;font-weight:800;line-height:.95;letter-spacing:-.03em">BRAND<br>BESTREDEN</div>
-          <div style="font-size:17px;line-height:1.6;color:#b8c2d6;max-width:52ch;margin-top:24px">De brandweer en de lokale autoriteiten beschikken opnieuw over actuele satellietinformatie. Jullie analyse bepaalt mee waar geëvacueerd wordt en waar de blusvliegtuigen naartoe gaan.</div>
+          <div style="font-size:19px;line-height:1.55;color:#b8c2d6;max-width:60ch;margin-top:20px">De brandweer en de lokale autoriteiten beschikken opnieuw over actuele satellietinformatie. Jullie analyse bepaalt mee waar geëvacueerd wordt en waar de blusvliegtuigen naartoe gaan.</div>
         </div>
       </sc-if>
       <sc-if value="{{overtime}}" hint-placeholder-val="{{false}}">
         <div>
           <div style="font-size:64px;font-weight:800;line-height:.95;letter-spacing:-.03em">SCHADE<br>BEPERKT</div>
-          <div style="font-size:17px;line-height:1.6;color:#b8c2d6;max-width:52ch;margin-top:24px">Het rapport kwam te laat om Bordeaux te sparen, maar de analyse is alsnog aangekomen. De blusvliegtuigen en de evacuatieploegen werken nu met jullie gegevens en houden het vuur weg van de resterende wijken.</div>
+          <div style="font-size:19px;line-height:1.55;color:#b8c2d6;max-width:60ch;margin-top:20px">Het rapport kwam te laat om Bordeaux te sparen, maar de analyse is alsnog aangekomen. De blusvliegtuigen en de evacuatieploegen werken nu met jullie gegevens en houden het vuur weg van de resterende wijken.</div>
         </div>
       </sc-if>
 
@@ -615,11 +615,11 @@
       </div>
       </div>
 
-      <div style="display:flex;flex-wrap:wrap;gap:32px 56px;align-items:flex-end;margin-top:8px">
+      <div style="display:flex;flex-wrap:wrap;gap:24px 56px;align-items:flex-end;margin-top:0">
       <div style="flex:1 1 520px;min-width:0;animation:eoRise 1.4s cubic-bezier(.22,.61,.36,1) 2.8s both">
-      <div style="font-size:14px;font-weight:700;letter-spacing:.16em;color:#97a3bd;margin-top:28px">AARDOBSERVATIETEAM — {{finalVerdict}}</div>
+      <div style="font-size:14px;font-weight:700;letter-spacing:.16em;color:#97a3bd;margin-top:24px">AARDOBSERVATIETEAM — {{finalVerdict}}</div>
 
-      <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;border-top:2px solid #3f5689;margin-top:20px;padding-top:20px">
+      <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;border-top:2px solid #3f5689;margin-top:12px;padding-top:14px">
         <div style="font-size:13px;font-weight:700;letter-spacing:.18em;color:{{finalColor}}">{{finalLabel}}</div>
         <div style="font-size:56px;font-weight:800;letter-spacing:-.02em;line-height:1;color:{{finalColor}}">{{finalTime}}</div>
       </div>
