@@ -133,7 +133,7 @@
       <div style="margin-top:28px;max-width:1100px;animation:eoRise 1.6s cubic-bezier(.22,.61,.36,1) 5.4s both">
         <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap">
           <div style="font-size:15px;font-weight:700;letter-spacing:.18em;color:#ffc83d">EERSTE OPDRACHT</div>
-          <div style="font-size:22px;font-weight:700;color:#f8f4f4">Het rapport bestaat uit 3 delen. Sleep elk deel naar de juiste plaats.</div>
+          <div style="font-size:22px;font-weight:700;color:#f8f4f4">Jullie onderzoek verloopt in 3 stappen. Welke volgorde is logisch?</div>
         </div>
         <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px">
           <sc-for list="{{briefSlots}}" as="sl" hint-placeholder-count="3">
@@ -1394,7 +1394,7 @@ class Component extends DCLogic {
               z: drag ? 50 : 1, bg: pick ? '#79E6FB' : '#f8f4f4', border: pick ? '#79E6FB' : '#f8f4f4',
               shadow: drag ? '0 10px 24px rgba(0,0,0,.5)' : 'none'};
           }),
-          briefMsg: solved ? 'Juist! Zo is het rapport opgebouwd.' : w ? 'Dat deel hoort daar niet. Probeer opnieuw.' : '',
+          briefMsg: solved ? 'Juist! In deze volgorde stellen jullie het rapport op.' : w ? 'Die stap komt niet op die plaats. Probeer opnieuw.' : '',
           briefMsgColor: solved ? '#41CD03' : '#ff563c',
         };
       })(),
