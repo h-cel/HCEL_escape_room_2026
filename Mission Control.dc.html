@@ -1413,11 +1413,11 @@ class Component extends DCLogic {
       resetGame: this.resetGame, resetLabel: s.resetArm ? 'ZEKER? KLIK OPNIEUW' : 'SPEL RESETTEN',
       ...(() => {
         const m = this.studyMap(), b = s.studyTmp || m[step.key];
-        const instel = !!this.cfg().instelmodus && step.type === 'q' && step.at !== 'poly';
+        const instel = !!this.cfg().instelmodus && step.type === 'q' && step.at !== 'poly' && step.at !== 'grid';
         const pct = (n) => (n * 100).toFixed(2) + '%';
         return {
-          hasStudy: !!b && step.at !== 'poly' && satChosen,
-          studyNote: !!m[step.key] && step.at !== 'poly',
+          hasStudy: !!b && step.at !== 'poly' && step.at !== 'grid' && satChosen,
+          studyNote: !!m[step.key] && step.at !== 'poly' && step.at !== 'grid',
           studyL: b ? pct(b[0]) : '0', studyT: b ? pct(b[1]) : '0',
           studyW: b ? pct(b[2] - b[0]) : '0', studyH: b ? pct(b[3] - b[1]) : '0',
           studyDraw: instel && satChosen && !s.zoom,
