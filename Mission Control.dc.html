@@ -15,7 +15,7 @@
 <script src="./image-slot.js"></script>
 <script src="./instellingen.js"></script>
 <style>
-  body{margin:0;background:#201e1d;}
+  body{margin:0;background:#00205b;}
   a{color:#ffc83d}a:hover{color:#ffdc7a}
   @keyframes eoFade{from{opacity:0}to{opacity:1}}
   @keyframes eoDrop{from{opacity:0;transform:translateY(-24px) rotate(var(--r)) scale(1.06)}to{opacity:1;transform:rotate(var(--r))}}
@@ -24,7 +24,7 @@
   @keyframes eoShake{20%,80%{transform:translateX(3px)}40%,60%{transform:translateX(-3px)}}
   @keyframes eoAlarm{0%,100%{opacity:1}50%{opacity:.25}}
   @keyframes eoVignette{0%{opacity:.18}50%{opacity:.55}100%{opacity:0}}
-  @keyframes eoBar{0%,100%{background:#201e1d}50%{background:#5c1a0e}}
+  @keyframes eoBar{0%,100%{background:#00205b}50%{background:#5c1a0e}}
   @keyframes eoAlarmOut{0%{opacity:1}50%{opacity:.25}99%{opacity:1}100%{opacity:0}}
   @keyframes eoFlame{from{transform:translateX(-50%) scale(.82);opacity:.75}to{transform:translateX(-50%) scale(1.08);opacity:1}}
   @keyframes eoHouseBurn{0%,100%{fill:#f8f4f4}50%{fill:#ff563c}}
@@ -39,22 +39,22 @@
 </style>
 </helmet>
 
-<div ref="{{rootRef}}" style="min-height:var(--eo-vh, 100vh);width:100%;background:#201e1d;color:#f8f4f4;font-family:'Archivo',system-ui,sans-serif">
+<div ref="{{rootRef}}" style="min-height:var(--eo-vh, 100vh);width:100%;background:#00205b;color:#f8f4f4;font-family:'Archivo',system-ui,sans-serif">
 
   <sc-if value="{{isLock}}" hint-placeholder-val="{{true}}">
     <div style="position:relative;isolation:isolate;overflow:hidden;min-height:var(--eo-vh, 100vh);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 56px;animation:eoFade .4s">
       <img src="uploads/esa-logo-wit.png" alt="" style="position:absolute;z-index:-1;left:50%;top:50%;width:min(1100px,90%);height:auto;transform:translate(-50%,-50%);opacity:.13;pointer-events:none;user-select:none">
       <img src="uploads/hcel-logo-wit.png" alt="" style="position:absolute;z-index:-1;right:40px;top:20px;width:190px;height:auto;opacity:.85;pointer-events:none;user-select:none">
-      <div style="font-size:12px;font-weight:600;letter-spacing:.22em;color:#9b9797">DEEL 2</div>
-      <div style="height:2px;width:100%;max-width:560px;background:#605d5d;margin:16px 0 28px"></div>
+      <div style="font-size:12px;font-weight:600;letter-spacing:.22em;color:#97a3bd">DEEL 2</div>
+      <div style="height:2px;width:100%;max-width:560px;background:#46609a;margin:16px 0 28px"></div>
       <div style="font-size:13px;font-weight:700;letter-spacing:.2em;color:#ffc83d;margin-bottom:12px">TOEGANGSPROTOCOL — ESA-NETWERK</div>
       <div style="font-size:40px;font-weight:800;line-height:1.05;letter-spacing:-.02em;max-width:22ch">TOEGANG TOT DE CONTROLEKAMER</div>
-      <div style="font-size:16px;line-height:1.55;color:#bab6b6;max-width:52ch;margin-top:18px">Het systeem vraagt een code van 8 cijfers. Voer ze in en bevestig met ENTER.</div>
+      <div style="font-size:16px;line-height:1.55;color:#b8c2d6;max-width:52ch;margin-top:18px">Het systeem vraagt een code van 8 cijfers. Voer ze in en bevestig met ENTER.</div>
 
       <div style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:14px;margin-top:22px">
-        <div style="font-size:12px;font-weight:700;letter-spacing:.18em;color:#9b9797">RESTERENDE MISSIETIJD</div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:.18em;color:#97a3bd">RESTERENDE MISSIETIJD</div>
         <div style="font-size:26px;font-weight:800;letter-spacing:.04em;color:#f8f4f4">{{timer}}</div>
-        <div style="font-size:12px;font-weight:600;letter-spacing:.1em;color:#7d7979">VAN {{startTime}}</div>
+        <div style="font-size:12px;font-weight:600;letter-spacing:.1em;color:#7a88a6">VAN {{startTime}}</div>
       </div>
 
       <sc-if value="{{lockHint}}" hint-placeholder-val="{{false}}">
@@ -63,7 +63,7 @@
 
       <div style="display:flex;justify-content:center;margin:26px 0 8px">
         <sc-for list="{{codeSlots}}" as="slot" hint-placeholder-count="8">
-          <div style="width:46px;height:60px;background:#2d2b2b;border:2px solid {{slot.border}};display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:{{slot.color}};margin-right:{{slot.gapAfter}}">{{slot.display}}</div>
+          <div style="width:46px;height:60px;background:#0c2f6e;border:2px solid {{slot.border}};display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:{{slot.color}};margin-right:{{slot.gapAfter}}">{{slot.display}}</div>
         </sc-for>
       </div>
 
@@ -86,7 +86,7 @@
       </div>
 
       <sc-if value="{{noLockHint}}" hint-placeholder-val="{{true}}">
-        <button onClick="{{askLockHint}}" style="margin-top:28px;border:2px solid #605d5d;background:transparent;color:#bab6b6;font-family:'Archivo',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;padding:12px 18px;text-align:left;cursor:pointer" style-hover="border-color:#ffc83d;color:#ffc83d">{{lockHintLabel}}</button>
+        <button onClick="{{askLockHint}}" style="margin-top:28px;border:2px solid #46609a;background:transparent;color:#b8c2d6;font-family:'Archivo',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;padding:12px 18px;text-align:left;cursor:pointer" style-hover="border-color:#ffc83d;color:#ffc83d">{{lockHintLabel}}</button>
       </sc-if>
     </div>
   </sc-if>
@@ -97,19 +97,19 @@
         <div style="width:12px;height:12px;background:#ff563c;animation:eoBlink 1.1s infinite"></div>
         <div style="font-size:15px;font-weight:700;letter-spacing:.2em;color:#ff563c">ALARM: BRANDHAARD GEDETECTEERD</div>
       </div>
-      <div style="height:2px;background:#605d5d;margin:20px 0 28px"></div>
+      <div style="height:2px;background:#46609a;margin:20px 0 28px"></div>
       <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:center">
-        <img src="uploads/alert-vuur.webp" alt="Bosbrand in de Gironde" style="display:block;flex:1 1 560px;min-width:0;max-width:900px;max-height:calc(var(--eo-vh, 100vh) - 220px);object-fit:cover;border:2px solid #444141;animation:eoRise 1.2s cubic-bezier(.22,.61,.36,1) both">
+        <img src="uploads/alert-vuur.webp" alt="Bosbrand in de Gironde" style="display:block;flex:1 1 560px;min-width:0;max-width:900px;max-height:calc(var(--eo-vh, 100vh) - 220px);object-fit:cover;border:2px solid #23427f;animation:eoRise 1.2s cubic-bezier(.22,.61,.36,1) both">
         <div style="flex:1 1 360px;min-width:0;display:flex;flex-direction:column;gap:24px">
           <div style="font-size:56px;font-weight:800;line-height:1;letter-spacing:-.03em;color:#ff563c;animation:eoRise 1.2s cubic-bezier(.22,.61,.36,1) 1s both">BRANDHAARD<br>GEDETECTEERD!</div>
           <div style="display:flex;gap:16px;align-items:center;animation:eoRise 1.2s cubic-bezier(.22,.61,.36,1) 2.2s both">
-            <img src="uploads/bosbrandinfo.avif" alt="Situering van de brandzone tussen Cap Ferret en Bordeaux" style="display:block;width:200px;height:auto;flex:0 0 auto;border:2px solid #444141">
-            <div style="font-size:22px;line-height:1.4;color:#f8f4f4"><strong style="color:#79E6FB;font-weight:800">Nabij Gironde</strong>, ten westen van Bordeaux<br><span style="color:#bab6b6">24 juli 2026</span></div>
+            <img src="uploads/bosbrandinfo.avif" alt="Situering van de brandzone tussen Cap Ferret en Bordeaux" style="display:block;width:200px;height:auto;flex:0 0 auto;border:2px solid #23427f">
+            <div style="font-size:22px;line-height:1.4;color:#f8f4f4"><strong style="color:#79E6FB;font-weight:800">Nabij Gironde</strong>, ten westen van Bordeaux<br><span style="color:#b8c2d6">24 juli 2026</span></div>
           </div>
           <div style="font-size:26px;font-weight:700;line-height:1.35;color:#f8f4f4;animation:eoRise 1.2s cubic-bezier(.22,.61,.36,1) 3.4s both">De lokale autoriteiten wachten op jullie analyse.</div>
           <div style="min-height:58px;display:flex">
             <sc-if value="{{briefReady}}" hint-placeholder-val="{{false}}">
-              <button onClick="{{briefNext}}" style="align-self:flex-start;animation:eoRise 1s cubic-bezier(.22,.61,.36,1) both;border:none;background:#ffc83d;color:#201e1d;font-family:'Archivo',sans-serif;font-size:16px;font-weight:800;letter-spacing:.06em;padding:18px 28px;min-width:280px;text-align:left;cursor:pointer" style-hover="background:#ffdc7a">VERDER →</button>
+              <button onClick="{{briefNext}}" style="align-self:flex-start;animation:eoRise 1s cubic-bezier(.22,.61,.36,1) both;border:none;background:#ffc83d;color:#00205b;font-family:'Archivo',sans-serif;font-size:16px;font-weight:800;letter-spacing:.06em;padding:18px 28px;min-width:280px;text-align:left;cursor:pointer" style-hover="background:#ffdc7a">VERDER →</button>
             </sc-if>
           </div>
         </div>
@@ -120,14 +120,14 @@
   <sc-if value="{{isBriefB}}" hint-placeholder-val="{{false}}">
     <div style="min-height:var(--eo-vh, 100vh);display:flex;flex-direction:column;justify-content:center;padding:40px 56px;box-sizing:border-box">
       <div style="font-size:15px;font-weight:700;letter-spacing:.2em;color:#ffc83d;animation:eoRise 1s cubic-bezier(.22,.61,.36,1) both">CRISISCENTRUM BOSBRAND</div>
-      <div style="height:2px;background:#605d5d;margin:16px 0 24px"></div>
+      <div style="height:2px;background:#46609a;margin:16px 0 24px"></div>
       <div style="font-size:34px;font-weight:800;line-height:1.15;letter-spacing:-.02em;max-width:36ch;animation:eoRise 1.2s cubic-bezier(.22,.61,.36,1) .3s both">Jullie stellen zelf een rapport op aan de hand van vragen.</div>
-      <div style="margin-top:24px;max-width:1100px;box-sizing:border-box;background:#f8f4f4;color:#201e1d;padding:18px 18px 20px;animation:eoRise 1.2s cubic-bezier(.22,.61,.36,1) 1.2s both">
-        <div style="font-size:15px;font-weight:700;letter-spacing:.18em;color:#605d5d">ZO WERKT ELKE VRAAG</div>
-        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;background:#bab6b6;border:2px solid #bab6b6;margin-top:10px">
-          <div style="background:#f8f4f4;padding:20px 20px;display:flex;align-items:center;gap:14px;animation:eoRise 1s cubic-bezier(.22,.61,.36,1) 2s both"><div style="width:34px;height:34px;flex:0 0 auto;background:#ffc83d;color:#201e1d;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center">1</div><div style="font-size:19px;font-weight:800;letter-spacing:.06em;color:#201e1d">KIES DE JUISTE SATELLIET</div></div>
-          <div style="background:#f8f4f4;padding:20px 20px;display:flex;align-items:center;gap:14px;animation:eoRise 1s cubic-bezier(.22,.61,.36,1) 2.7s both"><div style="width:34px;height:34px;flex:0 0 auto;background:#79E6FB;color:#201e1d;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center">2</div><div style="font-size:19px;font-weight:800;letter-spacing:.06em;color:#201e1d">BEKIJK HET BEELD</div></div>
-          <div style="background:#f8f4f4;padding:20px 20px;display:flex;align-items:center;gap:14px;animation:eoRise 1s cubic-bezier(.22,.61,.36,1) 3.4s both"><div style="width:34px;height:34px;flex:0 0 auto;background:#b79cff;color:#201e1d;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center">3</div><div style="font-size:19px;font-weight:800;letter-spacing:.06em;color:#201e1d">GEEF JULLIE ANTWOORD</div></div>
+      <div style="margin-top:24px;max-width:1100px;box-sizing:border-box;background:#f8f4f4;color:#00205b;padding:18px 18px 20px;animation:eoRise 1.2s cubic-bezier(.22,.61,.36,1) 1.2s both">
+        <div style="font-size:15px;font-weight:700;letter-spacing:.18em;color:#46609a">ZO WERKT ELKE VRAAG</div>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;background:#b8c2d6;border:2px solid #b8c2d6;margin-top:10px">
+          <div style="background:#f8f4f4;padding:20px 20px;display:flex;align-items:center;gap:14px;animation:eoRise 1s cubic-bezier(.22,.61,.36,1) 2s both"><div style="width:34px;height:34px;flex:0 0 auto;background:#ffc83d;color:#00205b;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center">1</div><div style="font-size:19px;font-weight:800;letter-spacing:.06em;color:#00205b">KIES DE JUISTE SATELLIET</div></div>
+          <div style="background:#f8f4f4;padding:20px 20px;display:flex;align-items:center;gap:14px;animation:eoRise 1s cubic-bezier(.22,.61,.36,1) 2.7s both"><div style="width:34px;height:34px;flex:0 0 auto;background:#79E6FB;color:#00205b;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center">2</div><div style="font-size:19px;font-weight:800;letter-spacing:.06em;color:#00205b">BEKIJK HET BEELD</div></div>
+          <div style="background:#f8f4f4;padding:20px 20px;display:flex;align-items:center;gap:14px;animation:eoRise 1s cubic-bezier(.22,.61,.36,1) 3.4s both"><div style="width:34px;height:34px;flex:0 0 auto;background:#b79cff;color:#00205b;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center">3</div><div style="font-size:19px;font-weight:800;letter-spacing:.06em;color:#00205b">GEEF JULLIE ANTWOORD</div></div>
         </div>
       </div>
 
@@ -147,7 +147,7 @@
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;min-height:64px">
           <sc-for list="{{briefCards}}" as="c" hint-placeholder-count="3">
-            <div onPointerDown="{{c.down}}" onPointerMove="{{c.move}}" onPointerUp="{{c.up}}" style="position:relative;z-index:{{c.z}};transform:{{c.transform}};touch-action:none;user-select:none;cursor:grab;box-sizing:border-box;border:3px solid {{c.border}};background:{{c.bg}};color:#201e1d;font-size:20px;font-weight:800;letter-spacing:.06em;padding:16px 22px;box-shadow:{{c.shadow}}">{{c.name}}</div>
+            <div onPointerDown="{{c.down}}" onPointerMove="{{c.move}}" onPointerUp="{{c.up}}" style="position:relative;z-index:{{c.z}};transform:{{c.transform}};touch-action:none;user-select:none;cursor:grab;box-sizing:border-box;border:3px solid {{c.border}};background:{{c.bg}};color:#00205b;font-size:20px;font-weight:800;letter-spacing:.06em;padding:16px 22px;box-shadow:{{c.shadow}}">{{c.name}}</div>
           </sc-for>
         </div>
         <div style="font-size:16px;line-height:1.4;color:{{briefMsgColor}};min-height:22px;margin-top:6px">{{briefMsg}}</div>
@@ -155,7 +155,7 @@
 
       <div style="min-height:58px;margin-top:20px;display:flex">
         <sc-if value="{{briefSolved}}" hint-placeholder-val="{{false}}">
-          <button onClick="{{start}}" style="align-self:flex-start;animation:eoRise 1s cubic-bezier(.22,.61,.36,1) both;border:none;background:#ffc83d;color:#201e1d;font-family:'Archivo',sans-serif;font-size:16px;font-weight:800;letter-spacing:.06em;padding:18px 28px;min-width:280px;text-align:left;cursor:pointer" style-hover="background:#ffdc7a">START DE ANALYSE</button>
+          <button onClick="{{start}}" style="align-self:flex-start;animation:eoRise 1s cubic-bezier(.22,.61,.36,1) both;border:none;background:#ffc83d;color:#00205b;font-family:'Archivo',sans-serif;font-size:16px;font-weight:800;letter-spacing:.06em;padding:18px 28px;min-width:280px;text-align:left;cursor:pointer" style-hover="background:#ffdc7a">START DE ANALYSE</button>
         </sc-if>
       </div>
     </div>
@@ -163,7 +163,7 @@
 
   <sc-if value="{{isTask}}" hint-placeholder-val="{{false}}">
     <div style="height:var(--eo-vh, 100vh);display:flex;flex-direction:column;overflow:hidden">
-      <div style="flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px 24px;padding:14px 28px 10px;border-bottom:2px solid #605d5d;animation:{{barAnim}}">
+      <div style="flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px 24px;padding:14px 28px 10px;border-bottom:2px solid #46609a;animation:{{barAnim}}">
         <div style="display:flex;align-items:center;gap:20px;min-width:0">
           <div style="font-size:12px;font-weight:700;letter-spacing:.2em;color:#ffc83d;white-space:nowrap">AARDOBSERVATIETEAM</div>
           <div style="display:flex;gap:4px">
@@ -201,16 +201,16 @@
           </sc-if>
           <div style="font-size:15px;font-weight:700;letter-spacing:.1em;color:{{timerColor}};animation:{{timerAnim}}">{{timer}}</div>
           <sc-if value="{{instel}}" hint-placeholder-val="{{false}}">
-            <button onClick="{{resetGame}}" style="border:2px dashed #79E6FB;background:transparent;color:#79E6FB;font-family:'Archivo',sans-serif;font-size:12px;font-weight:800;letter-spacing:.1em;padding:9px 16px;text-align:left;cursor:pointer" style-hover="background:#79E6FB;color:#201e1d">{{resetLabel}}</button>
+            <button onClick="{{resetGame}}" style="border:2px dashed #79E6FB;background:transparent;color:#79E6FB;font-family:'Archivo',sans-serif;font-size:12px;font-weight:800;letter-spacing:.1em;padding:9px 16px;text-align:left;cursor:pointer" style-hover="background:#79E6FB;color:#00205b">{{resetLabel}}</button>
           </sc-if>
-          <button onClick="{{toggleHint}}" style="border:2px solid #605d5d;background:transparent;color:#bab6b6;font-family:'Archivo',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;padding:9px 16px;text-align:left;cursor:pointer" style-hover="border-color:#ffc83d;color:#ffc83d">HULP VRAGEN</button>
+          <button onClick="{{toggleHint}}" style="border:2px solid #46609a;background:transparent;color:#b8c2d6;font-family:'Archivo',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;padding:9px 16px;text-align:left;cursor:pointer" style-hover="border-color:#ffc83d;color:#ffc83d">HULP VRAGEN</button>
         </div>
       </div>
 
       <div style="flex:1;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);min-height:0">
-        <div style="padding:22px 28px;border-right:2px solid #444141;display:flex;flex-direction:column;gap:12px;overflow-y:auto;min-height:0">
+        <div style="padding:22px 28px;border-right:2px solid #23427f;display:flex;flex-direction:column;gap:12px;overflow-y:auto;min-height:0">
           <div style="display:flex;flex-direction:column;gap:4px">
-            <div style="font-size:12px;font-weight:700;letter-spacing:.2em;color:#9b9797">{{partLine}}</div>
+            <div style="font-size:12px;font-weight:700;letter-spacing:.2em;color:#97a3bd">{{partLine}}</div>
           </div>
 
           <sc-if value="{{isQ}}" hint-placeholder-val="{{true}}">
@@ -219,29 +219,29 @@
               <div style="display:flex;flex-direction:column;gap:8px">
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
                   <div style="display:flex;align-items:center;gap:10px">
-                    <div style="width:30px;height:30px;flex:0 0 auto;background:#ffc83d;color:#201e1d;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center">1</div>
+                    <div style="width:30px;height:30px;flex:0 0 auto;background:#ffc83d;color:#00205b;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center">1</div>
                     <div style="font-size:19px;font-weight:800;letter-spacing:.12em">KIES DE JUISTE SATELLIET</div>
                   </div>
-                  <div style="font-size:12px;font-weight:600;letter-spacing:.08em;color:#7d7979">{{satCostLabel}}</div>
+                  <div style="font-size:12px;font-weight:600;letter-spacing:.08em;color:#7a88a6">{{satCostLabel}}</div>
                 </div>
                 <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px">
                   <sc-for list="{{satOptions}}" as="o" hint-placeholder-count="3">
                     <button onClick="{{o.onClick}}" style="display:flex;align-items:center;justify-content:space-between;gap:6px;min-width:0;border:2px solid {{o.border}};background:{{o.bg}};color:{{o.color}};font-family:'Archivo',sans-serif;font-size:16px;font-weight:700;padding:10px 12px;text-align:left;cursor:pointer">
                       <span style="overflow-wrap:anywhere">{{o.label}}</span>
                       <span style="display:{{o.check}};flex:0 0 auto">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="#201e1d" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;display:block"><path d="M20 6 9 17l-5-5"></path></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#00205b" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;display:block"><path d="M20 6 9 17l-5-5"></path></svg>
                       </span>
                     </button>
                   </sc-for>
                 </div>
                 <sc-if value="{{hasOkMsg}}" hint-placeholder-val="{{false}}">
-                  <div style="font-size:17px;line-height:1.45;color:#bab6b6;text-wrap:pretty">{{okMsg}}</div>
+                  <div style="font-size:17px;line-height:1.45;color:#b8c2d6;text-wrap:pretty">{{okMsg}}</div>
                 </sc-if>
                 <sc-if value="{{hasSatMsg}}" hint-placeholder-val="{{false}}">
-                  <div style="font-size:17px;line-height:1.45;color:#bab6b6;text-wrap:pretty">✕ {{satMsg}}</div>
+                  <div style="font-size:17px;line-height:1.45;color:#b8c2d6;text-wrap:pretty">✕ {{satMsg}}</div>
                 </sc-if>
                 <sc-if value="{{showHintBtn}}" hint-placeholder-val="{{true}}">
-                  <button onClick="{{askSubHint}}" style="align-self:flex-start;border:none;background:transparent;font-family:'Archivo',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;padding:0;cursor:pointer;color:#7d7979" style-hover="color:#ffc83d">{{subHintLabel}}</button>
+                  <button onClick="{{askSubHint}}" style="align-self:flex-start;border:none;background:transparent;font-family:'Archivo',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;padding:0;cursor:pointer;color:#7a88a6" style-hover="color:#ffc83d">{{subHintLabel}}</button>
                 </sc-if>
                 <sc-if value="{{showSub}}" hint-placeholder-val="{{false}}">
                   <div style="border-left:4px solid #ffc83d;padding:4px 0 4px 14px;font-size:18px;font-weight:600;line-height:1.4;color:#ffe9b0;text-wrap:pretty;animation:eoFade .3s">{{sub}}</div>
@@ -251,7 +251,7 @@
               <sc-if value="{{showRead}}" hint-placeholder-val="{{false}}">
                 <div style="border:2px solid #79E6FB;padding:12px 14px;display:flex;flex-direction:column;gap:8px;animation:eoFade .3s">
                   <div style="display:flex;align-items:center;gap:10px">
-                    <div style="width:30px;height:30px;flex:0 0 auto;background:#79E6FB;color:#201e1d;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center">2</div>
+                    <div style="width:30px;height:30px;flex:0 0 auto;background:#79E6FB;color:#00205b;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center">2</div>
                     <div style="font-size:19px;font-weight:800;letter-spacing:.12em;color:#79E6FB">BEKIJK HET BEELD</div>
                     <div style="flex:1"></div>
                     <svg viewBox="0 0 24 24" fill="none" stroke="#79E6FB" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;display:block;flex:0 0 auto"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg>
@@ -274,10 +274,10 @@
           </sc-if>
 
           <sc-if value="{{showMapCard}}" hint-placeholder-val="{{false}}">
-            <button onClick="{{toggleMap}}" style="margin-top:auto;flex:0 0 auto;border:2px solid #444141;background:#201e1d;padding:0;cursor:pointer;text-align:left;display:flex;flex-direction:column;font-family:'Archivo',sans-serif" style-hover="border-color:#79E6FB">
-              <span style="display:flex;justify-content:space-between;gap:12px;padding:8px 12px;border-bottom:2px solid #444141">
+            <button onClick="{{toggleMap}}" style="margin-top:auto;flex:0 0 auto;border:2px solid #23427f;background:#00205b;padding:0;cursor:pointer;text-align:left;display:flex;flex-direction:column;font-family:'Archivo',sans-serif" style-hover="border-color:#79E6FB">
+              <span style="display:flex;justify-content:space-between;gap:12px;padding:8px 12px;border-bottom:2px solid #23427f">
                 <span style="font-size:12px;font-weight:800;letter-spacing:.16em;color:#79E6FB">STUDIEGEBIED — GIRONDE</span>
-                <span style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#7d7979">VERGROTEN</span>
+                <span style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#7a88a6">VERGROTEN</span>
               </span>
               <img src="uploads/bosbrandinfo.avif" alt="Kaart van het studiegebied" style="display:block;width:100%;height:150px;object-fit:cover;object-position:40% 38%">
             </button>
@@ -286,15 +286,15 @@
           <sc-if value="{{isSummary}}" hint-placeholder-val="{{false}}">
             <div style="display:flex;flex-direction:column;gap:20px">
               <div style="font-size:34px;font-weight:800;line-height:1.05;letter-spacing:-.02em">RISICOANALYSE<br>AFGEROND</div>
-              <div style="font-size:15px;line-height:1.55;color:#bab6b6">Dit is jullie eigen inschatting van het brandrisico. Daar is geen juist of fout.</div>
+              <div style="font-size:15px;line-height:1.55;color:#b8c2d6">Dit is jullie eigen inschatting van het brandrisico. Daar is geen juist of fout.</div>
             </div>
           </sc-if>
 
           <sc-if value="{{isReport}}" hint-placeholder-val="{{false}}">
             <div style="display:flex;flex-direction:column;gap:20px">
               <div style="font-size:34px;font-weight:800;line-height:1.05;letter-spacing:-.02em">RAPPORT VERZENDEN<br>NAAR DE AUTORITEITEN</div>
-              <div style="font-size:15px;line-height:1.55;color:#bab6b6">Jullie rapport is klaar. Verzend het naar de lokale autoriteiten.</div>
-              <button onClick="{{transmit}}" style="align-self:flex-start;border:none;background:#ffc83d;color:#201e1d;font-family:'Archivo',sans-serif;font-size:16px;font-weight:800;letter-spacing:.06em;padding:18px 28px;min-width:300px;text-align:left;cursor:pointer" style-hover="background:#ffdc7a">RAPPORT VERZENDEN</button>
+              <div style="font-size:15px;line-height:1.55;color:#b8c2d6">Jullie rapport is klaar. Verzend het naar de lokale autoriteiten.</div>
+              <button onClick="{{transmit}}" style="align-self:flex-start;border:none;background:#ffc83d;color:#00205b;font-family:'Archivo',sans-serif;font-size:16px;font-weight:800;letter-spacing:.06em;padding:18px 28px;min-width:300px;text-align:left;cursor:pointer" style-hover="background:#ffdc7a">RAPPORT VERZENDEN</button>
             </div>
           </sc-if>
         </div>
@@ -303,7 +303,7 @@
           <sc-if value="{{isQ}}" hint-placeholder-val="{{true}}">
             <div style="display:flex;flex-direction:column;gap:10px">
               <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap">
-                <div style="font-size:13px;font-weight:700;letter-spacing:.14em;color:#9b9797">{{figCaptionShown}}</div>
+                <div style="font-size:13px;font-weight:700;letter-spacing:.14em;color:#97a3bd">{{figCaptionShown}}</div>
                 <sc-if value="{{satChosen}}" hint-placeholder-val="{{false}}">
                   <div style="display:flex;gap:20px">
                     <button onClick="{{toggleZoom}}" style="border:none;background:transparent;font-family:'Archivo',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;padding:0;cursor:pointer;color:#ffc83d" style-hover="color:#ffdc7a">{{zoomLabel}}</button>
@@ -313,7 +313,7 @@
               <div style="{{figWrap}}">
                 <div style="{{figStyle}}">
                   <sc-if value="{{zoom}}" hint-placeholder-val="{{false}}">
-                    <button onClick="{{toggleZoom}}" style="position:absolute;top:0;right:0;z-index:70;border:none;background:#ffc83d;color:#201e1d;font-family:'Archivo',sans-serif;font-size:13px;font-weight:800;letter-spacing:.12em;padding:12px 20px;text-align:left;cursor:pointer" style-hover="background:#ffdc7a">SLUITEN ✕</button>
+                    <button onClick="{{toggleZoom}}" style="position:absolute;top:0;right:0;z-index:70;border:none;background:#ffc83d;color:#00205b;font-family:'Archivo',sans-serif;font-size:13px;font-weight:800;letter-spacing:.12em;padding:12px 20px;text-align:left;cursor:pointer" style-hover="background:#ffdc7a">SLUITEN ✕</button>
                   </sc-if>
                   <sc-for list="{{figSlots}}" as="f" hint-placeholder-count="1">
                     <div style="position:absolute;inset:0;display:{{f.display}}">
@@ -321,16 +321,16 @@
                     </div>
                   </sc-for>
                   <sc-if value="{{noSat}}" hint-placeholder-val="{{true}}">
-                    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;letter-spacing:.12em;color:#7d7979">KIES EERST DE JUISTE SATELLIET</div>
+                    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;letter-spacing:.12em;color:#7a88a6">KIES EERST DE JUISTE SATELLIET</div>
                   </sc-if>
                   <sc-if value="{{hasStudy}}" hint-placeholder-val="{{false}}">
-                    <div style="position:absolute;z-index:5;left:{{studyL}};top:{{studyT}};width:{{studyW}};height:{{studyH}};box-sizing:border-box;border:2px dashed #79E6FB;outline:2px solid rgba(32,30,29,.6);pointer-events:none">
-                      <div style="position:absolute;left:-2px;bottom:100%;margin-bottom:2px;background:#79E6FB;color:#201e1d;font-size:11px;font-weight:800;letter-spacing:.12em;padding:3px 6px;white-space:nowrap">STUDIEGEBIED</div>
+                    <div style="position:absolute;z-index:5;left:{{studyL}};top:{{studyT}};width:{{studyW}};height:{{studyH}};box-sizing:border-box;border:2px dashed #79E6FB;outline:2px solid rgba(0,32,91,.6);pointer-events:none">
+                      <div style="position:absolute;left:-2px;bottom:100%;margin-bottom:2px;background:#79E6FB;color:#00205b;font-size:11px;font-weight:800;letter-spacing:.12em;padding:3px 6px;white-space:nowrap">STUDIEGEBIED</div>
                     </div>
                   </sc-if>
                   <sc-if value="{{studyDraw}}" hint-placeholder-val="{{false}}">
                     <div onPointerDown="{{sdDown}}" onPointerMove="{{sdMove}}" onPointerUp="{{sdUp}}" style="position:absolute;inset:0;z-index:8;cursor:crosshair;touch-action:none;background:transparent">
-                      <div style="position:absolute;left:0;bottom:0;background:#79E6FB;color:#201e1d;font-size:12px;font-weight:800;letter-spacing:.12em;padding:8px 14px;pointer-events:none">INSTELMODUS — SLEEP MET DE MUIS EEN KADER ROND HET STUDIEGEBIED</div>
+                      <div style="position:absolute;left:0;bottom:0;background:#79E6FB;color:#00205b;font-size:12px;font-weight:800;letter-spacing:.12em;padding:8px 14px;pointer-events:none">INSTELMODUS — SLEEP MET DE MUIS EEN KADER ROND HET STUDIEGEBIED</div>
                     </div>
                   </sc-if>
 
@@ -356,7 +356,7 @@
                           <circle cx="{{p.cx}}" cy="{{p.cy}}" r="0.8" fill="#2979ff" stroke="#f8f4f4" stroke-width="1" vector-effect="non-scaling-stroke"></circle>
                         </sc-for>
                       </svg>
-                      <div style="position:absolute;left:0;top:0;right:0;height:42px;background:#201e1d;pointer-events:none"></div>
+                      <div style="position:absolute;left:0;top:0;right:0;height:42px;background:#00205b;pointer-events:none"></div>
                       <div style="position:absolute;left:12px;top:8px;font-size:11px;font-weight:800;letter-spacing:.14em;color:#f8f4f4;pointer-events:none">{{scaleKm}} KM</div>
                       <div style="position:absolute;left:12px;top:26px;height:8px;width:{{scaleBarW}};background:#f8f4f4;border-left:3px solid #ffc83d;border-right:3px solid #ffc83d;box-sizing:border-box;pointer-events:none"></div>
                       <div style="position:absolute;left:0;bottom:0;background:#2979ff;color:#f8f4f4;font-size:12px;font-weight:800;letter-spacing:.12em;padding:8px 14px">KLIK PUNT NA PUNT ROND DE VERBRANDE ZONE</div>
@@ -370,9 +370,9 @@
                   <sc-if value="{{isLevel}}" hint-placeholder-val="{{false}}">
                     <div style="display:flex;flex-direction:column;gap:8px">
                       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-                        <div style="width:30px;height:30px;flex:0 0 auto;background:#b79cff;color:#201e1d;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center">3</div>
+                        <div style="width:30px;height:30px;flex:0 0 auto;background:#b79cff;color:#00205b;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center">3</div>
                         <div style="font-size:19px;font-weight:800;letter-spacing:.12em">JULLIE INSCHATTING</div>
-                        <div style="font-size:16px;line-height:1.4;color:#9b9797">Geen juist of fout: kies wat jullie op het beeld zien.</div>
+                        <div style="font-size:16px;line-height:1.4;color:#97a3bd">Geen juist of fout: kies wat jullie op het beeld zien.</div>
                       </div>
                       <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
                         <sc-for list="{{levelOptions}}" as="o" hint-placeholder-count="4">
@@ -392,12 +392,12 @@
                   <sc-if value="{{isGrid}}" hint-placeholder-val="{{false}}">
                     <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px 20px">
                       <div style="display:flex;align-items:center;gap:10px;flex:1 1 260px">
-                        <div style="width:30px;height:30px;flex:0 0 auto;background:#b79cff;color:#201e1d;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center">3</div>
+                        <div style="width:30px;height:30px;flex:0 0 auto;background:#b79cff;color:#00205b;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center">3</div>
                         <div style="font-size:19px;font-weight:800;letter-spacing:.12em">KLIK OP DE JUISTE CELLEN</div>
-                        <div style="font-size:12px;font-weight:600;letter-spacing:.08em;color:#7d7979">{{cellCostLabel}}</div>
+                        <div style="font-size:12px;font-weight:600;letter-spacing:.08em;color:#7a88a6">{{cellCostLabel}}</div>
                       </div>
                       <sc-if value="{{notConfirmed}}" hint-placeholder-val="{{true}}">
-                        <button onClick="{{confirmCells}}" style="border:none;background:#ffc83d;color:#201e1d;font-family:'Archivo',sans-serif;font-size:14px;font-weight:800;letter-spacing:.08em;padding:12px 20px;min-width:220px;text-align:left;cursor:pointer" style-hover="background:#ffdc7a">SELECTIE BEVESTIGEN</button>
+                        <button onClick="{{confirmCells}}" style="border:none;background:#ffc83d;color:#00205b;font-family:'Archivo',sans-serif;font-size:14px;font-weight:800;letter-spacing:.08em;padding:12px 20px;min-width:220px;text-align:left;cursor:pointer" style-hover="background:#ffdc7a">SELECTIE BEVESTIGEN</button>
                       </sc-if>
                       <sc-if value="{{cellsConfirmed}}" hint-placeholder-val="{{false}}">
                         <div style="font-size:14px;font-weight:700;letter-spacing:.08em;color:#f8f4f4">BEVESTIGD: {{currentValue}}</div>
@@ -409,15 +409,15 @@
                     <div style="display:flex;gap:28px;align-items:flex-start">
                       <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:12px">
                       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-                        <div style="width:30px;height:30px;flex:0 0 auto;background:#b79cff;color:#201e1d;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center">3</div>
+                        <div style="width:30px;height:30px;flex:0 0 auto;background:#b79cff;color:#00205b;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center">3</div>
                         <div style="font-size:19px;font-weight:800;letter-spacing:.12em">KIES DE RICHTING</div>
-                        <div style="font-size:12px;font-weight:600;letter-spacing:.08em;color:#7d7979">{{dirCostLabel}}</div>
+                        <div style="font-size:12px;font-weight:600;letter-spacing:.08em;color:#7a88a6">{{dirCostLabel}}</div>
                       </div>
                       <sc-if value="{{hasDirMsg}}" hint-placeholder-val="{{false}}">
-                        <div style="font-size:16px;line-height:1.45;color:#9b9797">✕ {{dirMsg}}</div>
+                        <div style="font-size:16px;line-height:1.45;color:#97a3bd">✕ {{dirMsg}}</div>
                       </sc-if>
                       </div>
-                      <div onPointerDown="{{dialDown}}" onPointerMove="{{dialMove}}" onPointerUp="{{dialUp}}" style="position:relative;flex:0 0 auto;width:176px;height:176px;border:2px solid #444141;border-radius:50%;cursor:grab;touch-action:none">
+                      <div onPointerDown="{{dialDown}}" onPointerMove="{{dialMove}}" onPointerUp="{{dialUp}}" style="position:relative;flex:0 0 auto;width:176px;height:176px;border:2px solid #23427f;border-radius:50%;cursor:grab;touch-action:none">
                         <div style="position:absolute;top:50%;left:50%;width:2px;height:58px;background:#ffc83d;transform-origin:50% 100%;transform:{{needleRot}}"></div>
                         <div style="position:absolute;top:50%;left:50%;width:8px;height:8px;background:#ffc83d;transform:translate(-50%,-50%)"></div>
                         <sc-for list="{{dirOptions}}" as="o" hint-placeholder-count="8">
@@ -430,30 +430,30 @@
                   <sc-if value="{{isPoly}}" hint-placeholder-val="{{false}}">
                     <div style="display:flex;flex-direction:column;gap:10px">
                       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-                        <div style="width:30px;height:30px;flex:0 0 auto;background:#b79cff;color:#201e1d;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center">3</div>
+                        <div style="width:30px;height:30px;flex:0 0 auto;background:#b79cff;color:#00205b;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center">3</div>
                         <div style="font-size:19px;font-weight:800;letter-spacing:.12em">TEKEN DE VERBRANDE ZONE</div>
-                        <div style="font-size:16px;color:#9b9797">Klik rond de verbrande zone en sluit de vorm.</div>
+                        <div style="font-size:16px;color:#97a3bd">Klik rond de verbrande zone en sluit de vorm.</div>
                       </div>
                       <sc-if value="{{polyClosed}}" hint-placeholder-val="{{false}}">
                         <div style="display:flex;align-items:baseline;gap:10px">
                           <div style="font-size:32px;font-weight:800;letter-spacing:-.02em;line-height:1">{{polyArea}}</div>
-                          <div style="font-size:16px;font-weight:700;color:#bab6b6">ha</div>
-                          <div style="font-size:14px;color:#7d7979">= {{polyKm2}} km²</div>
+                          <div style="font-size:16px;font-weight:700;color:#b8c2d6">ha</div>
+                          <div style="font-size:14px;color:#7a88a6">= {{polyKm2}} km²</div>
                         </div>
                         <sc-if value="{{hasScore}}" hint-placeholder-val="{{false}}">
                           <div style="border:2px solid {{scoreColor}};padding:8px 14px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
                             <div style="font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1;color:{{scoreColor}}">{{scorePct}}%</div>
-                            <div style="font-size:14px;line-height:1.45;color:#bab6b6;flex:1 1 240px">{{scoreText}}</div>
+                            <div style="font-size:14px;line-height:1.45;color:#b8c2d6;flex:1 1 240px">{{scoreText}}</div>
                           </div>
                         </sc-if>
                       </sc-if>
                       <sc-if value="{{setupMode}}" hint-placeholder-val="{{false}}">
                         <div style="border:2px dashed #79E6FB;padding:12px 16px;display:flex;flex-direction:column;gap:8px">
                           <div style="font-size:12px;font-weight:800;letter-spacing:.16em;color:#79E6FB">INSTELMODUS — JUISTE ZONE</div>
-                          <div style="font-size:13px;line-height:1.5;color:#bab6b6">Teken de juiste zone en sluit de vorm. Groen = toegestane marge (tweak "bufferKm"). Vastzetten: kopieer de code naar de tweak "juisteZone" en zet de instelmodus uit.</div>
+                          <div style="font-size:13px;line-height:1.5;color:#b8c2d6">Teken de juiste zone en sluit de vorm. Groen = toegestane marge (tweak "bufferKm"). Vastzetten: kopieer de code naar de tweak "juisteZone" en zet de instelmodus uit.</div>
                           <sc-if value="{{hasRefCode}}" hint-placeholder-val="{{false}}">
-                            <textarea readonly="" value="{{refCode}}" style="width:100%;min-height:56px;box-sizing:border-box;border:2px solid #605d5d;background:#201e1d;color:#f8f4f4;font-family:ui-monospace,monospace;font-size:12px;padding:8px;resize:vertical"></textarea>
-                            <button onClick="{{copyRef}}" style="align-self:flex-start;border:none;background:#79E6FB;color:#201e1d;font-family:'Archivo',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;padding:10px 16px;text-align:left;cursor:pointer" style-hover="background:#b6f2fd">{{copyLabel}}</button>
+                            <textarea readonly="" value="{{refCode}}" style="width:100%;min-height:56px;box-sizing:border-box;border:2px solid #46609a;background:#00205b;color:#f8f4f4;font-family:ui-monospace,monospace;font-size:12px;padding:8px;resize:vertical"></textarea>
+                            <button onClick="{{copyRef}}" style="align-self:flex-start;border:none;background:#79E6FB;color:#00205b;font-family:'Archivo',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;padding:10px 16px;text-align:left;cursor:pointer" style-hover="background:#b6f2fd">{{copyLabel}}</button>
                           </sc-if>
                         </div>
                       </sc-if>
@@ -462,9 +462,9 @@
                           <button onClick="{{closePoly}}" style="border:none;background:#2979ff;color:#f8f4f4;font-family:'Archivo',sans-serif;font-size:14px;font-weight:800;letter-spacing:.08em;padding:11px 18px;min-width:180px;text-align:left;cursor:pointer" style-hover="background:#5b9bff">VORM SLUITEN</button>
                         </sc-if>
                         <sc-if value="{{polyHasPoints}}" hint-placeholder-val="{{false}}">
-                          <button onClick="{{undoPoint}}" style="border:2px solid #605d5d;background:transparent;color:#bab6b6;font-family:'Archivo',sans-serif;font-size:13px;font-weight:700;letter-spacing:.08em;padding:11px 16px;text-align:left;cursor:pointer" style-hover="border-color:#ffc83d;color:#ffc83d">LAATSTE PUNT WISSEN</button>
+                          <button onClick="{{undoPoint}}" style="border:2px solid #46609a;background:transparent;color:#b8c2d6;font-family:'Archivo',sans-serif;font-size:13px;font-weight:700;letter-spacing:.08em;padding:11px 16px;text-align:left;cursor:pointer" style-hover="border-color:#ffc83d;color:#ffc83d">LAATSTE PUNT WISSEN</button>
                         </sc-if>
-                        <button onClick="{{clearPoly}}" style="border:2px solid #605d5d;background:transparent;color:#bab6b6;font-family:'Archivo',sans-serif;font-size:13px;font-weight:700;letter-spacing:.08em;padding:11px 16px;text-align:left;cursor:pointer" style-hover="border-color:#ffc83d;color:#ffc83d">OPNIEUW</button>
+                        <button onClick="{{clearPoly}}" style="border:2px solid #46609a;background:transparent;color:#b8c2d6;font-family:'Archivo',sans-serif;font-size:13px;font-weight:700;letter-spacing:.08em;padding:11px 16px;text-align:left;cursor:pointer" style-hover="border-color:#ffc83d;color:#ffc83d">OPNIEUW</button>
                       </div>
                     </div>
                   </sc-if>
@@ -472,9 +472,9 @@
                   <sc-if value="{{instelStudy}}" hint-placeholder-val="{{false}}">
                     <div style="border:2px dashed #79E6FB;padding:12px 16px;display:flex;flex-direction:column;gap:8px">
                       <div style="font-size:12px;font-weight:800;letter-spacing:.16em;color:#79E6FB">INSTELMODUS — STUDIEGEBIEDEN</div>
-                      <div style="font-size:13px;line-height:1.5;color:#bab6b6">Sleep met de muis een kader op het beeld; het wordt meteen bewaard. Vastzetten in het spel: kopieer de code naar de tweak "studiegebieden".</div>
-                      <textarea readonly="" value="{{studyCode}}" style="width:100%;min-height:56px;box-sizing:border-box;border:2px solid #605d5d;background:#201e1d;color:#f8f4f4;font-family:ui-monospace,monospace;font-size:12px;padding:8px;resize:vertical"></textarea>
-                      <button onClick="{{copyStudy}}" style="align-self:flex-start;border:none;background:#79E6FB;color:#201e1d;font-family:'Archivo',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;padding:10px 16px;text-align:left;cursor:pointer" style-hover="background:#b6f2fd">{{studyCopyLabel}}</button>
+                      <div style="font-size:13px;line-height:1.5;color:#b8c2d6">Sleep met de muis een kader op het beeld; het wordt meteen bewaard. Vastzetten in het spel: kopieer de code naar de tweak "studiegebieden".</div>
+                      <textarea readonly="" value="{{studyCode}}" style="width:100%;min-height:56px;box-sizing:border-box;border:2px solid #46609a;background:#00205b;color:#f8f4f4;font-family:ui-monospace,monospace;font-size:12px;padding:8px;resize:vertical"></textarea>
+                      <button onClick="{{copyStudy}}" style="align-self:flex-start;border:none;background:#79E6FB;color:#00205b;font-family:'Archivo',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;padding:10px 16px;text-align:left;cursor:pointer" style-hover="background:#b6f2fd">{{studyCopyLabel}}</button>
                     </div>
                   </sc-if>
                 </div>
@@ -483,14 +483,14 @@
           </sc-if>
 
           <sc-if value="{{isSummary}}" hint-placeholder-val="{{false}}">
-            <div style="display:flex;flex-direction:column;gap:2px;background:#444141;border:2px solid #444141">
+            <div style="display:flex;flex-direction:column;gap:2px;background:#23427f;border:2px solid #23427f">
               <sc-for list="{{summaryRows}}" as="r" hint-placeholder-count="4">
-                <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;background:#201e1d;padding:18px 20px">
-                  <span style="font-size:13px;font-weight:700;letter-spacing:.12em;color:#9b9797">{{r.label}}</span>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;background:#00205b;padding:18px 20px">
+                  <span style="font-size:13px;font-weight:700;letter-spacing:.12em;color:#97a3bd">{{r.label}}</span>
                   <span style="font-size:17px;font-weight:800;color:#ffc83d">{{r.value}}</span>
                 </div>
               </sc-for>
-              <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;background:#2d2b2b;padding:20px">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;background:#0c2f6e;padding:20px">
                 <span style="font-size:13px;font-weight:700;letter-spacing:.12em;color:#f8f4f4">TOTAAL RISICO</span>
                 <span style="font-size:22px;font-weight:800;color:#ffc83d">{{overallRisk}}</span>
               </div>
@@ -500,16 +500,16 @@
           <sc-if value="{{isReport}}" hint-placeholder-val="{{false}}">
             <div style="display:flex;flex-direction:column;gap:20px">
               <sc-for list="{{reportGroups}}" as="g" hint-placeholder-count="3">
-                <div style="display:flex;flex-direction:column;gap:2px;background:#444141;border:2px solid #444141">
-                  <div style="background:#2d2b2b;padding:12px 20px;font-size:12px;font-weight:700;letter-spacing:.18em;color:#f8f4f4">{{g.title}}</div>
+                <div style="display:flex;flex-direction:column;gap:2px;background:#23427f;border:2px solid #23427f">
+                  <div style="background:#0c2f6e;padding:12px 20px;font-size:12px;font-weight:700;letter-spacing:.18em;color:#f8f4f4">{{g.title}}</div>
                   <sc-for list="{{g.rows}}" as="r" hint-placeholder-count="4">
-                    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;background:#201e1d;padding:14px 20px">
-                      <span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#9b9797">{{r.label}}</span>
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;background:#00205b;padding:14px 20px">
+                      <span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#97a3bd">{{r.label}}</span>
                       <span style="font-size:16px;font-weight:800;color:#ffc83d">{{r.value}}</span>
                     </div>
                   </sc-for>
                   <sc-if value="{{g.hasTotal}}" hint-placeholder-val="{{false}}">
-                    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;background:#2d2b2b;padding:14px 20px">
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;background:#0c2f6e;padding:14px 20px">
                       <span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#f8f4f4">{{g.totalLabel}}</span>
                       <span style="font-size:18px;font-weight:800;color:#ffc83d">{{g.total}}</span>
                     </div>
@@ -521,15 +521,15 @@
         </div>
       </div>
 
-      <div style="display:flex;gap:2px;border-top:2px solid #605d5d">
+      <div style="display:flex;gap:2px;border-top:2px solid #46609a">
         <sc-if value="{{notReport}}" hint-placeholder-val="{{true}}">
-        <button onClick="{{back}}" style="flex:0 0 220px;border:none;background:transparent;color:#bab6b6;font-family:'Archivo',sans-serif;font-size:15px;font-weight:700;letter-spacing:.08em;padding:20px 32px;text-align:left;cursor:pointer" style-hover="color:#ffc83d">← TERUG</button>
+        <button onClick="{{back}}" style="flex:0 0 220px;border:none;background:transparent;color:#b8c2d6;font-family:'Archivo',sans-serif;font-size:15px;font-weight:700;letter-spacing:.08em;padding:20px 32px;text-align:left;cursor:pointer" style-hover="color:#ffc83d">← TERUG</button>
         </sc-if>
         <sc-if value="{{isReport}}" hint-placeholder-val="{{false}}">
           <div style="flex:1"></div>
         </sc-if>
         <sc-if value="{{canNext}}" hint-placeholder-val="{{false}}">
-          <button onClick="{{next}}" style="flex:1;border:none;background:#ffc83d;color:#201e1d;font-family:'Archivo',sans-serif;font-size:15px;font-weight:800;letter-spacing:.08em;padding:20px 32px;text-align:left;cursor:pointer" style-hover="background:#ffdc7a">VOLGENDE →</button>
+          <button onClick="{{next}}" style="flex:1;border:none;background:#ffc83d;color:#00205b;font-family:'Archivo',sans-serif;font-size:15px;font-weight:800;letter-spacing:.08em;padding:20px 32px;text-align:left;cursor:pointer" style-hover="background:#ffdc7a">VOLGENDE →</button>
         </sc-if>
       </div>
     </div>
@@ -542,69 +542,69 @@
       </sc-if>
       <div style="font-size:13px;font-weight:700;letter-spacing:.2em;color:#ffc83d">RAPPORT VERZONDEN — AUTORITEITEN VERWITTIGD</div>
       <sc-if value="{{overtime}}" hint-placeholder-val="{{false}}">
-        <div style="background:#ff563c;color:#201e1d;font-size:15px;font-weight:800;letter-spacing:.06em;padding:12px 16px;margin-top:14px;max-width:820px">TE LAAT INGEDIEND — {{housesLost}} HUIZEN VERLOREN. DE SCHADE IS BEPERKT, MAAR BORDEAUX IS GERAAKT.</div>
+        <div style="background:#ff563c;color:#00205b;font-size:15px;font-weight:800;letter-spacing:.06em;padding:12px 16px;margin-top:14px;max-width:820px">TE LAAT INGEDIEND — {{housesLost}} HUIZEN VERLOREN. DE SCHADE IS BEPERKT, MAAR BORDEAUX IS GERAAKT.</div>
       </sc-if>
-      <div style="height:2px;background:#605d5d;margin:20px 0 28px"></div>
+      <div style="height:2px;background:#46609a;margin:20px 0 28px"></div>
       <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
       <div style="flex:1 1 440px;min-width:0;max-width:820px">
       <sc-if value="{{onTime}}" hint-placeholder-val="{{true}}">
         <div>
           <div style="font-size:64px;font-weight:800;line-height:.95;letter-spacing:-.03em">BRAND<br>BESTREDEN</div>
-          <div style="font-size:17px;line-height:1.6;color:#bab6b6;max-width:52ch;margin-top:24px">De brandweer en de lokale autoriteiten beschikken opnieuw over actuele satellietinformatie. Jullie analyse bepaalt mee waar geëvacueerd wordt en waar de blusvliegtuigen naartoe gaan.</div>
+          <div style="font-size:17px;line-height:1.6;color:#b8c2d6;max-width:52ch;margin-top:24px">De brandweer en de lokale autoriteiten beschikken opnieuw over actuele satellietinformatie. Jullie analyse bepaalt mee waar geëvacueerd wordt en waar de blusvliegtuigen naartoe gaan.</div>
         </div>
       </sc-if>
       <sc-if value="{{overtime}}" hint-placeholder-val="{{false}}">
         <div>
           <div style="font-size:64px;font-weight:800;line-height:.95;letter-spacing:-.03em">SCHADE<br>BEPERKT</div>
-          <div style="font-size:17px;line-height:1.6;color:#bab6b6;max-width:52ch;margin-top:24px">Het rapport kwam te laat om Bordeaux te sparen, maar de analyse is alsnog aangekomen. De blusvliegtuigen en de evacuatieploegen werken nu met jullie gegevens en houden het vuur weg van de resterende wijken.</div>
+          <div style="font-size:17px;line-height:1.6;color:#b8c2d6;max-width:52ch;margin-top:24px">Het rapport kwam te laat om Bordeaux te sparen, maar de analyse is alsnog aangekomen. De blusvliegtuigen en de evacuatieploegen werken nu met jullie gegevens en houden het vuur weg van de resterende wijken.</div>
         </div>
       </sc-if>
 
-      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;background:#444141;border:2px solid #444141;margin-top:32px;max-width:780px;animation:eoRise 1.4s cubic-bezier(.22,.61,.36,1) 2.8s both">
-        <div style="background:#201e1d;padding:22px 24px">
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;background:#23427f;border:2px solid #23427f;margin-top:32px;max-width:780px;animation:eoRise 1.4s cubic-bezier(.22,.61,.36,1) 2.8s both">
+        <div style="background:#00205b;padding:22px 24px">
           <div style="font-size:11px;font-weight:700;letter-spacing:.18em;color:#ffc83d">SDIS 33 — BRANDWEER GIRONDE</div>
           <sc-if value="{{onTime}}" hint-placeholder-val="{{true}}">
-            <div style="font-size:15px;line-height:1.6;color:#bab6b6;margin-top:12px">{{sdisText}}</div>
+            <div style="font-size:15px;line-height:1.6;color:#b8c2d6;margin-top:12px">{{sdisText}}</div>
           </sc-if>
           <sc-if value="{{overtime}}" hint-placeholder-val="{{false}}">
-            <div style="font-size:15px;line-height:1.6;color:#bab6b6;margin-top:12px">Analyse laat ontvangen. De vlammen stonden al in de rand van Bordeaux, maar met jullie analyse konden we de laatste straten nog vrijhouden.</div>
+            <div style="font-size:15px;line-height:1.6;color:#b8c2d6;margin-top:12px">Analyse laat ontvangen. De vlammen stonden al in de rand van Bordeaux, maar met jullie analyse konden we de laatste straten nog vrijhouden.</div>
           </sc-if>
         </div>
-        <div style="background:#201e1d;padding:22px 24px">
+        <div style="background:#00205b;padding:22px 24px">
           <div style="font-size:11px;font-weight:700;letter-spacing:.18em;color:#ffc83d">PRÉFECTURE DE LA GIRONDE</div>
           <sc-if value="{{onTime}}" hint-placeholder-val="{{true}}">
-            <div style="font-size:15px;line-height:1.6;color:#bab6b6;margin-top:12px">{{prefText}}</div>
+            <div style="font-size:15px;line-height:1.6;color:#b8c2d6;margin-top:12px">{{prefText}}</div>
           </sc-if>
           <sc-if value="{{overtime}}" hint-placeholder-val="{{false}}">
-            <div style="font-size:15px;line-height:1.6;color:#bab6b6;margin-top:12px">De evacuatie was al begonnen toen het rapport binnenkwam. Jullie analyse bepaalt nu welke wijken nog ontruimd worden en waar de waarschuwing voor luchtkwaliteit geldt.</div>
+            <div style="font-size:15px;line-height:1.6;color:#b8c2d6;margin-top:12px">De evacuatie was al begonnen toen het rapport binnenkwam. Jullie analyse bepaalt nu welke wijken nog ontruimd worden en waar de waarschuwing voor luchtkwaliteit geldt.</div>
           </sc-if>
         </div>
       </div>
 
       <div style="animation:eoRise 1.4s cubic-bezier(.22,.61,.36,1) 3.6s both">
-      <div style="font-size:14px;font-weight:700;letter-spacing:.16em;color:#9b9797;margin-top:28px">AARDOBSERVATIETEAM — {{finalVerdict}}</div>
+      <div style="font-size:14px;font-weight:700;letter-spacing:.16em;color:#97a3bd;margin-top:28px">AARDOBSERVATIETEAM — {{finalVerdict}}</div>
 
-      <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;border-top:2px solid #605d5d;margin-top:20px;padding-top:20px">
+      <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;border-top:2px solid #46609a;margin-top:20px;padding-top:20px">
         <div style="font-size:13px;font-weight:700;letter-spacing:.18em;color:{{finalColor}}">{{finalLabel}}</div>
         <div style="font-size:56px;font-weight:800;letter-spacing:-.02em;line-height:1;color:{{finalColor}}">{{finalTime}}</div>
       </div>
 
       <sc-if value="{{notSaved}}" hint-placeholder-val="{{true}}">
         <div style="margin-top:28px;max-width:560px">
-          <div style="font-size:12px;font-weight:700;letter-spacing:.18em;color:#9b9797">TEAMNAAM</div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.18em;color:#97a3bd">TEAMNAAM</div>
           <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">
-            <input value="{{team}}" onChange="{{setTeam}}" onKeyDown="{{teamKey}}" placeholder="Groepsnaam" style="flex:1 1 260px;min-width:0;border:2px solid #605d5d;background:#201e1d;color:#f8f4f4;font-family:'Archivo',sans-serif;font-size:15px;font-weight:600;padding:14px 16px;outline:none" style-focus="border-color:#79E6FB">
-            <button onClick="{{addToBoard}}" style="border:none;background:#79E6FB;color:#201e1d;font-family:'Archivo',sans-serif;font-size:14px;font-weight:800;letter-spacing:.08em;padding:14px 22px;text-align:left;cursor:pointer" style-hover="background:#b6f2fd">VOEG TOE AAN SCOREBORD</button>
+            <input value="{{team}}" onChange="{{setTeam}}" onKeyDown="{{teamKey}}" placeholder="Groepsnaam" style="flex:1 1 260px;min-width:0;border:2px solid #46609a;background:#00205b;color:#f8f4f4;font-family:'Archivo',sans-serif;font-size:15px;font-weight:600;padding:14px 16px;outline:none" style-focus="border-color:#79E6FB">
+            <button onClick="{{addToBoard}}" style="border:none;background:#79E6FB;color:#00205b;font-family:'Archivo',sans-serif;font-size:14px;font-weight:800;letter-spacing:.08em;padding:14px 22px;text-align:left;cursor:pointer" style-hover="background:#b6f2fd">VOEG TOE AAN SCOREBORD</button>
           </div>
         </div>
       </sc-if>
 
       <sc-if value="{{hasBoard}}" hint-placeholder-val="{{false}}">
-        <div style="margin-top:28px;max-width:560px;border:2px solid #444141">
-          <div style="font-size:12px;font-weight:700;letter-spacing:.18em;color:#201e1d;background:#79E6FB;padding:10px 16px">SCOREBORD</div>
+        <div style="margin-top:28px;max-width:560px;border:2px solid #23427f">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.18em;color:#00205b;background:#79E6FB;padding:10px 16px">SCOREBORD</div>
           <sc-for list="{{board}}" as="b" hint-placeholder-count="3">
-            <div style="display:flex;align-items:center;gap:14px;border-top:2px solid #444141;padding:12px 16px;background:{{b.bg}}">
-              <div style="font-size:14px;font-weight:800;color:#7d7979;width:26px">{{b.rank}}</div>
+            <div style="display:flex;align-items:center;gap:14px;border-top:2px solid #23427f;padding:12px 16px;background:{{b.bg}}">
+              <div style="font-size:14px;font-weight:800;color:#7a88a6;width:26px">{{b.rank}}</div>
               <div style="flex:1;min-width:0;font-size:15px;font-weight:700;color:{{b.nameColor}}">{{b.name}}</div>
               <div style="font-size:15px;font-weight:800;letter-spacing:.04em;color:{{b.color}}">{{b.time}}</div>
             </div>
@@ -612,29 +612,29 @@
         </div>
       </sc-if>
 
-      <button onClick="{{restart}}" style="margin-top:32px;border:2px solid #605d5d;background:transparent;color:#bab6b6;font-family:'Archivo',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;padding:14px 22px;text-align:left;cursor:pointer" style-hover="border-color:#ffc83d;color:#ffc83d">OPNIEUW STARTEN</button>
+      <button onClick="{{restart}}" style="margin-top:32px;border:2px solid #46609a;background:transparent;color:#b8c2d6;font-family:'Archivo',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;padding:14px 22px;text-align:left;cursor:pointer" style-hover="border-color:#ffc83d;color:#ffc83d">OPNIEUW STARTEN</button>
       </div>
       </div>
 
       <div style="position:relative;flex:1 1 400px;min-width:0;max-width:640px;height:min(680px, calc(var(--eo-vh, 100vh) - 150px));min-height:520px">
         <figure style="position:absolute;top:0;left:0;width:64%;margin:0;box-sizing:border-box;background:#f8f4f4;padding:10px 10px 0;box-shadow:0 14px 30px rgba(0,0,0,.55);z-index:1;--r:-4deg;transform:rotate(-4deg);animation:eoDrop 1.1s cubic-bezier(.22,.61,.36,1) 1s backwards;transition:transform .3s" style-hover="z-index:10;transform:rotate(0deg) scale(1.04)">
           <img src="uploads/bosbrand%20gelukt.webp" alt="Blusvliegtuig dropt water boven het naaldbos" style="display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover">
-          <figcaption style="font-size:15px;font-weight:600;line-height:1.35;color:#201e1d;padding:10px 4px 12px">Blusvliegtuigen ingezet op de oostelijke flank.</figcaption>
+          <figcaption style="font-size:15px;font-weight:600;line-height:1.35;color:#00205b;padding:10px 4px 12px">Blusvliegtuigen ingezet op de oostelijke flank.</figcaption>
         </figure>
         <figure style="position:absolute;top:28%;right:0;width:64%;margin:0;box-sizing:border-box;background:#f8f4f4;padding:10px 10px 0;box-shadow:0 14px 30px rgba(0,0,0,.55);z-index:2;--r:3deg;transform:rotate(3deg);animation:eoDrop 1.1s cubic-bezier(.22,.61,.36,1) 1.7s backwards;transition:transform .3s" style-hover="z-index:10;transform:rotate(0deg) scale(1.04)">
           <img src="uploads/bosbrand%20gelukt3.webp" alt="Brandweerploegen blussen aan de bosrand" style="display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover">
-          <figcaption style="font-size:15px;font-weight:600;line-height:1.35;color:#201e1d;padding:10px 4px 12px">Ploegen houden de bosrand nat.</figcaption>
+          <figcaption style="font-size:15px;font-weight:600;line-height:1.35;color:#00205b;padding:10px 4px 12px">Ploegen houden de bosrand nat.</figcaption>
         </figure>
         <sc-if value="{{onTime}}" hint-placeholder-val="{{true}}">
         <figure style="position:absolute;top:56%;left:6%;width:64%;margin:0;box-sizing:border-box;background:#f8f4f4;padding:10px 10px 0;box-shadow:0 14px 30px rgba(0,0,0,.55);z-index:3;--r:-2deg;transform:rotate(-2deg);animation:eoDrop 1.1s cubic-bezier(.22,.61,.36,1) 2.4s backwards;transition:transform .3s" style-hover="z-index:10;transform:rotate(0deg) scale(1.04)">
           <img src="uploads/bosbrand%20gelukt2.webp" alt="Geëvacueerde bewoners in een opvangcentrum" style="display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover">
-          <figcaption style="font-size:15px;font-weight:600;line-height:1.35;color:#201e1d;padding:10px 4px 12px">Bewoners op tijd opgevangen in de evacuatiehal.</figcaption>
+          <figcaption style="font-size:15px;font-weight:600;line-height:1.35;color:#00205b;padding:10px 4px 12px">Bewoners op tijd opgevangen in de evacuatiehal.</figcaption>
         </figure>
         </sc-if>
         <sc-if value="{{overtime}}" hint-placeholder-val="{{false}}">
         <figure style="position:absolute;top:56%;left:6%;width:64%;margin:0;box-sizing:border-box;background:#f8f4f4;padding:10px 10px 0;box-shadow:0 14px 30px rgba(0,0,0,.55);z-index:3;--r:-2deg;transform:rotate(-2deg);animation:eoDrop 1.1s cubic-bezier(.22,.61,.36,1) 2.4s backwards;transition:transform .3s" style-hover="z-index:10;transform:rotate(0deg) scale(1.04)">
           <img src="uploads/bosbrand%20gefaaldPRESS.webp" alt="Uitgebrande woning in de brandzone" style="display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover">
-          <figcaption style="font-size:15px;font-weight:600;line-height:1.35;color:#201e1d;padding:10px 4px 12px">De vlammen bereikten de bewoonde zone voor de evacuatie rond was.</figcaption>
+          <figcaption style="font-size:15px;font-weight:600;line-height:1.35;color:#00205b;padding:10px 4px 12px">De vlammen bereikten de bewoonde zone voor de evacuatie rond was.</figcaption>
         </figure>
         </sc-if>
       </div>
@@ -643,45 +643,45 @@
   </sc-if>
 
   <sc-if value="{{overModal}}" hint-placeholder-val="{{false}}">
-    <div style="position:fixed;inset:0;z-index:90;overflow-y:auto;background:#201e1d;display:flex;flex-direction:column;justify-content:center;padding:48px 56px;animation:eoFade .5s">
+    <div style="position:fixed;inset:0;z-index:90;overflow-y:auto;background:#00205b;display:flex;flex-direction:column;justify-content:center;padding:48px 56px;animation:eoFade .5s">
       <div style="display:flex;align-items:center;gap:12px">
         <svg viewBox="0 0 24 24" fill="none" stroke="#ff563c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;animation:eoFlame .6s infinite alternate">
           <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
         </svg>
         <div style="font-size:13px;font-weight:700;letter-spacing:.2em;color:#ff563c">MISSIETIJD VERSTREKEN — BORDEAUX BEREIKT</div>
       </div>
-      <div style="height:2px;background:#605d5d;margin:20px 0 28px"></div>
+      <div style="height:2px;background:#46609a;margin:20px 0 28px"></div>
       <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
       <div style="flex:1 1 440px;min-width:0;max-width:820px">
       <div style="font-size:64px;font-weight:800;line-height:.95;letter-spacing:-.03em">JULLIE ZIJN<br>TE LAAT</div>
-      <div style="font-size:19px;line-height:1.6;color:#bab6b6;max-width:54ch;margin-top:24px">De tijd is op. Het vuur heeft Bordeaux bereikt en de evacuatie komt te laat. Om de schade nog te beperken moet het rapport alsnog ingediend worden. Vanaf nu brandt er elke minuut een huis af.</div>
+      <div style="font-size:19px;line-height:1.6;color:#b8c2d6;max-width:54ch;margin-top:24px">De tijd is op. Het vuur heeft Bordeaux bereikt en de evacuatie komt te laat. Om de schade nog te beperken moet het rapport alsnog ingediend worden. Vanaf nu brandt er elke minuut een huis af.</div>
 
-      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;background:#444141;border:2px solid #444141;margin-top:32px;max-width:780px">
-        <div style="background:#201e1d;padding:22px 24px">
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;background:#23427f;border:2px solid #23427f;margin-top:32px;max-width:780px">
+        <div style="background:#00205b;padding:22px 24px">
           <div style="font-size:11px;font-weight:700;letter-spacing:.18em;color:#ff563c">SDIS 33 — BRANDWEER GIRONDE</div>
-          <div style="font-size:16px;line-height:1.6;color:#bab6b6;margin-top:12px">De vlammen zijn overgeslagen naar Bordeaux.</div>
+          <div style="font-size:16px;line-height:1.6;color:#b8c2d6;margin-top:12px">De vlammen zijn overgeslagen naar Bordeaux.</div>
         </div>
-        <div style="background:#201e1d;padding:22px 24px">
+        <div style="background:#00205b;padding:22px 24px">
           <div style="font-size:11px;font-weight:700;letter-spacing:.18em;color:#ff563c">PRÉFECTURE DE LA GIRONDE</div>
-          <div style="font-size:16px;line-height:1.6;color:#bab6b6;margin-top:12px">Zonder rapport konden we geen evacuatiebevel onderbouwen. Stuur ons alsnog jullie analyse, dan kunnen we de schade beperken.</div>
+          <div style="font-size:16px;line-height:1.6;color:#b8c2d6;margin-top:12px">Zonder rapport konden we geen evacuatiebevel onderbouwen. Stuur ons alsnog jullie analyse, dan kunnen we de schade beperken.</div>
         </div>
       </div>
 
       <div style="display:flex;flex-wrap:wrap;gap:36px;margin-top:28px">
         <div>
-          <div style="font-size:12px;font-weight:700;letter-spacing:.16em;color:#7d7979">NOG IN TE VULLEN</div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.16em;color:#7a88a6">NOG IN TE VULLEN</div>
           <div style="font-size:34px;font-weight:800;letter-spacing:-.02em;margin-top:4px">{{openCount}} / {{totalCount}}</div>
         </div>
         <div>
-          <div style="font-size:12px;font-weight:700;letter-spacing:.16em;color:#7d7979">VANAF NU</div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.16em;color:#7a88a6">VANAF NU</div>
           <div style="font-size:34px;font-weight:800;letter-spacing:-.02em;margin-top:4px;color:#ff563c">1 HUIS / MIN</div>
         </div>
       </div>
 
-      <button onClick="{{closeOverModal}}" style="margin-top:32px;border:none;background:#ffc83d;color:#201e1d;font-family:'Archivo',sans-serif;font-size:17px;font-weight:800;letter-spacing:.06em;padding:18px 28px;min-width:340px;text-align:left;cursor:pointer" style-hover="background:#ffdc7a">RAPPORT VERDER AANVULLEN</button>
-      </div><figure style="margin:0;background:#201e1d;border:2px solid #444141;flex:1 1 340px;min-width:0;max-width:560px">
+      <button onClick="{{closeOverModal}}" style="margin-top:32px;border:none;background:#ffc83d;color:#00205b;font-family:'Archivo',sans-serif;font-size:17px;font-weight:800;letter-spacing:.06em;padding:18px 28px;min-width:340px;text-align:left;cursor:pointer" style-hover="background:#ffdc7a">RAPPORT VERDER AANVULLEN</button>
+      </div><figure style="margin:0;background:#00205b;border:2px solid #23427f;flex:1 1 340px;min-width:0;max-width:560px">
         <img src="uploads/bosbrand%20gefaaldPRESS.webp" alt="Uitgebrande woning in de brandzone" style="display:block;width:100%;height:auto;aspect-ratio:1620/1079;object-fit:contain">
-        <figcaption style="font-size:16px;font-weight:600;line-height:1.45;color:#bab6b6;padding:12px 14px">De brand bereikte de bewoonde zone voor de evacuatie startte.</figcaption>
+        <figcaption style="font-size:16px;font-weight:600;line-height:1.45;color:#b8c2d6;padding:12px 14px">De brand bereikte de bewoonde zone voor de evacuatie startte.</figcaption>
       </figure>
 
       
@@ -691,22 +691,22 @@
 
   <sc-if value="{{urgent}}" hint-placeholder-val="{{false}}">
     <div style="position:fixed;inset:0;z-index:70;pointer-events:none;box-shadow:inset 0 0 180px 60px #ff563c;animation:eoVignette 1.1s 10 forwards"></div>
-    <div style="position:fixed;left:0;right:0;bottom:0;z-index:71;pointer-events:none;background:#ff563c;color:#201e1d;font-size:14px;font-weight:800;letter-spacing:.2em;padding:10px 32px;animation:eoAlarmOut 1.1s 10 forwards">MINDER DAN 5 MINUTEN — HET VUUR NADERT DE DORPEN</div>
+    <div style="position:fixed;left:0;right:0;bottom:0;z-index:71;pointer-events:none;background:#ff563c;color:#00205b;font-size:14px;font-weight:800;letter-spacing:.2em;padding:10px 32px;animation:eoAlarmOut 1.1s 10 forwards">MINDER DAN 5 MINUTEN — HET VUUR NADERT DE DORPEN</div>
   </sc-if>
 
   <sc-if value="{{hasPenalty}}" hint-placeholder-val="{{false}}">
-    <div style="position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:80;display:flex;align-items:center;gap:16px;background:#ff563c;color:#201e1d;padding:14px 22px;animation:eoFade .2s">
+    <div style="position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:80;display:flex;align-items:center;gap:16px;background:#ff563c;color:#00205b;padding:14px 22px;animation:eoFade .2s">
       <div style="font-size:22px;font-weight:800;letter-spacing:.02em">{{penaltyCost}}</div>
       <div style="font-size:13px;font-weight:700;letter-spacing:.14em">{{penaltyLabel}}</div>
     </div>
   </sc-if>
 
   <sc-if value="{{showMap}}" hint-placeholder-val="{{false}}">
-    <div onClick="{{toggleMap}}" style="position:fixed;inset:0;z-index:80;background:rgba(32,30,29,.92);display:flex;align-items:center;justify-content:center;padding:32px;cursor:pointer">
-      <figure style="margin:0;max-width:min(1100px,100%);max-height:100%;display:flex;flex-direction:column;background:#201e1d;border:2px solid #605d5d">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 16px;border-bottom:2px solid #444141">
+    <div onClick="{{toggleMap}}" style="position:fixed;inset:0;z-index:80;background:rgba(0,32,91,.92);display:flex;align-items:center;justify-content:center;padding:32px;cursor:pointer">
+      <figure style="margin:0;max-width:min(1100px,100%);max-height:100%;display:flex;flex-direction:column;background:#00205b;border:2px solid #46609a">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 16px;border-bottom:2px solid #23427f">
           <div style="font-size:13px;font-weight:800;letter-spacing:.16em;color:#79E6FB">STUDIEGEBIED — GIRONDE</div>
-          <div style="font-size:12px;font-weight:700;letter-spacing:.1em;color:#bab6b6">KLIK OM TE SLUITEN ✕</div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.1em;color:#b8c2d6">KLIK OM TE SLUITEN ✕</div>
         </div>
         <img src="uploads/bosbrandinfo.avif" alt="Kaart van het studiegebied" style="display:block;max-width:100%;max-height:calc(var(--eo-vh, 100vh) - 120px);object-fit:contain">
       </figure>
@@ -714,11 +714,11 @@
   </sc-if>
 
   <sc-if value="{{instelFixed}}" hint-placeholder-val="{{false}}">
-    <button onClick="{{resetGame}}" style="position:fixed;left:16px;bottom:16px;z-index:95;border:2px dashed #79E6FB;background:#201e1d;color:#79E6FB;font-family:'Archivo',sans-serif;font-size:12px;font-weight:800;letter-spacing:.1em;padding:9px 16px;text-align:left;cursor:pointer" style-hover="background:#79E6FB;color:#201e1d">{{resetLabel}}</button>
+    <button onClick="{{resetGame}}" style="position:fixed;left:16px;bottom:16px;z-index:95;border:2px dashed #79E6FB;background:#00205b;color:#79E6FB;font-family:'Archivo',sans-serif;font-size:12px;font-weight:800;letter-spacing:.1em;padding:9px 16px;text-align:left;cursor:pointer" style-hover="background:#79E6FB;color:#00205b">{{resetLabel}}</button>
   </sc-if>
 
   <sc-if value="{{hint}}" hint-placeholder-val="{{false}}">
-    <div style="position:fixed;right:24px;bottom:24px;z-index:20;background:#2d2b2b;border:2px solid #ffc83d;padding:18px 22px;max-width:340px;animation:eoFade .25s">
+    <div style="position:fixed;right:24px;bottom:24px;z-index:20;background:#0c2f6e;border:2px solid #ffc83d;padding:18px 22px;max-width:340px;animation:eoFade .25s">
       <div style="display:flex;align-items:center;gap:10px">
         <svg viewBox="0 0 24 24" fill="none" stroke="#ffc83d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px">
           <path d="M10.268 21a2 2 0 0 0 3.464 0"></path>
@@ -727,7 +727,7 @@
         <div style="font-size:12px;font-weight:700;letter-spacing:.14em;color:#ffc83d">HULP VRAGEN</div>
       </div>
       <div style="font-size:24px;font-weight:800;line-height:1.3;color:#f8f4f4;margin-top:12px">Ring de bel drie keer.</div>
-      <div style="font-size:17px;line-height:1.45;color:#bab6b6;margin-top:8px">De spelleider hoort jullie en komt naar het lokaal.</div>
+      <div style="font-size:17px;line-height:1.45;color:#b8c2d6;margin-top:8px">De spelleider hoort jullie en komt naar het lokaal.</div>
     </div>
   </sc-if>
 
@@ -1146,7 +1146,7 @@ class Component extends DCLogic {
       e('svg', {viewBox: '0 0 24 24', fill: '#f8f4f4', stroke: '#f8f4f4', strokeWidth: 1, strokeLinejoin: 'round', style: {width: 52, height: 52, display: 'block', animation: 'eoBob 1.2s ease-in-out infinite'}},
         e('path', {d: PLANE})),
       e('div', {style: {position: 'absolute', top: 40, left: -26, width: 44, height: 46, transformOrigin: '50% 0', background: 'linear-gradient(#79E6FB, rgba(121,230,251,0))', animation: 'eoDrop .5s linear infinite'}}));
-    this._fly = e('div', {style: {position: 'relative', height: 132, overflow: 'hidden', borderBottom: '2px solid #605d5d'}},
+    this._fly = e('div', {style: {position: 'relative', height: 132, overflow: 'hidden', borderBottom: '2px solid #46609a'}},
       plane,
       e('div', {style: {position: 'absolute', left: 0, right: 0, bottom: 0, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', paddingBottom: 6}}, trees));
     return this._fly;
@@ -1209,7 +1209,7 @@ class Component extends DCLogic {
     const codeSlots = [0,1,2,3,4,5,6,7].map(i => ({
       display: s.code.length > i ? s.code[i] : '',
       gapAfter: s.lockHint && (i===1||i===3) ? '18px' : '6px',
-      border: s.lockMsg === 'TOEGANG GEWEIGERD' ? '#ff563c' : s.code.length > i ? '#9b9797' : '#444141',
+      border: s.lockMsg === 'TOEGANG GEWEIGERD' ? '#ff563c' : s.code.length > i ? '#97a3bd' : '#23427f',
       color: '#f8f4f4',
     }));
     const dateLabels = [{w:'116px', t:'DAG'},{w:'116px', t:'MAAND'},{w:'208px', t:'JAAR'}];
@@ -1217,8 +1217,8 @@ class Component extends DCLogic {
       label,
       onClick: label==='ENTER' ? this.submitCode : label==='\u2190' ? this.del : (() => this.press(label)),
       bg: label==='ENTER' ? '#ffc83d' : 'transparent',
-      color: label==='ENTER' ? '#201e1d' : '#f8f4f4',
-      border: label==='ENTER' ? '#ffc83d' : '#605d5d',
+      color: label==='ENTER' ? '#00205b' : '#f8f4f4',
+      border: label==='ENTER' ? '#ffc83d' : '#46609a',
       align: 'center', size: label==='ENTER' ? '15px' : '19px',
     }));
 
@@ -1230,7 +1230,7 @@ class Component extends DCLogic {
       const burning = i === burnIdx;
       const burnt = i < burnIdx;
       trees.push({
-        fill: burnt ? '#3a3737' : burning ? '#ff563c' : '#41CD03',
+        fill: burnt ? '#1a2f55' : burning ? '#ff563c' : '#41CD03',
         flame: burning ? 'block' : 'none',
       });
     }
@@ -1239,15 +1239,15 @@ class Component extends DCLogic {
     const satOptions = (step.sats||[]).map(sat => {
       const on = cur.sat === sat.n, bad = !on && s.satWrong === sat.n;
       return {label: sat.n, onClick: () => this.pickSat(step, sat),
-        bg: on ? '#41CD03' : bad ? '#ff563c' : 'transparent', color: (on || bad) ? '#201e1d' : '#f8f4f4',
-        border: on ? '#41CD03' : bad ? '#ff563c' : '#605d5d', check: on ? 'block' : 'none'};
+        bg: on ? '#41CD03' : bad ? '#ff563c' : 'transparent', color: (on || bad) ? '#00205b' : '#f8f4f4',
+        border: on ? '#41CD03' : bad ? '#ff563c' : '#46609a', check: on ? 'block' : 'none'};
     });
 
     const levelOptions = LEVELS.map((l, li) => {
       const on = cur.val === l;
       return {label:l, onClick: () => this.setVal(step.key, l),
-        bg: on ? '#41CD03' : 'transparent', color: on ? '#201e1d' : '#f8f4f4', border: on ? '#41CD03' : '#605d5d',
-        bars: [0,1,2,3].map(k => ({h: (6 + k*3) + 'px', bg: k <= li ? (on ? '#201e1d' : '#b79cff') : (on ? 'rgba(32,30,29,.25)' : '#444141')}))};
+        bg: on ? '#41CD03' : 'transparent', color: on ? '#00205b' : '#f8f4f4', border: on ? '#41CD03' : '#46609a',
+        bars: [0,1,2,3].map(k => ({h: (6 + k*3) + 'px', bg: k <= li ? (on ? '#00205b' : '#b79cff') : (on ? 'rgba(0,32,91,.25)' : '#23427f')}))};
     });
 
     const chosenCells = cur.cells || [];
@@ -1258,7 +1258,7 @@ class Component extends DCLogic {
       const done = !!cur.confirmed;
       gridCells.push({label:id, onClick: () => this.toggleCell(step.key, id),
         bg: done ? (on && good ? 'rgba(65,205,3,.5)' : on ? 'rgba(255,86,60,.55)' : 'transparent') : on ? 'rgba(121,230,251,.45)' : 'transparent',
-        color: on ? '#201e1d' : 'rgba(248,244,244,.5)',
+        color: on ? '#00205b' : 'rgba(248,244,244,.5)',
         border: done ? (good ? '#41CD03' : on ? '#ff563c' : 'rgba(248,244,244,.22)') : on ? '#79E6FB' : 'rgba(248,244,244,.22)'});
     }
     const cellsConfirmed = !!cur.confirmed;
@@ -1279,7 +1279,7 @@ class Component extends DCLogic {
       const on = shownDir === d, ok = cur.val === d, ang = k*45;
       return {label:d, onClick: () => this.commitDir(d),
         bg: ok ? '#ffc83d' : on ? '#6b5210' : 'transparent',
-        color: ok ? '#201e1d' : '#f8f4f4', border: on ? '#ffc83d' : '#605d5d',
+        color: ok ? '#00205b' : '#f8f4f4', border: on ? '#ffc83d' : '#46609a',
         pos: 'translate(-50%,-50%) rotate(' + ang + 'deg) translateY(-69px) rotate(' + (-ang) + 'deg)'};
     });
     const dirIndex = DIRS.indexOf(shownDir);
@@ -1332,7 +1332,7 @@ class Component extends DCLogic {
     const rail = ST.filter(x => x.type === 'q').map((x,k) => {
       const done = !!((A[x.key]||{}).val);
       const active = x.key === step.key;
-      return {bg: active ? '#ffc83d' : done ? '#9b9797' : '#444141'};
+      return {bg: active ? '#ffc83d' : done ? '#97a3bd' : '#23427f'};
     });
 
     return {
@@ -1374,10 +1374,10 @@ class Component extends DCLogic {
             const name = ok ? x.name : bad ? (PARTS.find(y => y.id === w.id) || {}).name : '';
             return {idx: k, tag: 'DEEL ' + (k + 1), name, q: x.q, qDisplay: solved ? 'block' : 'none',
               onClick: () => this.slotClick(k), cursor: s.briefPick && !ok ? 'pointer' : 'default',
-              border: ok ? '#41CD03' : bad ? '#ff563c' : s.briefPick ? '#79E6FB' : '#605d5d',
+              border: ok ? '#41CD03' : bad ? '#ff563c' : s.briefPick ? '#79E6FB' : '#46609a',
               borderStyle: ok || bad ? 'solid' : 'dashed',
               bg: ok ? 'rgba(65,205,3,.16)' : bad ? 'rgba(255,86,60,.18)' : 'transparent',
-              tagColor: ok ? '#41CD03' : bad ? '#ff563c' : '#9b9797', color: '#f8f4f4'};
+              tagColor: ok ? '#41CD03' : bad ? '#ff563c' : '#97a3bd', color: '#f8f4f4'};
           }),
           briefCards: PART_DECK.filter(id => slots.indexOf(id) < 0 && !(w && w.id === id)).map(id => {
             const x = PARTS.find(y => y.id === id), drag = s.briefDrag && s.briefDrag.id === id, pick = s.briefPick === id;
@@ -1396,7 +1396,7 @@ class Component extends DCLogic {
       partLine: step.part + (step.no ? ' \u00b7 ' + step.no.split(' ')[0] + ' ' + (ST.filter(x => x.type === 'q' && x.part === step.part).indexOf(step) + 1) : ''),
       showHintBtn: !s.subHints[step.key] && !satChosen, showSub: !!s.subHints[step.key] && !satChosen,
       showRead: satChosen && !!(step.read || []).length,
-      readRows: (step.read || []).map(r => ({text: r.t, sw: r.c || 'transparent', swBorder: r.c ? '#605d5d' : 'transparent'})),
+      readRows: (step.read || []).map(r => ({text: r.t, sw: r.c || 'transparent', swBorder: r.c ? '#46609a' : 'transparent'})),
       noSat: !satChosen, figCaptionShown: satChosen ? (step.fig || '') : 'SATELLIETBEELD',
       showGrid: step.at === 'grid' && satChosen, showPoly: step.at === 'poly' && satChosen,
       instel: !!this.cfg().instelmodus, instelFixed: !!this.cfg().instelmodus && s.phase !== 'task',
@@ -1462,11 +1462,11 @@ class Component extends DCLogic {
       hasDirMsg: !!s.dirMsg, dirMsg: s.dirMsg || '',
       zoom: s.zoom, toggleZoom: this.toggleZoom,
       figWrap: s.zoom
-        ? 'position:fixed;inset:0;z-index:60;background:rgba(32,30,29,.96);display:flex;align-items:center;justify-content:center;padding:16px'
+        ? 'position:fixed;inset:0;z-index:60;background:rgba(0,32,91,.96);display:flex;align-items:center;justify-content:center;padding:16px'
         : 'position:relative',
       figStyle: s.zoom
-        ? 'position:relative;width:min(100%, calc((var(--eo-vh, 100vh) - 36px) * 1.6));aspect-ratio:16/10;border:2px solid #605d5d;background:#201e1d;overflow:hidden'
-        : 'position:relative;width:min(100%, calc((var(--eo-vh, 100vh) - ' + ((step.at === 'level' || step.at === 'compass' ? 380 : step.at === 'grid' ? 320 : 450) + 60) + 'px) * 1.6));aspect-ratio:16/10;border:2px solid #444141;background:#2d2b2b;overflow:hidden',
+        ? 'position:relative;width:min(100%, calc((var(--eo-vh, 100vh) - 36px) * 1.6));aspect-ratio:16/10;border:2px solid #46609a;background:#00205b;overflow:hidden'
+        : 'position:relative;width:min(100%, calc((var(--eo-vh, 100vh) - ' + ((step.at === 'level' || step.at === 'compass' ? 380 : step.at === 'grid' ? 320 : 450) + 60) + 'px) * 1.6));aspect-ratio:16/10;border:2px solid #23427f;background:#0c2f6e;overflow:hidden',
       zoomLabel: s.zoom ? 'SLUITEN' : 'VOLLEDIG SCHERM',
       rootRef: this.rootRef,
       showMap: !!s.showMap, toggleMap: this.toggleMap,
@@ -1476,7 +1476,7 @@ class Component extends DCLogic {
       currentValue: cur.val == null ? '\u2014' : String(cur.val),
       hasValue: cur.val != null && cur.val !== '',
       canNext: answered && step.type !== 'report',
-      nextStyle: answered ? 'background:#ffc83d;color:#201e1d;cursor:pointer' : 'background:#2d2b2b;color:#605d5d;cursor:not-allowed',
+      nextStyle: answered ? 'background:#ffc83d;color:#00205b;cursor:pointer' : 'background:#0c2f6e;color:#46609a;cursor:not-allowed',
       next: this.next, back: this.back, summaryRows: rows, overallRisk,
       reportGroups, figSlots, dialDown: this.dialDown, dialMove: this.dialMove, dialUp: this.dialUp,
       transmit: this.transmit, restart: this.restart,
@@ -1516,7 +1516,7 @@ class Component extends DCLogic {
         return {
           rank: (ix + 1) + '.', name: b.name,
           time: (late ? '+' : '') + fmt(Math.abs(b.secs)),
-          bg: b.id === s.justAdded ? (late ? '#3a2422' : '#2b3a3d') : '#201e1d',
+          bg: b.id === s.justAdded ? (late ? '#3a2422' : '#2b3a3d') : '#00205b',
           color: late ? '#ff563c' : (b.id === s.justAdded ? '#79E6FB' : '#f8f4f4'),
           nameColor: b.id === s.justAdded ? (late ? '#ff563c' : '#79E6FB') : '#f8f4f4',
         };
