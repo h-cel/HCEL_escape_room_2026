@@ -42,14 +42,14 @@
 <div ref="{{rootRef}}" style="min-height:var(--eo-vh, 100vh);width:100%;background:#00163f;color:#f8f4f4;font-family:'Archivo',system-ui,sans-serif">
 
   <sc-if value="{{isLock}}" hint-placeholder-val="{{true}}">
-    <div style="position:relative;isolation:isolate;overflow:hidden;min-height:var(--eo-vh, 100vh);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 56px;animation:eoFade .4s">
+    <div style="position:relative;isolation:isolate;overflow:hidden;min-height:var(--eo-vh, 100vh);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 56px;box-sizing:border-box;animation:eoFade .4s">
       <img src="uploads/esa-logo-wit.png" alt="" style="position:absolute;z-index:-1;left:50%;top:50%;width:min(1100px,90%);height:auto;transform:translate(-50%,-50%);opacity:.13;pointer-events:none;user-select:none">
       <img src="uploads/hcel-logo-wit.png" alt="" style="position:absolute;z-index:-1;right:40px;top:20px;width:190px;height:auto;opacity:.85;pointer-events:none;user-select:none">
       <div style="font-size:12px;font-weight:600;letter-spacing:.22em;color:#97a3bd">DEEL 2</div>
-      <div style="height:2px;width:100%;max-width:560px;background:#3f5689;margin:16px 0 28px"></div>
+      <div style="height:2px;width:100%;max-width:560px;background:#3f5689;margin:14px 0 22px"></div>
       <div style="font-size:13px;font-weight:700;letter-spacing:.2em;color:#ffc83d;margin-bottom:12px">TOEGANGSPROTOCOL — ESA-NETWERK</div>
-      <div style="font-size:40px;font-weight:800;line-height:1.05;letter-spacing:-.02em;max-width:22ch">TOEGANG TOT DE CONTROLEKAMER</div>
-      <div style="font-size:16px;line-height:1.55;color:#b8c2d6;max-width:52ch;margin-top:18px">Het systeem vraagt een code van 8 cijfers. Voer ze in en bevestig met ENTER.</div>
+      <div style="font-size:40px;font-weight:800;line-height:1.05;letter-spacing:-.02em">TOEGANG TOT DE CONTROLEKAMER</div>
+      <div style="font-size:16px;line-height:1.55;color:#b8c2d6;max-width:70ch;margin-top:14px">Het systeem vraagt een code van 8 cijfers. Voer ze in en bevestig met ENTER.</div>
 
       <div style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:14px;margin-top:22px">
         <div style="font-size:12px;font-weight:700;letter-spacing:.18em;color:#97a3bd">RESTERENDE MISSIETIJD</div>
@@ -58,7 +58,7 @@
       </div>
 
       <sc-if value="{{lockHint}}" hint-placeholder-val="{{false}}">
-        <div style="border-top:3px solid #ffc83d;padding:14px 0 0;margin-top:22px;max-width:52ch;font-size:15px;line-height:1.55;color:#ffe9b0;animation:eoFade .3s">Het satellietnetwerk is gebouwd door ESA. Hang de satellieten in de juiste volgorde van lancering. De codefragmenten vormen samen de oprichtingsdatum van ESA: dag, maand, jaar.</div>
+        <div style="border-top:3px solid #ffc83d;padding:12px 0 0;margin-top:18px;max-width:86ch;font-size:15px;line-height:1.55;color:#ffe9b0;animation:eoFade .3s">Het satellietnetwerk is gebouwd door ESA. Hang de satellieten in de juiste volgorde van lancering. De codefragmenten vormen samen de oprichtingsdatum van ESA: dag, maand, jaar.</div>
       </sc-if>
 
       <div style="display:flex;justify-content:center;margin:26px 0 8px">
