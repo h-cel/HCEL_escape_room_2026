@@ -102,14 +102,14 @@
   <sc-if value="{{isBriefA}}" hint-placeholder-val="{{false}}">
     <div style="min-height:var(--eo-vh, 100vh);display:flex;flex-direction:column;justify-content:center;padding:48px 56px;box-sizing:border-box">
       <div style="display:flex;align-items:center;gap:12px;animation:eoRise 1.6s cubic-bezier(.22,.61,.36,1) both">
-        <div style="width:12px;height:12px;background:#ff563c;animation:eoBlink 1.1s infinite"></div>
-        <div style="font-size:15px;font-weight:700;letter-spacing:.2em;color:#ff563c">ALARM: BRANDHAARD GEDETECTEERD</div>
+        <div style="width:12px;height:12px;background:#ffc83d;animation:eoBlink 1.1s infinite"></div>
+        <div style="font-size:15px;font-weight:700;letter-spacing:.2em;color:#ffc83d">ALARM: BRANDHAARD GEDETECTEERD</div>
       </div>
       <div style="height:2px;background:#3f5689;margin:20px 0 28px"></div>
       <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:center">
         <img src="uploads/alert-vuur.webp" alt="Bosbrand in de Gironde" style="display:block;flex:1 1 560px;min-width:0;max-width:900px;max-height:calc(var(--eo-vh, 100vh) - 220px);object-fit:cover;border:2px solid #1c3567;animation:eoRise 2.2s cubic-bezier(.22,.61,.36,1) .3s both">
         <div style="flex:1 1 360px;min-width:0;display:flex;flex-direction:column;gap:24px">
-          <div style="font-size:56px;font-weight:800;line-height:1;letter-spacing:-.03em;color:#ff563c;animation:eoRise 1.6s cubic-bezier(.22,.61,.36,1) 2s both">BRANDHAARD<br>GEDETECTEERD!</div>
+          <div style="font-size:56px;font-weight:800;line-height:1;letter-spacing:-.03em;color:#ffc83d;animation:eoRise 1.6s cubic-bezier(.22,.61,.36,1) 2s both">BRANDHAARD<br>GEDETECTEERD!</div>
           <div style="display:flex;gap:16px;align-items:center;animation:eoRise 1.6s cubic-bezier(.22,.61,.36,1) 3.6s both">
             <img src="uploads/bosbrandinfo.avif" alt="Situering van de brandzone tussen Cap Ferret en Bordeaux" style="display:block;width:200px;height:auto;flex:0 0 auto;border:2px solid #1c3567">
             <div style="font-size:22px;line-height:1.4;color:#f8f4f4"><strong style="color:#79E6FB;font-weight:800">Nabij Gironde</strong>, ten westen van Bordeaux<br><span style="color:#b8c2d6">24 juli 2026</span></div>
@@ -757,6 +757,13 @@
     </div>
   </sc-if>
 
+  <sc-if value="{{instel}}" hint-placeholder-val="{{false}}">
+    <div style="position:fixed;top:3px;left:16px;z-index:96;display:flex;align-items:center;gap:4px;background:#00163f;border:2px dashed #79E6FB;padding:1px 4px;font-family:'Archivo',sans-serif">
+      <button onClick="{{instelPrev}}" title="Vorige pagina (pijltje links)" style="border:none;background:transparent;color:#79E6FB;font-size:16px;font-weight:800;padding:2px 8px;cursor:pointer">◀</button>
+      <div style="font-size:11px;font-weight:800;letter-spacing:.1em;color:#79E6FB;white-space:nowrap">INSTELMODUS · {{instelPage}}</div>
+      <button onClick="{{instelNext}}" title="Volgende pagina (pijltje rechts)" style="border:none;background:transparent;color:#79E6FB;font-size:16px;font-weight:800;padding:2px 8px;cursor:pointer">▶</button>
+    </div>
+  </sc-if>
   <sc-if value="{{instelFixed}}" hint-placeholder-val="{{false}}">
     <button onClick="{{resetGame}}" style="position:fixed;left:16px;bottom:16px;z-index:95;border:2px dashed #79E6FB;background:#00163f;color:#79E6FB;font-family:'Archivo',sans-serif;font-size:12px;font-weight:800;letter-spacing:.1em;padding:9px 16px;text-align:left;cursor:pointer" style-hover="background:#79E6FB;color:#00163f">{{resetLabel}}</button>
   </sc-if>
@@ -915,7 +922,12 @@ class Component extends DCLogic {
     } catch (e) {}
     try { const rz = localStorage.getItem('eo-refzone-v1'); if (rz) this.setState({refLocal: rz}); } catch (e) {}
     try { const sl = JSON.parse(localStorage.getItem('eo-study-v1') || 'null'); if (sl && typeof sl === 'object') this.setState({studyLocal: sl}); } catch (e) {}
-    this._esc = (e) => { if (e.key === 'Escape') this.setState({zoom:false}); };
+    this._esc = (e) => {
+      if (e.key === 'Escape') this.setState({zoom:false});
+      // instelmodus: met de pijltjes vrij door alle pagina's, zonder antwoorden
+      const tag = (e.target && e.target.tagName) || '';
+      if (this.cfg().instelmodus && !/INPUT|TEXTAREA/.test(tag) && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) { e.preventDefault(); this.instelGo(e.key === 'ArrowRight' ? 1 : -1); }
+    };
     window.addEventListener('keydown', this._esc);
     this._fit = () => {
       const el = this.rootRef.current; if (!el) return;
@@ -1092,6 +1104,16 @@ class Component extends DCLogic {
     this.penalize(this.straf('strafHintSatelliet', 30), 'HINT SATELLIETKEUZE');
   };
   start = () => this.setState({phase:'task', i:0});
+  // instelmodus: pagina's in volgorde = codescherm, alarm, uitleg, elke vraag (en rapport), eindscherm
+  instelPages = () => { const n = this.steps().length;
+    return [{phase:'lock'}, {phase:'brief', briefStep:0}, {phase:'brief', briefStep:1}]
+      .concat(Array.from({length:n}, (_, i) => ({phase:'task', i}))).concat([{phase:'done'}]); };
+  instelIndex = () => { const s = this.state;
+    return this.instelPages().findIndex(p => p.phase === s.phase && (p.briefStep == null || p.briefStep === (s.briefStep || 0)) && (p.i == null || p.i === s.i)); };
+  instelGo = (d) => { const P = this.instelPages(), k = Math.max(0, Math.min(P.length - 1, this.instelIndex() + d));
+    this.setState({...P[k], briefReady:true, zoom:false, studyDraw:false, satMsg:'', satWrong:null, lockMsg:'', overModal:false}); };
+  instelPrev = () => this.instelGo(-1);
+  instelNext = () => this.instelGo(1);
   briefNext = () => this.setState({briefStep: 1});
   placeCard = (id, idx) => {
     const slots = (this.state.briefSlots || [null,null,null]).slice();
@@ -1562,6 +1584,7 @@ class Component extends DCLogic {
       readRows: (step.read || []).map(r => ({text: r.t, sw: r.c || 'transparent', swBorder: r.c ? '#3f5689' : 'transparent'})),
       noSat: !satChosen, figCaptionShown: satChosen ? (step.fig || '') : 'SATELLIETBEELD',
       showGrid: step.at === 'grid' && satChosen, showPoly: step.at === 'poly' && satChosen,
+      instelPrev: this.instelPrev, instelNext: this.instelNext, instelPage: (this.instelIndex() + 1) + '/' + this.instelPages().length,
       instel: !!this.cfg().instelmodus, instelFixed: !!this.cfg().instelmodus && s.phase !== 'task',
       resetGame: this.resetGame, resetLabel: s.resetArm ? 'ZEKER? KLIK OPNIEUW' : 'SPEL RESETTEN',
       ...(() => {
