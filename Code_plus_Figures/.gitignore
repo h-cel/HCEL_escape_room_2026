@@ -1,0 +1,8 @@
+# Only publish the notebooks and the figures in Output/figures.
+# Everything else (downloaded satellite data, zips, NetCDF, GeoTIFF, ...) stays local.
+*
+!.gitignore
+!*/
+!*.ipynb
+!Output/figures/**
+.ipynb_checkpoints/
