@@ -42,4 +42,4 @@ Antwoord in het Nederlands.
 - localStorage: `eo-state-v1` (lopend spel), `eo-board-v1` (scorebord), `eo-study-v1`, `eo-refzone-v1`.
 - Lokaal testen: open via een lokale server (bv. `python -m http.server`), niet via file://,
   anders laden de satellietbeelden niet. De kiosk-starters regelen dit zelf.
-- Repo: github.com/jarovdnb/HCEL_escape_room, branch `main`.
+- Repo: github.com/h-cel/HCEL_escape_room_2026, branch `main`.
