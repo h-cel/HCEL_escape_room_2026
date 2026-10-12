@@ -31,8 +31,7 @@ window.EO_INSTELLINGEN = {
 
   // --- Studiegebied (blauw kader per beeld) ---
   // per vraag: links,boven,rechts,onder als fractie van het beeld (0 tot 1)
-  studiegebieden: "fuel:0.43,0.423,0.593,0.568 lst:0.156,0.292,0.525,0.636 wind:0.296,0.504,0.445,0.623 soil:0.173,0.266,0.53,0.598 dir:0.296,0.504,0.445,0.623 air:0.219,0.434,0.345,0.587",
-
+  studiegebieden: "fuel:0.29,0.395,0.454,0.553 lst:0.156,0.292,0.525,0.636 wind:0.296,0.504,0.445,0.623 soil:0.142,0.224,0.499,0.599 dir:0.283,0.481,0.424,0.617 air:0.243,0.446,0.345,0.543 hotspot:0.555,0.298,0.661,0.595",
   // --- Verbrande zone (vraag oppervlakte) ---
   schaalKm: 5,                 // lengte van de schaalbalk in km
   schaalBalkPct: 4.6,          // breedte van de schaalbalk in % van het beeld
