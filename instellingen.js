@@ -7,7 +7,7 @@ window.EO_INSTELLINGEN = {
 
   // --- Spel ---
   minuten: 45,                 // speeltijd in minuten
-  schermSchaal: 100,           // grootte van het scherm in %, 0 = automatisch
+  schermSchaal: 0,             // grootte van het scherm in %, 0 = automatisch
   instelmodus: false,          // true = resetknop + studiegebieden tekenen
   toonStudiegebiedKaart: false, // true = kaartje "Studiegebied" linksonder bij elke vraag
 
