@@ -96,6 +96,14 @@
       <sc-if value="{{noLockHint}}" hint-placeholder-val="{{true}}">
         <button onClick="{{askLockHint}}" style="margin-top:28px;border:2px solid #3f5689;background:transparent;color:#b8c2d6;font-family:'Archivo',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;padding:12px 18px;text-align:left;cursor:pointer" style-hover="border-color:#ffc83d;color:#ffc83d">{{lockHintLabel}}</button>
       </sc-if>
+
+      <sc-if value="{{isWaiting}}" hint-placeholder-val="{{false}}">
+        <div style="position:absolute;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;background:rgba(0,22,63,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);animation:eoFade .4s">
+          <div style="font-size:13px;font-weight:700;letter-spacing:.22em;color:#ffc83d">MISSIE KLAAR VOOR LANCERING</div>
+          <button onClick="{{startClock}}" style="border:none;background:#ffc83d;color:#00163f;font-family:'Archivo',sans-serif;font-size:26px;font-weight:800;letter-spacing:.08em;padding:26px 48px;cursor:pointer;box-shadow:0 10px 40px rgba(0,0,0,.45)" style-hover="background:#ffdc7a">START DE TIJD ▶</button>
+          <div style="font-size:15px;font-weight:600;letter-spacing:.1em;color:#b8c2d6">MISSIETIJD {{startTime}}</div>
+        </div>
+      </sc-if>
     </div>
   </sc-if>
 
@@ -898,7 +906,7 @@ function fmt(sec) {
 }
 
 class Component extends DCLogic {
-  state = {phase:'lock', code:'', lockMsg:'', i:0, answers:{}, satMsg:'', secondsLeft:null,
+  state = {phase:'lock', waiting:true, code:'', lockMsg:'', i:0, answers:{}, satMsg:'', secondsLeft:null,
            hint:false, lockHint:false, subHints:{}, penalty:null, zoom:false,
            team:'', saved:false, board:[], justAdded:null,
            overtime:false, overModal:false, overSeconds:0,
@@ -908,10 +916,10 @@ class Component extends DCLogic {
     this._orbRaf = requestAnimationFrame(this.orbitFrame);
     let saved = null;
     try { saved = JSON.parse(localStorage.getItem('eo-state-v1') || 'null'); } catch (e) {}
-    if (saved && typeof saved.secondsLeft === 'number' && (saved.secondsLeft > 0 || saved.overtime)) this.setState(saved);
+    if (saved && typeof saved.secondsLeft === 'number' && (saved.secondsLeft > 0 || saved.overtime)) this.setState({waiting: false, ...saved});
     else this.setState({secondsLeft: (this.cfg().minuten ?? 45)*60});
     this._t = setInterval(() => this.setState(s => {
-      if (s.phase !== 'lock' && s.phase !== 'task') return null;
+      if ((s.phase !== 'lock' && s.phase !== 'task') || s.waiting) return null;
       if (s.overtime) return {overSeconds: (s.overSeconds||0) + 1};
       const n = Math.max(0, (s.secondsLeft||0) - 1);
       return n === 0 ? {secondsLeft: 0, overtime: true, overModal: true, overSeconds: 0, zoom: false, penalty: null} : {secondsLeft: n};
@@ -975,7 +983,7 @@ class Component extends DCLogic {
     if (s.secondsLeft == null) return;
     try {
       localStorage.setItem('eo-state-v1', JSON.stringify({
-        phase: s.phase, i: s.i, answers: s.answers, secondsLeft: s.secondsLeft,
+        phase: s.phase, waiting: !!s.waiting, i: s.i, answers: s.answers, secondsLeft: s.secondsLeft,
         briefStep: s.briefStep, briefSlots: s.briefSlots,
         subHints: s.subHints, lockHint: s.lockHint,
         overtime: s.overtime, overSeconds: s.overSeconds, overModal: s.overModal, penaltyTotal: s.penaltyTotal,
@@ -1355,7 +1363,8 @@ class Component extends DCLogic {
   next = () => this.setState(s => ({studyDraw:false, i: Math.min(this.steps().length-1, s.i+1), satMsg:'', satWrong:null}));
   back = () => this.setState(s => (s.i === 0 ? {phase:'brief', briefStep:1} : {i: s.i-1, satMsg:'', satWrong:null}));
   transmit = () => this.setState({phase:'done'});
-  restart = () => { try { localStorage.removeItem('eo-state-v1'); } catch (e) {} this.setState({phase:'lock', code:'', lockMsg:'', i:0, answers:{}, satMsg:'', satWrong:null, hint:false, lockHint:false, subHints:{}, penalty:null, zoom:false, dirPreview:null, dirAngle:null, dirDrag:false, dirMsg:'', team:'', saved:false, justAdded:null, overtime:false, overModal:false, overSeconds:0, penaltyTotal:0, studyDraw:false, showMap:false, briefReady:false, briefStep:0, briefSlots:[null,null,null], briefPick:null, briefWrong:null, briefDrag:null, secondsLeft:(this.cfg().minuten ?? 45)*60}); this._fly = null; };
+  startClock = () => this.setState({waiting: false});
+  restart = () => { try { localStorage.removeItem('eo-state-v1'); } catch (e) {} this.setState({phase:'lock', waiting:true, code:'', lockMsg:'', i:0, answers:{}, satMsg:'', satWrong:null, hint:false, lockHint:false, subHints:{}, penalty:null, zoom:false, dirPreview:null, dirAngle:null, dirDrag:false, dirMsg:'', team:'', saved:false, justAdded:null, overtime:false, overModal:false, overSeconds:0, penaltyTotal:0, studyDraw:false, showMap:false, briefReady:false, briefStep:0, briefSlots:[null,null,null], briefPick:null, briefWrong:null, briefDrag:null, secondsLeft:(this.cfg().minuten ?? 45)*60}); this._fly = null; };
   setTeam = (e) => this.setState({team: e.target.value});
   teamKey = (e) => { if (e.key === 'Enter') this.addToBoard(); };
   addToBoard = () => {
@@ -1521,7 +1530,7 @@ class Component extends DCLogic {
 
     return {
       briefReady: !!s.briefReady,
-      isLock: s.phase==='lock', isTask: s.phase==='task', isDone: s.phase==='done',
+      isLock: s.phase==='lock', isWaiting: s.phase==='lock' && !!s.waiting, isTask: s.phase==='task', isDone: s.phase==='done',
       overtime: !!s.overtime, notOvertime: !s.overtime, overModal: !!s.overModal,
       closeOverModal: this.closeOverModal,
       houses: (() => {
@@ -1671,7 +1680,7 @@ class Component extends DCLogic {
       nextStyle: answered ? 'background:#ffc83d;color:#00163f;cursor:pointer' : 'background:#0a2454;color:#3f5689;cursor:not-allowed',
       next: this.next, back: this.back, summaryRows: rows, overallRisk,
       reportGroups, figSlots, dialDown: this.dialDown, dialMove: this.dialMove, dialUp: this.dialUp,
-      transmit: this.transmit, restart: this.restart,
+      transmit: this.transmit, restart: this.restart, startClock: this.startClock,
       finalTime: s.overtime ? '+' + fmt(s.overSeconds||0) : fmt(sec),
       finalLabel: s.overtime ? 'TIJD TE LAAT' : 'RESTERENDE TIJD',
       finalVerdict: s.overtime ? 'SCHADE BEPERKT' : 'GESLAAGD',
